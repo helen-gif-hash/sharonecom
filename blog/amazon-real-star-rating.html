@@ -1,0 +1,496 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Amazon displays a rounded star rating on your listing page — but the actual score driving your rank is different. Learn how to find the real number behind your rankings.">
+  <title>Amazon Shows You a Rounded Star Rating. Here is How to Find the REAL Number Behind Your Rankings. — SharonEcom</title>
+  <style>
+    :root {
+      --primary: #6E56CF;
+      --primary-hover: #5A44C0;
+      --primary-soft: #F0EBFA;
+      --accent: #FFCD4D;
+      --bg: #FFFFFF;
+      --surface: #F7F8FA;
+      --text: #1B1B1F;
+      --muted: #5B5B66;
+      --border: #E6E6EA;
+      --radius: 8px;
+      --radius-card: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .article-header {
+      padding: 64px 0 40px;
+      text-align: center;
+    }
+.article-header h1 {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .article-meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .article-meta .dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+    .article-content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+    }
+    .article-content .lead {
+      font-size: 18px;
+      color: var(--text);
+      line-height: 1.65;
+      margin-bottom: 32px;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+    }
+    .article-content h2 {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+      margin-top: 48px;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .article-content h3 {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.2px;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .article-content p {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+    .article-content strong {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .article-content ul, .article-content ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+    .article-content li {
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .article-content a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .article-content a:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
+    }
+    .highlight-box {
+      background: var(--primary-soft);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius-card);
+      padding: 28px 32px;
+      margin: 32px 0;
+    }
+    .highlight-box p {
+      margin-bottom: 0;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .highlight-box strong {
+      color: var(--primary);
+    }
+    .zone-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 28px 32px;
+      margin-bottom: 20px;
+      background: var(--bg);
+      transition: border-color 0.15s;
+    }
+    .zone-card:hover { border-color: var(--primary); }
+    .zone-card .zone-label {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.3px;
+    }
+    .zone-card .zone-label.defend { color: #D97706; }
+    .zone-card .zone-label.attack { color: #DC2626; }
+    .zone-card p {
+      margin-bottom: 14px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .zone-card .zone-action {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .zone-card ul {
+      margin-bottom: 0;
+    }
+    .zone-card li {
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .mistake-block {
+      margin-bottom: 24px;
+    }
+    .mistake-block .mistake-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mistake-block .mistake-title .icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #FEF2F2;
+      color: #DC2626;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+    .mistake-block p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--muted);
+      padding-left: 32px;
+    }
+    .tool-cta {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 28px 32px;
+      margin: 32px 0;
+      text-align: center;
+    }
+    .tool-cta .tool-cta-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    .tool-cta h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    .tool-cta p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .tool-cta .btn-primary {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--primary);
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 28px;
+      cursor: pointer;
+      transition: background 0.15s;
+      text-decoration: none;
+    }
+    .tool-cta .btn-primary:hover { background: var(--primary-hover); }
+    .tool-cta .tool-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+    .author-bio {
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+      padding-top: 32px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .author-bio .author-avatar {
+      flex: 0 0 48px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .author-bio .author-info h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .author-bio .author-info p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 0;
+    }
+    .back-link-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .back-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .back-link:hover { color: var(--primary-hover); }
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text); }
+    @media (max-width: 768px) {
+      .nav-links { gap: 18px; }
+      .nav-links a { font-size: 12px; }
+      .article-header h1 { font-size: 26px; }
+      .article-content .lead { font-size: 16px; }
+      .article-content h2 { font-size: 20px; }
+      .article-content h3 { font-size: 16px; }
+      .article-content p, .article-content li { font-size: 15px; }
+      .highlight-box, .zone-card, .tool-cta { padding: 20px; }
+      .footer { flex-direction: column; gap: 12px; text-align: center; }
+      .footer-links { gap: 16px; }
+      .author-bio { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar container">
+  <a href="/" class="nav-logo">SharonEcom</a>
+  <ul class="nav-links">
+    <li><a href="/#tools">Tools</a></li>
+    <li><a href="/#playbooks">Playbooks</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/contact/">Contact</a></li>
+  </ul>
+</nav>
+<header class="article-header container">
+<h1>Amazon Shows You a Rounded Star Rating. Here is How to Find the REAL Number Behind Your Rankings.</h1>
+  <div class="article-meta">
+    <span>Sharon</span>
+    <span class="dot"></span>
+    <span>Amazon Operations</span>
+    <span class="dot"></span>
+    <span>6 min read</span>
+  </div>
+</header>
+<div class="article-content">
+  <p class="lead">Most sellers obsess over the orange stars on their product page. But Amazon is algorithm? It is reading a completely different number — and that number determines your traffic.</p>
+  <p>Here is something I learned after years of managing Amazon accounts: <strong>the star rating you see on your listing is not your actual review score.</strong></p>
+  <p>It is a rounded, simplified version. Behind the scenes, Amazon calculates your true rating to 10 decimal places — and that is the number the algorithm actually uses to decide where you rank.</p>
+  <p>Two products can both display "4.3 stars" on the front end. But one might have a raw score of 4.32 (solid, safe, ranking well), and the other might be at 4.29 (one bad review away from a traffic collapse).</p>
+  <p>Let me show you how to find your real number — it takes two minutes.</p>
+  <h2>Find Your Raw Review Score in Seller Central</h2>
+  <h3>Path 1: The 30-Second Check</h3>
+  <p>Navigate to:</p>
+  <p><strong>Reports → Custom Analytics → Customer Satisfaction</strong></p>
+  <p>This gives you a quick overview. Good for a pulse check, but it is not the full picture.</p>
+  <h3>Path 2: The Real Number (What You Actually Want)</h3>
+  <p>This is where Amazon hides the raw, unrounded review score:</p>
+  <ol>
+    <li>Go to <strong>Reports → Custom Analytics → Overall Business Performance</strong></li>
+    <li>Scroll down to the data table</li>
+    <li>Click <strong>Edit Metrics</strong></li>
+    <li>Add these four columns:</li>
+  </ol>
+  <ul>
+    <li>ASIN</li>
+    <li>Customer Review Count</li>
+    <li>Overall Star Ratings</li>
+    <li><strong>Raw Star Ratings</strong> ← This. This is the one.</li>
+  </ul>
+  <div class="highlight-box">
+    <p>The <strong>Overall Star Ratings</strong> column shows you what customers see — the rounded, public-facing number.</p>
+    <p style="margin-top:12px;">The <strong>Raw Star Ratings</strong> column? That is what Amazon actually thinks about your product. It can go up to 10 decimal places. I have seen numbers like <strong>4.2876543210</strong>. That is the number the ranking algorithm is actually using.</p>
+  </div>
+  <h2>Why The Difference Matters (More Than You Think)</h2>
+  <p>Same front-end 4.3 stars. Completely different reality:</p>
+  <div class="zone-card">
+    <p><strong>Product A</strong> — raw score 4.34 → ranking is stable, traffic is safe. Amazon trusts this listing.</p>
+  </div>
+  <div class="zone-card">
+    <p><strong>Product B</strong> — raw score 4.26 → hanging by a thread. One more negative review and you dip below the threshold, triggering both a visible star drop <em>and</em> a ranking downgrade.</p>
+  </div>
+  <p>Amazon treats Product A and Product B very differently. Your customers can not see the difference — but your sales report definitely will.</p>
+  <h2>How I Use This Data: The Two Zones That Actually Matter</h2>
+  <p>Once you have your raw scores, here is how I prioritize across my accounts:</p>
+  <div class="zone-card">
+    <div class="zone-label defend">Zone 1: Raw Score 4.30–4.34 → DEFEND</div>
+    <p>Your front end probably says 4.3 stars. Things look fine. <strong>You are not fine.</strong></p>
+    <p>Just 1–2 negative reviews can push you below the 4.3 threshold, and the drop compounds: visible star downgrade + ranking hit + lower click-through rate.</p>
+    <div class="zone-action">What I do:</div>
+    <ul>
+      <li>Check these ASINs every week, no exceptions</li>
+      <li>Follow up on every new negative review immediately</li>
+      <li>Keep a steady stream of positive reviews flowing in — not to grow, just to hold position</li>
+    </ul>
+  </div>
+  <div class="zone-card">
+    <div class="zone-label attack">Zone 2: Raw Score 4.25–4.28 → ATTACK</div>
+    <p>You are 0.01 to 0.05 away from crossing into 4.3 territory on the front end. <strong>This is the highest-ROI window in review management.</strong></p>
+    <p>You do not need 50 new reviews to tip the scale. Sometimes 3–5 quality 5-star ratings will do it. And the payoff? Going from 4.28 to 4.31 raw can bump your front-end display by half a star — which has a measurable impact on click-through rate and conversion.</p>
+    <div class="zone-action">What I do:</div>
+    <ul>
+      <li>Move these ASINs to the top of the review-generation priority list</li>
+      <li>Run a focused campaign: targeted follow-ups, Vine reviews if eligible, anything ethical to earn those few extra 5-stars</li>
+      <li>Watch the raw score weekly — if it is climbing, double down; if it is stalled, switch tactics</li>
+    </ul>
+  </div>
+  <h2>Two Mistakes Almost Every Seller Makes At First</h2>
+  <div class="mistake-block">
+    <div class="mistake-title"><span class="icon">✕</span> "The front-end stars are my real score."</div>
+    <p>They are not. The front-end rating is a rounded display. Two listings both showing 4.3 stars can have a meaningfully different ranking weight. If you are only watching the public number, you are flying blind.</p>
+  </div>
+  <div class="mistake-block">
+    <div class="mistake-title"><span class="icon">✕</span> "The review score is just a simple average of all ratings."</div>
+    <p>Amazon has not used a simple average for years. They use a weighted formula. Recent reviews count more than old ones. Verified purchases count more than unverified ones. Reviews from active, high-spend buyers carry more algorithmic weight than reviews from new accounts.</p>
+    <p style="margin-top: 8px;">Think about what that means: a single 5-star review from a loyal Prime customer who buys weekly? That is worth more than three 5-star reviews from new accounts. And a 1-star from a verified frequent buyer hurts more than a 1-star from a one-time shopper.</p>
+    <p style="margin-top: 8px;"><strong>Direction matters, recency matters, reviewer quality matters.</strong> Not just the headline number.</p>
+  </div>
+  <h2>Free Tool: Amazon Review Score Calculator</h2>
+  <div class="tool-cta">
+    <div class="tool-cta-icon">⭐</div>
+    <h3>Amazon Review Score Calculator</h3>
+    <p>I built a Google Sheets calculator that tells you exactly how many 5-star reviews you need to hit your target score.</p>
+    <a href="https://docs.google.com/spreadsheets/d/1yJzs8KC6B-7e4Zz2e6Hd7qvVwr626z_Wv4qUMzZ5HYs/edit?usp=sharing" target="_blank" rel="noopener" class="btn-primary">Open the calculator →</a>
+    <p style="margin-top: 14px; font-size: 13px; color: var(--muted);">File → Make a copy, then drop in your own numbers.</p>
+    <div style="text-align: left; margin-top: 20px;">
+      <p style="font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px;">How it works:</p>
+      <ul style="margin-bottom: 0;">
+        <li style="font-size: 14px;">Enter your current review counts by star level (1★ through 5★)</li>
+        <li style="font-size: 14px;">Enter your target score</li>
+        <li style="font-size: 14px;">The sheet instantly calculates how many additional 5-star reviews you need</li>
+      </ul>
+    </div>
+    <p class="tool-note">One caveat: Amazon shows rounded percentages on the front end (like "68% 5-star"), while the backend calculates from exact ratios. So the calculator gives you a close estimate — not a perfect match to the backend weighted formula. But it is directionally accurate and useful for planning.</p>
+  </div>
+  <h2>The Bottom Line</h2>
+  <p>Checking your raw star rating takes two minutes. But most sellers never do it — because they do not know it exists, or they think the front-end stars tell the whole story.</p>
+  <p><strong>Now you know better.</strong></p>
+  <p>Check your raw scores this week. Sort them. Find the ones in the 4.25–4.35 range. Those are the ASINs where one or two reviews can meaningfully move the needle — for better or worse.</p>
+  <div class="author-bio">
+    <div class="author-avatar">S</div>
+    <div class="author-info">
+      <h4>Sharon</h4>
+      <p>Amazon operator based in China. I manage seller accounts daily — PPC, reviews, listing optimization. Sharing real tactics, not theory.</p>
+    </div>
+  </div>
+</div>
+<div class="back-link-wrap">
+  <a href="/blog/" class="back-link">← Back to Blog</a>
+</div>
+<footer class="footer">
+  <span>© 2026 SharonEcom</span>
+  <div class="footer-links">
+    <a href="#">Affiliate Disclosure</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+</body>
+</html>
+
+
+
