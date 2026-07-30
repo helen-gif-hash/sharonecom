@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon FBA Profit Calculator — SharonEcom</title>
+<meta name="description" content="Calculate Amazon FBA profit across 12 markets. Auto-calculates referral fees, FBA fulfillment from dimensions, VAT, digital services fee. 2026 rates.">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --primary:       #6E56CF;
+  --primary-hover: #5A44C0;
+  --primary-soft:  #F0EBFA;
+  --accent:        #FFCD4D;
+  --bg:            #FFFFFF;
+  --surface:       #F7F8FA;
+  --text:          #1B1B1F;
+  --muted:         #5B5B66;
+  --border:        #E6E6EA;
+  --radius:        8px;
+  --radius-card:   12px;
+  --card:#fff; --t3:#8F99A8;
+  --green:#0d8a4e; --glight:#e7f7ef;
+  --red:#d92c3c; --rlight:#fef0f2; --orange:#d97706; --olight:#fff9ed;
+  --r:var(--radius-card); --sh:0 1px 3px rgba(0,0,0,.06);
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 16px 48px}
+
+/* Header */
+.hdr{text-align:center;padding:28px 0 20px}
+.badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 11px;border-radius:20px;font-size:11px;font-weight:700}
+.badge-ok{background:var(--glight);color:var(--green)}
+.badge-free{background:var(--primary-soft);color:var(--primary)}
+.badge-date{background:#fef9e7;color:#8a6d14}
+.hdr h1{font-size:36px;font-weight:800;letter-spacing:-.4px}
+.hdr .sub{color:var(--muted);margin-top:4px;font-size:14px}
+
+/* Main 2-col - 60/40 ratio */
+.main{display:grid;grid-template-columns:minmax(0,60%) minmax(0,40%);gap:20px;align-items:start}
+.right-col{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding-bottom:2px}
+@media(max-width:1020px){.main{grid-template-columns:1fr}.right-col{position:static;max-height:none;overflow:visible}}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh)}
+.chead{padding:13px 18px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.cbody{padding:16px 18px}
+
+/* Form */
+.fg{margin-bottom:18px}.fg:last-child{margin-bottom:0}
+.flbl{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px}
+.flbl .hint{font-weight:400;color:var(--t3);font-size:11px}
+/* Hover-only tooltip for explanatory hints (used on label small "?" icon) */
+.htip{position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#e6e9ee;color:var(--muted);font-size:10px;font-weight:700;cursor:help;margin-left:6px;flex-shrink:0;line-height:1;transition:background .15s,color .15s}
+.htip:hover{background:var(--primary);color:#fff}
+.htip::after{content:attr(data-tip);position:absolute;top:calc(100% + 8px);right:-6px;background:#2b303b;color:#fff;padding:7px 10px;border-radius:6px;font-size:11px;font-weight:500;line-height:1.4;width:max-content;max-width:240px;white-space:normal;opacity:0;pointer-events:none;transition:opacity .15s;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.15);text-transform:none;letter-spacing:0}
+.htip::before{content:'';position:absolute;top:calc(100% + 2px);right:5px;border:5px solid transparent;border-bottom-color:#2b303b;opacity:0;transition:opacity .15s;z-index:100}
+.htip:hover::after,.htip:hover::before{opacity:1}
+.finp,.fsel{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:var(--font);background:var(--card);color:var(--text);transition:border-color .15s}
+.finp:focus,.fsel:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(110,86,207,.12)}
+.fsel{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath fill='%238f99a8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.frow5{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:8px}
+
+/* Section header (AMAZON FEES / OPERATIONS) - small uppercase title + grey description */
+.sec-h{display:flex;flex-direction:column;gap:0px;margin:-12px 0 0px}
+.sec-h .sec-t{font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.sec-h .sec-d{font-size:11px;color:var(--t3);line-height:1.45;margin-top:0px;margin-bottom:8px}
+/* Currency/percent input wrappers - now wrapper only contains symbol + input (label is outside) */
+.ipre{position:relative;display:block}
+.ipre .pref{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:700;font-size:13px;pointer-events:none;line-height:1;z-index:1}
+.ipre input{padding-left:32px!important}
+.isuf{position:relative;display:block}
+.isuf .suf{position:absolute;right:11px;top:0;bottom:0;display:flex;align-items:center;color:var(--muted);font-weight:600;font-size:13px;pointer-events:none;line-height:1;z-index:1}
+.isuf input{padding-right:30px!important}
+
+/* Price row - subtle highlight (no border) */
+.price-row{border-radius:var(--r);padding:12px;margin-bottom:2px;background:#F8F6FC}
+.price-row .flbl{font-size:13px;color:var(--primary)}
+
+/* Result right panel */
+.res-top{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.res-box{border-radius:var(--r);padding:20px;text-align:center}
+.res-box .rlbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.res-box .rval{font-size:30px;font-weight:800;letter-spacing:-.8px}
+.res-box .rsub{font-size:12px;margin-top:4px}
+.res-profit{background:var(--glight);border:1px solid #b7e4cf}.res-profit .rlbl{color:var(--green)}.res-profit .rval{color:var(--green)}
+.res-margin{background:var(--primary-soft);border:1px solid #D0C4F0}.res-margin .rlbl{color:var(--primary)}.res-margin .rval{color:var(--primary)}
+
+.res-group-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.65px;color:var(--muted);margin:14px 0 8px;padding-left:2px}
+.res-group-title:first-of-type{margin-top:0}
+.res-list{border-radius:var(--r);border:1px solid var(--border);background:var(--card);overflow:hidden}
+.res-item{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;border-bottom:1px solid var(--border);font-size:13px}
+.res-item:last-child{border-bottom:none}
+.res-item{transition:background-color .12s}
+.res-item:hover{background:var(--primary-soft)}
+.res-item .riname{color:var(--muted);font-weight:500}
+.res-item .rival{font-weight:700;font-variant-numeric:tabular-nums}
+.res-item .rival.green{color:var(--green)}.res-item .rival.red{color:var(--red)}
+.res-item.strong{font-weight:700}
+.res-item.strong:hover{background:var(--primary-soft)}
+.res-item .riinp{width:90px;padding:5px 8px;border:1px solid var(--border);border-radius:5px;font-size:13px;text-align:center;font-weight:700}
+.res-item .riwrap{display:flex;align-items:center;gap:5px}
+.res-item .riwrap .suf{font-size:12px;font-weight:700;color:var(--muted)}
+.res-item input.riinp:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(110,86,207,.12)}
+.stag{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:700;margin-left:6px}
+.stag-g{background:var(--glight);color:var(--green)}.stag-r{background:var(--rlight);color:var(--red)}.stag-o{background:var(--olight);color:var(--orange)}
+
+/* Bottom */
+.sec-t{font-size:15px;font-weight:700;margin:24px 0 10px}
+.cgrid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:700px){.cgrid2{grid-template-columns:1fr}}
+.chwrap{position:relative;height:280px}.chwrap canvas{width:100%!important;height:100%!important}
+
+/* Table */
+.dtab{width:100%;border-collapse:collapse;font-size:12px}
+.dtab th{text-align:left;padding:9px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--t3);border-bottom:2px solid var(--border)}
+.dtab td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--muted)}
+.dtab tr:last-child td{border-bottom:none}
+.dtab tbody tr{transition:background-color .12s}
+.dtab tbody tr:hover{background:var(--primary-soft)}
+.dtab .hl{font-weight:600;color:var(--primary)}
+.green{color:var(--green)}.red{color:var(--red)}
+
+/* Dimensions row - units OUTSIDE box on the right */
+.dim-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:7px;align-items:start;min-width:0}
+.dim-cell{display:flex;flex-direction:column;gap:4px;min-width:0}
+.dim-cell .dim-input-wrap{display:flex;align-items:center;border:1px solid var(--border);border-radius:7px;background:var(--card);transition:border-color .15s;min-width:0;width:100%}
+.dim-cell .dim-input-wrap:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px rgba(110,86,207,.12)}
+.dim-cell .dim-input-wrap input{flex:1;width:100%;min-width:0;padding:9px 8px;border:none;background:transparent;font-size:13px;font-family:var(--font);color:var(--text);outline:none}
+.dim-cell .dim-input-wrap.readonly{background:#f5f6f8}
+.dim-cell .dim-input-wrap.readonly input{color:var(--muted)}
+.dim-cell .dim-unit{padding:0 9px;font-size:12px;color:var(--muted);font-weight:600;border-left:1px solid var(--border);align-self:stretch;display:flex;align-items:center}
+.dim-lbl{font-size:10px;color:var(--t3);text-align:center;line-height:1.2;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Scenarios - exactly 3 per row, matching reference */
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:780px){.sgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.sgrid{grid-template-columns:1fr}}
+.scard{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;position:relative;min-height:140px;display:flex;flex-direction:column;cursor:pointer;transition:box-shadow .15s,border-color .15s}
+.scard:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.scard .shead{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.scard .stitle{font-size:15px;font-weight:700;line-height:1.25}
+.scard .sdesc{font-size:12px;color:var(--muted);margin-top:2px;font-weight:400}
+.scard .sbadge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px;white-space:nowrap;flex-shrink:0}
+.scard .sbadge.now{background:var(--primary-soft);color:var(--primary);text-transform:uppercase;letter-spacing:.5px}
+.scard .sbadge.down{background:var(--rlight);color:var(--red)}
+.scard .sbody{margin-top:auto}
+.scard .slbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--t3);margin-bottom:3px}
+.scard .sval{font-size:22px;font-weight:800;letter-spacing:-.5px}
+.scard .sfooter{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
+.scard .sfooter .sml{color:var(--muted)}
+.scard .sfooter .smv{font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
+.scard.base{border-color:var(--primary);background:var(--primary-soft)}
+.scard.base .sval{color:var(--primary)}
+.scard-note{text-align:center;color:var(--muted);font-size:13px;margin-top:14px;font-style:italic}
+
+/* Price Ladder */
+.pl-wrap{overflow-x:auto}
+.pl-table td{white-space:nowrap}
+.pl-table .pl-price{font-weight:700;color:var(--text)}
+.pl-table tbody tr.pl-now td{background:var(--primary-soft);border-top:1px solid var(--primary);border-bottom:1px solid var(--primary)}
+.pl-table tbody tr.pl-now .pl-price{color:var(--primary)}
+.pl-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.pl-note-tag{font-size:11px;font-weight:700;color:var(--primary);white-space:nowrap}
+.pl-note-dim{font-size:11px;color:var(--t3);white-space:nowrap}
+
+/* Footer */
+.ft{text-align:center;padding:24px 0 0;color:var(--t3);font-size:11px}.ft a{color:var(--primary);text-decoration:none}
+
+/* Buttons */
+.btn-row{display:flex;gap:8px;margin-top:14px}
+.btn{flex:1;padding:9px;border:1px solid var(--border);border-radius:7px;background:var(--card);cursor:pointer;font-size:12px;font-weight:600;color:var(--muted)}
+.btn:hover{background:#f5f6f8}
+/* ── Nav ── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.navbar { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--border); }
+.nav-logo { font-size: 18px; font-weight: 700; color: var(--primary); text-decoration: none; letter-spacing: -0.3px; }
+.nav-links { display: flex; gap: 32px; align-items: center; list-style: none; }
+.nav-links a { font-size: 14px; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+.nav-links a:hover { color: var(--text); }
+
+</style>
+</head>
+<body>
+<nav class="navbar container">
+  <a href="../index.html" class="nav-logo">SharonEcom</a>
+  <ul class="nav-links">
+    <li><a href="../index.html#tools">Tools</a></li>
+    <li><a href="../index.html#playbooks">Playbooks</a></li>
+    <li><a href="../index.html#blog">Blog</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+<div class="wrap">
+
+<header class="hdr">
+  <div class="badges">
+    <span class="badge badge-ok">&#10003; 2026 Fee Rates — 12 Markets</span>
+    <span class="badge badge-free">100% Free · No Sign-up</span>
+    <span class="badge badge-date">Data: July 2026</span>
+  </div>
+  <h1>Amazon FBA Profit Calculator</h1>
+  <p class="sub">Calculate real profit across 12 Amazon markets. Auto-computes referral fees, FBA from dimensions, VAT & digital services fee.</p>
+</header>
+
+<div class="main">
+
+<!-- ===== LEFT: INPUTS ===== -->
+<div class="card" id="inputCard">
+  <div class="chead">&#9881; Your Numbers</div>
+  <div class="cbody">
+
+    <!-- Row 1: Market -->
+    <div class="fg">
+      <label class="flbl">Market</label>
+      <select class="fsel" id="market">
+        <option value="US">&#127482;&#127480; United States ($)</option>
+        <option value="CA">&#127464;&#127462; Canada (C$)</option>
+        <option value="UK">&#127468;&#127463; United Kingdom (&pound;)</option>
+        <option value="DE">&#127465;&#127466; Germany (&euro;)</option>
+        <option value="FR">&#127467;&#127479; France (&euro;)</option>
+        <option value="IT">&#127470;&#127481; Italy (&euro;)</option>
+        <option value="ES">&#127466;&#127480; Spain (&euro;)</option>
+        <option value="NL">&#127475;&#127473; Netherlands (&euro;)</option>
+        <option value="SE">&#127480;&#127466; Sweden (SEK)</option>
+        <option value="PL">&#127477;&#127473; Poland (z&#322;)</option>
+        <option value="BE">&#127463;&#127466; Belgium (&euro;)</option>
+        <option value="JP">&#127471;&#127477; Japan (JPY)</option>
+      </select>
+    </div>
+
+    <!-- Row 2: Selling Price + VAT + Tax-exclusive -->
+    <div class="price-row">
+      <div class="frow3">
+        <div class="fg">
+          <label class="flbl">Selling Price <span class="htip" data-tip="listing price">?</span></label>
+          <div class="ipre"><span class="pref" id="curPref1">$</span>
+            <input type="number" class="finp" id="sellingPrice" value="38.72" step="0.01" min="0" style="font-size:15px;font-weight:700">
+          </div>
+        </div>
+        <div class="fg">
+          <label class="flbl">Est. VAT <span class="hint" id="vatHint">N/A</span></label>
+          <div class="ipre"><span class="pref" id="curPrefV">$</span>
+            <input type="number" class="finp" id="vatAmount" value="0.00" step="0.01" min="0">
+          </div>
+        </div>
+        <div class="fg">
+          <label class="flbl">Price (excl. VAT)</label>
+          <div class="ipre"><span class="pref" id="curPref2">$</span>
+            <input type="number" class="finp" id="priceExVat" value="38.72" step="0.01" readonly style="background:#f5f6f8">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INITIAL COST TOTAL section header -->
+    <div class="sec-h">
+      <div class="sec-t">Initial Cost Total</div>
+      <div class="sec-d">What your product costs to source and the cost to ship stock from your supplier to an Amazon fulfillment center.</div>
+    </div>
+
+    <!-- Row: COGS + Inbound Shipping -->
+    <div class="frow">
+      <div class="fg">
+          <label class="flbl">Product Cost (COGS)</label>
+          <div class="ipre"><span class="pref" id="curPrefC">$</span>
+            <input type="number" class="finp" id="cogs" value="10.33" step="0.01" min="0">
+          </div>
+        </div>
+      <div class="fg">
+          <label class="flbl">Inbound Shipping (per unit)</label>
+          <div class="ipre"><span class="pref" id="curPrefI">$</span>
+            <input type="number" class="finp" id="inboundShipping" value="0.65" step="0.01" min="0">
+          </div>
+        </div>
+    </div>
+
+    <!-- AMAZON FEES section header -->
+    <div class="sec-h">
+      <div class="sec-t">Amazon Fees</div>
+      <div class="sec-d">Amazon-side fees auto-fill based on your settings, or customize any value to match your reality.</div>
+    </div>
+
+    <!-- Row 3: Category + Referral Fee -->
+    <div class="frow">
+      <div class="fg">
+        <label class="flbl">Product Category</label>
+        <select class="fsel" id="category"></select>
+      </div>
+      <div class="fg isuf">
+        <label class="flbl">Amazon Referral Fee <span class="htip" data-tip="auto / manual">?</span></label>
+        <input type="number" class="finp" id="referralFeePct" value="15" step="0.1" min="0" max="100">
+        <span class="suf">%</span>
+      </div>
+    </div>
+
+    <!-- Row 4: FBA Size Tier -->
+    <div class="fg">
+      <label class="flbl">FBA Size Tier <span class="htip" data-tip="auto-detected from dimensions">?</span></label>
+      <select class="fsel" id="sizeTier"></select>
+    </div>
+
+    <!-- Row 5: Dimensions -->
+    <div class="fg">
+      <label class="flbl">Product Package Dimensions</label>
+      <div class="dim-row">
+        <div class="dim-cell">
+          <div class="dim-lbl">Length <span class="dim-unit-label" data-unit-id="dimUL" style="color:var(--primary)">(in)</span></div>
+          <div class="dim-input-wrap"><input type="number" id="dimL" value="12" step="0.1" min="0.1" placeholder="L"></div>
+        </div>
+        <div class="dim-cell">
+          <div class="dim-lbl">Width <span class="dim-unit-label" data-unit-id="dimUW" style="color:var(--primary)">(in)</span></div>
+          <div class="dim-input-wrap"><input type="number" id="dimW" value="8" step="0.1" min="0.1" placeholder="W"></div>
+        </div>
+        <div class="dim-cell">
+          <div class="dim-lbl">Height <span class="dim-unit-label" data-unit-id="dimUH" style="color:var(--primary)">(in)</span></div>
+          <div class="dim-input-wrap"><input type="number" id="dimH" value="2" step="0.1" min="0.1" placeholder="H"></div>
+        </div>
+        <div class="dim-cell">
+          <div class="dim-lbl">Dim. Weight <span class="dim-unit-label" data-unit-id="dimUDW" style="color:var(--primary)">(lb)</span></div>
+          <div class="dim-input-wrap readonly"><input type="number" id="dimWeight" value="0.5" step="0.01" readonly></div>
+        </div>
+        <div class="dim-cell">
+          <div class="dim-lbl">Actual Weight <span class="dim-unit-label" data-unit-id="dimUAW" style="color:var(--primary)">(lb)</span></div>
+          <div class="dim-input-wrap"><input type="number" id="actualWeight" value="0.4" step="0.01" min="0.01" placeholder="Wt"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 6: FBA Fulfillment Fee (own row) -->
+    <div class="fg">
+        <label class="flbl">FBA Fulfillment Fee <span class="htip" data-tip="auto / manual">?</span></label>
+        <div class="ipre"><span class="pref" id="curPrefF">$</span>
+          <input type="number" class="finp" id="fbaFee" value="4.60" step="0.01" min="0">
+        </div>
+      </div>
+
+    <!-- Row 7: Fuel & Logistics Surcharge + Digital Services Fee -->
+    <div class="frow">
+      <div class="fg">
+          <label class="flbl">Fuel & Logistics Surcharge <span class="hint" id="fuelHint">3.5%</span></label>
+          <div class="ipre"><span class="pref" id="curPrefS">$</span>
+            <input type="number" class="finp" id="fuelSurchargeAmt" value="0.16" step="0.01" readonly style="background:#f5f6f8">
+          </div>
+        </div>
+      <div class="fg">
+          <label class="flbl">Digital Services Fee <span class="hint" id="dsfHint">0%</span></label>
+          <div class="ipre"><span class="pref" id="curPrefD">$</span>
+            <input type="number" class="finp" id="digitalFeeAmt" value="0.00" step="0.01" readonly style="background:#f5f6f8">
+          </div>
+        </div>
+    </div>
+
+    <!-- Row 8: Monthly Storage Fee (own row) -->
+    <div class="fg">
+        <label class="flbl">Monthly Storage Fee (per unit)</label>
+        <div class="ipre"><span class="pref" id="curPrefSt">$</span>
+          <input type="number" class="finp" id="storageFee" value="0.18" step="0.01" min="0">
+        </div>
+      </div>
+
+    </div>
+</div>
+
+<!-- ===== RIGHT: RESULTS ===== -->
+<div class="right-col">
+
+<!-- Per-unit profit -->
+<div class="res-group-title">Per-Unit Profit</div>
+<div class="res-top">
+  <div class="res-box res-profit">
+    <div class="rlbl">Initial profit per Unit</div>
+    <div class="rval" id="rNetProfit">$12.71</div>
+    <div class="rsub">after all fees & Cost</div>
+  </div>
+  <div class="res-box res-margin">
+    <div class="rlbl">Profit Margin</div>
+    <div class="rval" id="rMargin">32.8%</div>
+    <div class="rsub" id="rMarginTag"><span class="stag stag-g">Excellent</span></div>
+  </div>
+</div>
+<div class="res-list" id="unitResultList"></div>
+
+<!-- Monthly profit -->
+<div class="res-group-title">Monthly Profit</div>
+<div class="res-list" id="monthlyResultList"></div>
+
+</div><!-- end right -->
+</div><!-- end main -->
+
+<!-- Bottom Module 1: Where Your Selling Price Goes -->
+<div class="sec-t">&#128200; Where Your Selling Price Goes</div>
+<div class="card"><div class="cbody">
+  <div class="cgrid2">
+    <div class="chwrap"><canvas id="waterfallChart"></canvas></div>
+    <div class="chwrap"><canvas id="donutChart"></canvas></div>
+  </div>
+</div></div>
+
+<!-- Bottom Module 2: Monthly Profit by Volume -->
+<div class="sec-t">&#128200; Monthly Profit by Volume &mdash; How Earnings Scale with Sales</div>
+<div class="card"><div class="cbody" style="padding:0">
+  <table class="dtab" id="volumeTable"><thead><tr><th>Monthly Units</th><th>Gross Revenue</th><th>Total Costs</th><th>Net Profit</th><th>Margin</th></tr></thead><tbody></tbody></table>
+</div></div>
+
+<!-- Bottom Module 3: Pressure Test Scenarios -->
+<div class="sec-t">&#129514; Stress-Test Scenarios &mdash; What If Things Break</div>
+<div class="sgrid" id="scenarioGrid"></div>
+<div class="scard-note">Each card reruns the full calculation with one thing changed. A deal that only works in the "Now" case — and turns red the moment a competitor cuts price or returns tick up — is a thin deal worth rethinking.</div>
+
+<!-- Bottom Module 4: Price Ladder -->
+<div class="sec-t">&#128176; Price Ladder &mdash; Find Your Sweet Spot</div>
+<div class="card"><div class="cbody">
+  <div class="pl-wrap">
+    <table class="dtab pl-table" id="ladderTable"><thead><tr>
+      <th>Price</th><th>Net Margin</th><th>Profit / Unit</th><th>Monthly Profit</th><th>ROI</th><th></th>
+    </tr></thead><tbody></tbody></table>
+  </div>
+  <div class="scard-note">Every row reruns the full calculation at a different selling price &mdash; same costs, same fee rules, same monthly volume. Scan the Margin column to find your sweet spot: the lowest price that still clears your target. The highlighted row is your current price; it updates live as you edit the form.</div>
+</div></div>
+
+<footer class="ft">
+  <p>Fee data: Amazon Seller Central published rates, July 2026. Fuel surcharge 3.5% (US/CA) or 1.5% (EU) or 0% (JP). Digital services fee as published.</p>
+  <p>All calculations run in your browser. No data collected, stored, or transmitted.</p>
+  <p>Built for embedding on Cloudflare Pages &mdash; 100% client-side, zero backend.</p>
+</footer>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+// ==================== DATA ====================
+
+// Market configuration (12 markets)
+const MARKETS = {
+  US: {symbol:'$',  currency:'USD', lenLabel:'in', wtLabel:'lb',  dimDiv:139,  vat:0,   fuelRate:0.035, dsfRate:0,
+       storageRate:0.78, storagePeak:2.40, volDiv:1728},
+  CA: {symbol:'C$', currency:'CAD', lenLabel:'cm', wtLabel:'kg',  dimDiv:5000, vat:0,   fuelRate:0.035, dsfRate:0,
+       storageRate:40, storagePeak:77, volDiv:1000000},
+  UK: {symbol:'£',  currency:'GBP', lenLabel:'cm', wtLabel:'kg',  dimDiv:5000, vat:0.20,fuelRate:0.015, dsfRate:0.02,
+       storageRate:0.76, storagePeak:1.50535, volDiv:28316.8},
+  DE: {symbol:'€',  currency:'EUR', lenLabel:'cm', wtLabel:'kg',  dimDiv:5000, vat:0.19,fuelRate:0.015, dsfRate:0,
+       storageRate:27.54, storagePeak:52.19984, volDiv:1000000},
+  FR: {symbol:'€',  currency:'EUR', lenLabel:'cm', wtLabel:'kg',  dimDiv:5000, vat:0.20,fuelRate:0.015, dsfRate:0.03,
+       storageRate:27.54, storagePeak:52.19984, volDiv:1000000},
+  IT: {symbol:'€',  currency:'EUR', lenLabel:'cm', wtLabel:'kg',  dimDiv:5000, vat:0.22,fuelRate:0.015, dsfRate:0.03,
+       storageRate:27.54, storagePeak:52.19984, volDiv:1000000},
+  ES: {symbol:'€',  currency:'EUR', lenLabel:'cm', wtLabel:'kg',  dimDiv:5000, vat:0.21,fuelRate:0.015, dsfRate:0.03,
+       storageRate:27.54, storagePeak:52.19984, volDiv:1000000},
+  NL: {symbol:'€',  currency:'EUR', lenLabel:'cm', wtLabel:'kg',  dimDiv:5000, vat:0.21,fuelRate:0.015, dsfRate:0,
+       storageRate:27.54, storagePeak:52.19984, volDiv:1000000},
+  SE: {symbol:'SEK',currency:'SEK', lenLabel:'cm', wtLabel:'kg',  dimDiv:5000, vat:0.25,fuelRate:0.015, dsfRate:0,
+       storageRate:321.31, storagePeak:548.1784, volDiv:1000000},
+  PL: {symbol:'zł', currency:'PLN', lenLabel:'cm', wtLabel:'kg',  dimDiv:5000, vat:0.23,fuelRate:0.015, dsfRate:0,
+       storageRate:27.54, storagePeak:52.19984, volDiv:1000000},
+  BE: {symbol:'€',  currency:'EUR', lenLabel:'cm', wtLabel:'kg',  dimDiv:5000, vat:0.21,fuelRate:0.015, dsfRate:0,
+       storageRate:27.54, storagePeak:52.19984, volDiv:1000000},
+  JP: {symbol:'¥',  currency:'JPY', lenLabel:'cm', wtLabel:'kg',  dimDiv:5000, vat:0,   fuelRate:0,     dsfRate:0,
+       storageRate:5676, storagePeak:10087, volDiv:1000000},
+};
+
+// Referral fee categories by market
+const CATEGORIES = {
+  US: [
+    {name:'Amazon Device Accessories', feePct:0.45},
+    {name:'Automotive & Powersports', feePct:0.12},
+    {name:'Baby Products', feePct:0.15},
+    {name:'Backpacks, Handbags & Luggage', feePct:0.15},
+    {name:'Beauty, Health & Personal Care', feePct:0.15},
+    {name:'Business, Industrial & Scientific', feePct:0.12},
+    {name:'Clothing & Accessories', feePct:0.17},
+    {name:'Compact Appliances', feePct:0.15},
+    {name:'Computers', feePct:0.08},
+    {name:'Consumer Electronics', feePct:0.08},
+    {name:'Electronics Accessories', feePct:0.15},
+    {name:'Everything Else', feePct:0.15},
+    {name:'Eyewear', feePct:0.15},
+    {name:'Footwear', feePct:0.15},
+    {name:'Full-Size Appliances', feePct:0.08},
+    {name:'Furniture', feePct:0.15},
+    {name:'Grocery & Gourmet', feePct:0.15},
+    {name:'Home & Kitchen', feePct:0.15},
+    {name:'Jewelry', feePct:0.20},
+    {name:'Lawn & Garden', feePct:0.15},
+    {name:'Mattresses', feePct:0.15},
+    {name:'Musical Instruments', feePct:0.15},
+    {name:'Office Products', feePct:0.15},
+    {name:'Pet Products', feePct:0.15},
+    {name:'Sports & Outdoors', feePct:0.15},
+    {name:'Tires', feePct:0.10},
+    {name:'Tools & Home Improvement', feePct:0.15},
+    {name:'Toys & Games', feePct:0.15},
+    {name:'Video Games & Accessories', feePct:0.15},
+    {name:'Watches', feePct:0.16},
+  ],
+  EU: [
+    {name:'Amazon Device Accessories', uk:0.45, de:0.45, se:0.45, pl:0.45},
+    {name:'Automotive and Powersports', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Baby Products', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Backpacks, Handbags and Luggage', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Beauty, Health and Personal Care', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Books', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Business, Industrial and Scientific Supplies', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Clothing and Accessories', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Compact Appliances', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Computers', uk:0.07, de:0.07, se:0.07, pl:0.07},
+    {name:'Consumer Electronics', uk:0.07, de:0.07, se:0.07, pl:0.07},
+    {name:'Electronics Accessories', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Everything else', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Eyewear', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Footwear', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Full-Size Appliances', uk:0.07, de:0.07, se:0.07, pl:0.07},
+    {name:'Furniture', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Grocery and Gourmet', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Home and Kitchen', uk:0.15, de:0.15, se:0.15, pl:0.10},
+    {name:'Jewelry', uk:0.20, de:0.20, se:0.20, pl:0.20},
+    {name:'Lawn and Garden', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Mattresses', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Musical Instruments and AV Production', uk:0.12, de:0.12, se:0.12, pl:0.12},
+    {name:'Office Products', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Pet Supplies', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Sports and Outdoors', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Tires', uk:0.07, de:0.07, se:0.07, pl:0.07},
+    {name:'Tools and Home Improvement', uk:0.13, de:0.13, se:0.13, pl:0.13},
+    {name:'Toys and Games', uk:0.15, de:0.15, se:0.15, pl:0.10},
+    {name:'Video Game Consoles', uk:0.08, de:0.08, se:0.08, pl:0.08},
+    {name:'Video Games and Accessories', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Watches', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Vitamins, Minerals & Supplements', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Software', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Luggage', uk:0.15, de:0.15, se:0.15, pl:0.15},
+    {name:'Luggage Accessories', uk:0.15, de:0.15, se:0.15, pl:0.15},
+  ],
+  CA: [
+    {name:'Amazon Device Accessories', feePct:0.45},
+    {name:'Automotive and Powersports', feePct:0.12},
+    {name:'Baby Products', feePct:0.15},
+    {name:'Backpacks, Handbags and Luggage', feePct:0.15},
+    {name:'Beauty, Health and Personal Care', feePct:0.15},
+    {name:'Business, Industrial and Scientific Supplies', feePct:0.12},
+    {name:'Clothing and Accessories', feePct:0.17},
+    {name:'Compact Appliances', feePct:0.15},
+    {name:'Computers', feePct:0.08},
+    {name:'Consumer Electronics', feePct:0.08},
+    {name:'Electronics Accessories', feePct:0.15},
+    {name:'Everything Else', feePct:0.15},
+    {name:'Eyewear', feePct:0.17},
+    {name:'Footwear', feePct:0.15},
+    {name:'Full-Size Appliances', feePct:0.15},
+    {name:'Furniture', feePct:0.15},
+    {name:'Grocery and Gourmet', feePct:0.15},
+    {name:'Home and Kitchen', feePct:0.15},
+    {name:'Jewelry', feePct:0.20},
+    {name:'Lawn and Garden', feePct:0.15},
+    {name:'Mattresses', feePct:0.15},
+    {name:'Musical Instruments and AV Production', feePct:0.15},
+    {name:'Office Products', feePct:0.15},
+    {name:'Pet Supplies', feePct:0.15},
+    {name:'Sports and Outdoors', feePct:0.15},
+    {name:'Tires', feePct:0.10},
+    {name:'Tools and Home Improvement', feePct:0.15},
+    {name:'Toys and Games', feePct:0.15},
+    {name:'Video Game Consoles', feePct:0.08},
+    {name:'Video Games and Gaming Accessories', feePct:0.15},
+    {name:'Watches', feePct:0.16},
+  ],
+  JP: [
+    {name:'Amazon Device Accessories', feePct:0.454},
+    {name:'Automotive & Powersports', feePct:0.104},
+    {name:'Baby Products', feePct:0.154},
+    {name:'Backpacks, Handbags & Luggage', feePct:0.124},
+    {name:'Beauty, Health & Personal Care', feePct:0.104},
+    {name:'Business, Industrial & Scientific', feePct:0.154},
+    {name:'Clothing & Accessories', feePct:0.124},
+    {name:'Compact Appliances', feePct:0.084},
+    {name:'Computers', feePct:0.084},
+    {name:'Consumer Electronics', feePct:0.084},
+    {name:'Electronics Accessories', feePct:0.104},
+    {name:'Everything Else', feePct:0.154},
+    {name:'Eyewear', feePct:0.124},
+    {name:'Footwear', feePct:0.124},
+    {name:'Full-Size Appliances', feePct:0.084},
+    {name:'Furniture', feePct:0.154},
+    {name:'Grocery & Gourmet', feePct:0.104},
+    {name:'Home & Kitchen', feePct:0.154},
+    {name:'Jewelry', feePct:0.104},
+    {name:'Lawn & Garden', feePct:0.154},
+    {name:'Mattresses', feePct:0.154},
+    {name:'Musical Instruments', feePct:0.104},
+    {name:'Office Products', feePct:0.154},
+    {name:'Pet Products', feePct:0.154},
+    {name:'Sports & Outdoors', feePct:0.104},
+    {name:'Tires', feePct:0.104},
+    {name:'Tools & Home Improvement', feePct:0.154},
+    {name:'Toys & Games', feePct:0.104},
+    {name:'Video Game Consoles', feePct:0.084},
+    {name:'Video Games & Accessories', feePct:0.154},
+    {name:'Watches', feePct:0.154},
+    {name:'Media (Books/DVD/Music/Software)', feePct:0.154},
+  ],
+};
+
+// US FBA Size Tier labels
+const US_TIER_LABELS = [
+  'Small standard (≤15x12x0.75in, ≤1lb)',
+  'Large standard (≤18x14x8in, ≤20lb)',
+  'Small bulky',
+  'Large bulky',
+  'Extra-large 0-50lb',
+  'Extra-large 50-70lb',
+  'Extra-large 70-150lb',
+  'Extra-large 150+lb',
+];
+
+// US FBA tiers with fee lookup
+const US_FBA_TIERS = {
+  smallStandard: [
+    {maxWt:0.125, fees:[2.43,3.32,3.58]},
+    {maxWt:0.25,  fees:[2.49,3.42,3.68]},
+    {maxWt:0.375, fees:[2.56,3.45,3.71]},
+    {maxWt:0.5,   fees:[2.66,3.54,3.80]},
+    {maxWt:0.625, fees:[2.77,3.68,3.94]},
+    {maxWt:0.75,  fees:[2.82,3.78,4.04]},
+    {maxWt:0.875, fees:[2.92,3.91,4.17]},
+    {maxWt:1.0,   fees:[2.95,3.96,4.22]},
+  ],
+  largeStandard: [
+    {maxWt:0.25,  fees:[2.91,3.73,3.99]},
+    {maxWt:0.5,   fees:[3.13,3.95,4.21]},
+    {maxWt:0.75,  fees:[3.38,4.20,4.46]},
+    {maxWt:1.0,   fees:[3.78,4.60,4.86]},
+    {maxWt:1.25,  fees:[4.22,5.04,5.30]},
+    {maxWt:1.5,   fees:[4.60,5.42,5.68]},
+    {maxWt:1.75,  fees:[4.75,5.57,5.83]},
+    {maxWt:2.0,   fees:[5.00,5.82,6.08]},
+    {maxWt:2.25,  fees:[5.10,5.92,6.18]},
+    {maxWt:2.5,   fees:[5.28,6.10,6.36]},
+    {maxWt:2.75,  fees:[5.44,6.26,6.52]},
+    {maxWt:3.0,   fees:[5.85,6.67,6.93]},
+    // 3+ lb: $6.15 + $0.08 per 4oz above 3lb
+  ],
+  oversize: [
+    {tier:'smallBulky',  base:[6.78,7.55,7.55], perLb:0.38},
+    {tier:'largeBulky',  base:[8.58,9.35,9.35], perLb:0.38},
+    {tier:'xl050',       base:[25.56,26.33,26.33], perLb:0.38},
+    {tier:'xl5070',      base:[36.55,37.32,37.32], perLb:0.75},
+    {tier:'xl70150',     base:[50.55,51.32,51.32], perLb:0.75},
+    {tier:'xl150plus',   base:[194.18,194.95,194.95], perLb:0.19},
+  ],
+};
+
+// EU FBA Size Tier labels
+const EU_TIER_LABELS = [
+  'Light envelope',
+  'Standard envelope',
+  'Large envelope',
+  'Extra-large envelope',
+  'Small parcel',
+  'Standard parcel',
+  'Small oversize',
+  'Standard oversize',
+  'Large oversize',
+  'Special oversize',
+];
+
+// EU FBA data - weight-segmented for envelope/parcel, base+perKg for oversize
+const EU_FBA = {
+  // Light envelope (≤33x23x2.5cm): weight segments
+  lightEnv: [
+    {maxKg:0.020,uk:1.83,de:2.33,fr:2.75,it:3.23,es:2.77,nl:2.31,se:33.35,pl:3.04,be:2.26},
+    {maxKg:0.040,uk:1.87,de:2.37,fr:2.76,it:3.26,es:2.84,nl:2.35,se:33.52,pl:3.05,be:2.31},
+    {maxKg:0.060,uk:1.89,de:2.39,fr:2.78,it:3.28,es:2.87,nl:2.35,se:33.70,pl:3.06,be:2.31},
+    {maxKg:0.080,uk:2.07,de:2.52,fr:3.30,it:3.39,es:3.21,nl:2.45,se:35.08,pl:3.13,be:2.41},
+    {maxKg:0.100,uk:2.08,de:2.54,fr:3.32,it:3.41,es:3.23,nl:2.47,se:35.20,pl:3.14,be:2.43},
+  ],
+  // Standard envelope (≤33x23x2.5cm): weight segments
+  stdEnv: [
+    {maxKg:0.210,uk:2.10,de:2.57,fr:3.33,it:3.45,es:3.26,nl:2.51,se:35.47,pl:3.16,be:2.47},
+    {maxKg:0.460,uk:2.16,de:2.68,fr:3.77,it:3.64,es:3.45,nl:2.60,se:41.09,pl:3.36,be:2.56},
+  ],
+  // Large envelope (≤33x23x4cm): single weight segment
+  largeEnv: [
+    {maxKg:0.960,uk:2.72,de:3.04,fr:4.39,it:3.94,es:3.60,nl:3.26,se:42.35,pl:3.49,be:3.21},
+  ],
+  // Extra-large envelope (≤33x23x6cm): single weight segment
+  xlEnv: [
+    {maxKg:0.960,uk:2.94,de:3.42,fr:4.72,it:4.17,es:3.85,nl:3.61,se:45.62,pl:3.58,be:3.53},
+  ],
+  // Small parcel (≤35x25x12cm): weight segments
+  smallParcel: [
+    {maxKg:0.150,uk:2.91,de:3.38,fr:4.56,it:4.13,es:3.52,nl:3.47,se:45.41,pl:3.61,be:3.39},
+    {maxKg:0.400,uk:3.00,de:3.39,fr:5.07,it:4.54,es:3.74,nl:3.51,se:47.29,pl:3.67,be:3.67},
+    {maxKg:0.900,uk:3.04,de:3.40,fr:5.79,it:4.95,es:3.95,nl:4.03,se:48.19,pl:3.71,be:4.15},
+    {maxKg:1.400,uk:3.05,de:3.41,fr:5.87,it:5.11,es:4.21,nl:4.50,se:52.68,pl:3.76,be:4.63},
+    {maxKg:1.900,uk:3.25,de:3.43,fr:6.10,it:5.14,es:4.27,nl:4.82,se:54.49,pl:3.81,be:4.95},
+    {maxKg:3.900,uk:3.27,de:4.54,fr:7.80,it:5.16,es:5.50,nl:5.90,se:64.10,pl:3.93,be:6.38},
+  ],
+  // Standard parcel (≤45x34x26cm): weight segments
+  stdParcel: [
+    {maxKg:0.150,uk:2.94,de:3.39,fr:4.58,it:4.29,es:3.55,nl:3.69,se:48.58,pl:3.67,be:3.46},
+    {maxKg:0.400,uk:3.01,de:3.42,fr:5.22,it:4.70,es:3.77,nl:4.04,se:51.70,pl:3.73,be:3.85},
+    {maxKg:0.900,uk:3.06,de:3.44,fr:6.01,it:5.15,es:3.99,nl:4.39,se:52.04,pl:3.80,be:4.39},
+    {maxKg:1.400,uk:3.26,de:3.93,fr:6.41,it:5.26,es:4.85,nl:4.72,se:58.46,pl:3.89,be:4.99},
+    {maxKg:1.900,uk:3.48,de:3.95,fr:6.44,it:5.29,es:4.94,nl:4.76,se:61.53,pl:3.97,be:5.41},
+    {maxKg:2.900,uk:3.49,de:4.55,fr:7.08,it:5.30,es:4.98,nl:4.82,se:65.36,pl:4.10,be:6.27},
+    {maxKg:3.900,uk:3.54,de:5.09,fr:7.81,it:5.35,es:5.53,nl:5.15,se:65.71,pl:4.15,be:6.30},
+    {maxKg:5.900,uk:3.56,de:5.22,fr:8.22,it:5.38,es:5.96,nl:5.30,se:70.20,pl:4.19,be:6.54},
+    {maxKg:8.900,uk:3.57,de:6.03,fr:8.84,it:5.41,es:7.24,nl:5.74,se:72.20,pl:4.24,be:6.90},
+    {maxKg:11.90,uk:3.58,de:6.65,fr:9.38,it:6.25,es:7.85,nl:6.31,se:87.92,pl:4.37,be:7.36},
+  ],
+  // Oversize tiers: base fee (at base weight) + per-kg surcharge above base weight
+  smallOversize:    {baseWt:0.760, base:{uk:3.48,de:4.56,fr:7.05,it:7.21,es:5.68,nl:7.02,se:82.32,pl:4.13,be:6.63}, perKg:{uk:0.22,de:0.18,fr:0.20,it:0.08,es:0.04,nl:0.07,se:0.73,pl:0.03,be:0.04}},
+  stdOversizeLight: {baseWt:0.760, base:{uk:4.35,de:4.59,fr:7.29,it:7.45,es:6.55,nl:7.12,se:82.59,pl:4.15,be:6.66}, perKg:{uk:0.15,de:0.18,fr:0.21,it:0.22,es:0.34,nl:0.22,se:3.10,pl:0.14,be:0.23}},
+  stdOversizeHeavy: {baseWt:1.576, base:{uk:6.58,de:7.25,fr:10.42,it:10.63,es:11.72,nl:10.24,se:129.09,pl:6.15,be:10.15}, perKg:{uk:0.08,de:0.07,fr:0.11,it:0.08,es:0.27,nl:0.22,se:4.00,pl:0.15,be:0.24}},
+  stdOversizeLarge: {baseWt:0.760, base:{uk:5.67,de:6.06,fr:8.47,it:9.13,es:6.76,nl:7.22,se:83.09,pl:4.18,be:6.69}, perKg:{uk:0.07,de:0.08,fr:0.13,it:0.09,es:0.33,nl:0.23,se:4.00,pl:0.16,be:0.29}},
+  bulkyOversize:    {baseWt:0.760, base:{uk:10.20,de:8.24,fr:15.38,it:9.59,es:9.95,nl:9.96,se:118.02,pl:6.27,be:9.50}, perKg:{uk:0.24,de:0.27,fr:0.45,it:0.30,es:0.43,nl:0.32,se:4.90,pl:0.16,be:0.35}},
+  heavyOversize:    {baseWt:3.150, base:{uk:13.04,de:13.00,fr:15.59,it:16.85,es:14.00,nl:16.22,se:192.14,pl:10.21,be:15.47}, perKg:{uk:0.09,de:0.15,fr:0.18,it:0.15,es:0.12,nl:0.62,se:9.49,pl:0.39,be:0.68}},
+};
+
+// CA FBA Size Tier labels
+const CA_TIER_LABELS = [
+  'Envelope', 'Standard', 'Small oversize', 'Medium oversize', 'Large oversize', 'Special oversize',
+];
+
+// CA FBA data
+const CA_FBA = {
+  envelope: [
+    {maxKg:0.10,fee:4.46},{maxKg:0.20,fee:4.71},{maxKg:0.30,fee:5.01},{maxKg:0.40,fee:5.28},{maxKg:0.50,fee:5.62},
+  ],
+  standard: [
+    {maxKg:0.10,fee:5.92},{maxKg:0.20,fee:6.12},{maxKg:0.30,fee:6.36},{maxKg:0.40,fee:6.73},
+    {maxKg:0.50,fee:7.23},{maxKg:0.60,fee:7.40},{maxKg:0.70,fee:7.71},{maxKg:0.80,fee:7.95},
+    {maxKg:0.90,fee:8.25},{maxKg:1.00,fee:8.49},{maxKg:1.10,fee:8.58},{maxKg:1.20,fee:8.84},
+    {maxKg:1.30,fee:9.04},{maxKg:1.40,fee:9.29},{maxKg:1.50,fee:9.60},
+  ],
+  smallOversize: {base:15.43,per500g:0.46},
+  mediumOversize:{base:37.78,per500g:0.52},
+  largeOversize: {base:82.20,per500g:0.58},
+  specialOversize:{base:150.78,per500g:0.58},
+};
+
+// JP FBA Size Tier labels
+const JP_TIER_LABELS = [
+  'Small (≤25x18x2.0cm, ≤250g)',
+  'Standard 1 (≤35x30x3.3cm, ≤1kg)',
+  'Standard 2a (≤20cm, ≤2kg)',
+  'Standard 2b (≤30cm, ≤2kg)',
+  'Standard 2c (≤40cm, ≤2kg)',
+  'Standard 2d (≤50cm, ≤2kg)',
+  'Standard 2e (≤60cm, ≤2kg)',
+  'Standard 3 (≤80cm, ≤5kg)',
+  'Standard 4 (≤100cm, ≤9kg)',
+  'Large 1 (≤60cm, ≤2kg)',
+  'Large 2 (≤80cm, ≤5kg)',
+  'Large 3 (≤100cm, ≤10kg)',
+  'Large 4 (≤120cm, ≤15kg)',
+  'Large 5 (≤140cm, ≤20kg)',
+  'Large 6 (≤160cm, ≤25kg)',
+  'Large 7 (≤180cm, ≤30kg)',
+  'Large 8 (≤200cm, ≤40kg)',
+  'Oversize 1 (≤200cm, ≤50kg)',
+  'Oversize 2 (≤220cm)',
+  'Oversize 3 (≤240cm)',
+  'Oversize 4a (≤260cm)',
+  'Oversize 4b (≤400cm)',
+];
+
+// JP FBA fees (hi/lo — using the higher >¥750 brackets)
+const JP_FBA_FEES = [
+  {hi:288, lo:222},   // Small
+  {hi:318, lo:252},   // Std1
+  {hi:410, lo:344},   // Std2a
+  {hi:415, lo:358},   // Std2b
+  {hi:420, lo:371},   // Std2c
+  {hi:425, lo:379},   // Std2d
+  {hi:430, lo:391},   // Std2e
+  {hi:472, lo:427},   // Std3
+  {hi:532, lo:466},   // Std4
+  {hi:589, lo:523},   // Lg1
+  {hi:624, lo:558},   // Lg2
+  {hi:675, lo:609},   // Lg3
+  {hi:781, lo:715},   // Lg4
+  {hi:1020,lo:954},   // Lg5
+  {hi:1100,lo:1034},  // Lg6
+  {hi:1532,lo:1466},  // Lg7
+  {hi:1756,lo:1690},  // Lg8
+  {hi:2755,lo:2689},  // Ov1
+  {hi:3573,lo:3507},  // Ov2
+  {hi:4496,lo:4430},  // Ov3
+  {hi:5625,lo:5559},  // Ov4a
+  {hi:13950,lo:13884},// Ov4b
+];
+
+// Default values per market
+const DEFAULTS = {
+  US:{price:38.72, cogs:10.33, refPct:15, fba:4.60, storage:0.18, ship:0.65, ad:5, ret:5, units:100,
+      dimL:12, dimW:8, dimH:2, actWt:0.4, cat:'Sports'},
+  CA:{price:38.72, cogs:10.33, refPct:15, fba:6.36, storage:0.18, ship:0.65, ad:5, ret:5, units:100,
+      dimL:30, dimW:20, dimH:5, actWt:0.2, cat:'Sports & Outdoors'},
+  UK:{price:25.00, cogs:6.50, refPct:15, fba:3.06, storage:0.18, ship:0.50, ad:5, ret:5, units:100,
+      dimL:30, dimW:20, dimH:5, actWt:0.2, cat:'Outdoors'},
+  DE:{price:29.00, cogs:7.80, refPct:15, fba:3.44, storage:0.18, ship:0.60, ad:5, ret:5, units:100,
+      dimL:30, dimW:20, dimH:5, actWt:0.2, cat:'Outdoors'},
+  FR:{price:29.00, cogs:7.80, refPct:15, fba:6.01, storage:0.18, ship:0.60, ad:5, ret:5, units:100,
+      dimL:30, dimW:20, dimH:5, actWt:0.2, cat:'Outdoors'},
+  IT:{price:29.00, cogs:7.80, refPct:15, fba:5.15, storage:0.18, ship:0.60, ad:5, ret:5, units:100,
+      dimL:30, dimW:20, dimH:5, actWt:0.2, cat:'Outdoors'},
+  ES:{price:29.00, cogs:7.80, refPct:15, fba:3.99, storage:0.18, ship:0.60, ad:5, ret:5, units:100,
+      dimL:30, dimW:20, dimH:5, actWt:0.2, cat:'Outdoors'},
+  NL:{price:29.00, cogs:7.80, refPct:15, fba:4.39, storage:0.18, ship:0.60, ad:5, ret:5, units:100,
+      dimL:30, dimW:20, dimH:5, actWt:0.2, cat:'Outdoors'},
+  SE:{price:320,  cogs:85,   refPct:15, fba:52.04,storage:2.00, ship:6.50, ad:5, ret:5, units:100,
+      dimL:30, dimW:20, dimH:5, actWt:0.2, cat:'Outdoors'},
+  PL:{price:65,   cogs:18,   refPct:10, fba:3.80, storage:0.80, ship:2.50, ad:5, ret:5, units:100,
+      dimL:30, dimW:20, dimH:5, actWt:0.2, cat:'Outdoors'},
+  BE:{price:29.00, cogs:7.80, refPct:15, fba:4.39, storage:0.18, ship:0.60, ad:5, ret:5, units:100,
+      dimL:30, dimW:20, dimH:5, actWt:0.2, cat:'Outdoors'},
+  JP:{price:3500, cogs:900, refPct:10.4, fba:472, storage:25, ship:60, ad:5, ret:5, units:100,
+      dimL:30, dimW:20, dimH:5, actWt:0.2, cat:'Sports & Outdoors'},
+};
+
+// ==================== HELPERS ====================
+const $=id=>document.getElementById(id);
+function fmtC(v, sym){ return sym + v.toFixed(2); }
+function fmtP(v){ return v.toFixed(1)+'%'; }
+function fmtI(v){ return v>=0?'+'+v.toFixed(1)+'%':v.toFixed(1)+'%'; }
+
+function getMkt(){ return MARKETS[$('market').value]; }
+function getCats(mktCode){
+  if(mktCode==='US') return CATEGORIES.US.map(c=>({...c, rate: c.feePct}));
+  if(mktCode==='CA') return CATEGORIES.CA.map(c=>({...c, rate: c.feePct}));
+  if(mktCode==='JP') return CATEGORIES.JP.map(c=>({...c, rate: c.feePct}));
+  if(['UK','DE','FR','IT','ES','NL','SE','PL','BE'].includes(mktCode)){
+    return CATEGORIES.EU.map(c=>{
+      let rate = c.de;
+      if(mktCode==='UK') rate = c.uk;
+      else if(mktCode==='SE') rate = c.se;
+      else if(mktCode==='PL') rate = c.pl;
+      return {...c, rate};
+    });
+  }
+  return CATEGORIES.EU.map(c=>({...c, rate: c.de}));
+}
+
+// ==================== US FBA FEE CALC ====================
+function calcUSFbaFee(dimL, dimW, dimH, actualWeightLb, sellingPrice){
+  const dimWeight = (dimL*dimW*dimH)/139;
+  const billWeight = Math.max(actualWeightLb, dimWeight);
+
+  const L=dimL, W=dimW, H=dimH;
+  const girth = 2*(Math.max(L,W,H)===L?(W+H):(Math.max(L,W,H)===W?(L+H):(L+W)));
+  const longest = Math.max(L,W,H);
+  const median = [L,W,H].sort((a,b)=>a-b)[1];
+
+  let pBracket = sellingPrice<10?0:(sellingPrice<=50?1:2);
+
+  // Small standard: ≤15×12×0.75in, ≤1lb
+  // Uses UNIT weight (not dimensional) per Amazon rules
+  if(L<=15 && W<=12 && H<=0.75 && actualWeightLb<=1){
+    // Round up to nearest 2oz (0.125 lb) for billing
+    const unitWt = Math.ceil(actualWeightLb/0.125)*0.125;
+    for(let i=0;i<US_FBA_TIERS.smallStandard.length;i++){
+      if(unitWt<=US_FBA_TIERS.smallStandard[i].maxWt) return US_FBA_TIERS.smallStandard[i].fees[pBracket];
+    }
+    return US_FBA_TIERS.smallStandard[US_FBA_TIERS.smallStandard.length-1].fees[pBracket];
+  }
+
+  // Large standard: ≤18×14×8in, ≤20lb
+  // Uses GREATER of unit or dimensional weight, rounded up to nearest 4oz
+  if(L<=18 && W<=14 && H<=8 && billWeight<=20){
+    const billWtRounded = Math.ceil(billWeight*4)/4; // round up to nearest 4oz (0.25 lb)
+    for(let i=0;i<US_FBA_TIERS.largeStandard.length;i++){
+      if(billWtRounded<=US_FBA_TIERS.largeStandard[i].maxWt) return US_FBA_TIERS.largeStandard[i].fees[pBracket];
+    }
+    // >3lb: $6.15/$6.97/$7.23 + $0.08 per 4oz above 3lb (NOT last segment's fees)
+    const base3lb=[6.15, 6.97, 7.23][pBracket];
+    const extra4oz = Math.ceil((billWeight-3)*4);
+    return base3lb + extra4oz*0.08;
+  }
+
+  // Oversize: uses greater of unit or dimensional weight
+  if(longest<=37 && median<=28 && H<=20 && longest+girth<130){
+    const si=US_FBA_TIERS.oversize[0]; // smallBulky
+    return si.base[pBracket] + si.perLb*Math.max(0,billWeight-1);
+  }
+  if(longest<=59 && median<=33 && H<=33 && longest+girth<130){
+    const si=US_FBA_TIERS.oversize[1]; // largeBulky
+    return si.base[pBracket] + si.perLb*Math.max(0,billWeight-1);
+  }
+  if(billWeight<=50){
+    const si=US_FBA_TIERS.oversize[2]; // xl050
+    return si.base[pBracket] + si.perLb*Math.max(0,billWeight-1);
+  }
+  if(billWeight<=70){
+    const si=US_FBA_TIERS.oversize[3]; // xl5070
+    return si.base[pBracket] + si.perLb*Math.max(0,billWeight-51);
+  }
+  if(billWeight<=150){
+    const si=US_FBA_TIERS.oversize[4]; // xl70150
+    return si.base[pBracket] + si.perLb*Math.max(0,billWeight-71);
+  }
+  // xl150+ uses unit weight (not dim) per Amazon rules
+  const si=US_FBA_TIERS.oversize[5]; // xl150plus
+  return si.base[pBracket] + si.perLb*Math.max(0,actualWeightLb-151);
+}
+
+// ==================== EU FBA FEE CALC ====================
+function calcEUFbaFee(mktCode, dimL, dimW, dimH, billWeightKg){
+  const cc = mktCode.toLowerCase();
+  // Helper: look up fee from weight-segmented array
+  function lookupSeg(arr, wt){
+    for(let i=0;i<arr.length;i++){
+      if(wt<=arr[i].maxKg) return arr[i][cc];
+    }
+    return arr[arr.length-1][cc];
+  }
+  // Helper: calculate oversize fee = base + perKg * extra weight
+  function lookupOversize(tier, wt){
+    const base=tier.base[cc], perKg=tier.perKg[cc], baseWt=tier.baseWt;
+    const extraKg=Math.max(0, wt-baseWt);
+    return base + perKg*Math.ceil(extraKg);
+  }
+
+  const L=dimL, W=dimW, H=dimH;
+  const longest=Math.max(L,W,H);
+
+  // Envelope (≤33x23x2.5cm) — light (<100g) or standard (100-460g)
+  if(L<=33&&W<=23&&H<=2.5){
+    if(billWeightKg<=0.100) return lookupSeg(EU_FBA.lightEnv, billWeightKg);
+    return lookupSeg(EU_FBA.stdEnv, billWeightKg);
+  }
+  // Large envelope (≤33x23x4cm)
+  if(L<=33&&W<=23&&H<=4) return lookupSeg(EU_FBA.largeEnv, billWeightKg);
+  // Extra-large envelope (≤33x23x6cm)
+  if(L<=33&&W<=23&&H<=6) return lookupSeg(EU_FBA.xlEnv, billWeightKg);
+  // Small parcel (≤35x25x12cm)
+  if(L<=35&&W<=25&&H<=12) return lookupSeg(EU_FBA.smallParcel, billWeightKg);
+  // Standard parcel (≤45x34x26cm)
+  if(L<=45&&W<=34&&H<=26) return lookupSeg(EU_FBA.stdParcel, billWeightKg);
+  // Small oversize (≤61x46x46cm)
+  if(L<=61&&W<=46&&H<=46) return lookupOversize(EU_FBA.smallOversize, billWeightKg);
+  // Standard oversize light (≤101x60x60cm, ≤12kg)
+  if(L<=101&&W<=60&&H<=60 && billWeightKg<=12) return lookupOversize(EU_FBA.stdOversizeLight, billWeightKg);
+  // Standard oversize heavy (≤101x60x60cm, >12kg)
+  if(L<=101&&W<=60&&H<=60) return lookupOversize(EU_FBA.stdOversizeHeavy, billWeightKg);
+  // Standard oversize large (≤120x60x60cm)
+  if(L<=120&&W<=60&&H<=60) return lookupOversize(EU_FBA.stdOversizeLarge, billWeightKg);
+  // Heavy oversize (weight-based, ≤31.5kg)
+  if(billWeightKg<=31.5) return lookupOversize(EU_FBA.heavyOversize, billWeightKg);
+  // Bulky oversize (>120cm or >60cm or >31.5kg)
+  return lookupOversize(EU_FBA.bulkyOversize, billWeightKg);
+}
+
+// ==================== CA FBA FEE CALC ====================
+function calcCAFbaFee(dimL, dimW, dimH, billWtKg){
+  const longest = Math.max(dimL, dimW, dimH);
+  const wtG = billWtKg * 1000;
+
+  // Envelope: ≤33x23x2.5cm, ≤500g
+  if(dimL<=33 && dimW<=23 && dimH<=2.5 && billWtKg<=0.5){
+    for(let i=0; i<CA_FBA.envelope.length; i++){
+      if(wtG <= CA_FBA.envelope[i].maxKg*1000) return CA_FBA.envelope[i].fee;
+    }
+    return CA_FBA.envelope[CA_FBA.envelope.length-1].fee;
+  }
+  // Standard: ≤45x34x26cm
+  if(dimL<=45 && dimW<=34 && dimH<=26){
+    for(let i=0; i<CA_FBA.standard.length; i++){
+      if(wtG <= CA_FBA.standard[i].maxKg*1000) return CA_FBA.standard[i].fee;
+    }
+    // >1500g: 10.32 + 0.09 per 100g above 1500
+    return 10.32 + Math.ceil((wtG-1500)/100)*0.09;
+  }
+  // Small oversize: ≤61cm longest, ≤32kg
+  if(longest<=61 && billWtKg<=32){
+    return CA_FBA.smallOversize.base + Math.ceil(Math.max(0,billWtKg-0.5)/0.5)*CA_FBA.smallOversize.per500g;
+  }
+  // Medium oversize: ≤101cm longest, ≤68kg
+  if(longest<=101 && billWtKg<=68){
+    return CA_FBA.mediumOversize.base + Math.ceil(Math.max(0,billWtKg-0.5)/0.5)*CA_FBA.mediumOversize.per500g;
+  }
+  // Large oversize: ≤120cm longest, ≤68kg
+  if(longest<=120 && billWtKg<=68){
+    return CA_FBA.largeOversize.base + Math.ceil(Math.max(0,billWtKg-0.5)/0.5)*CA_FBA.largeOversize.per500g;
+  }
+  // Special oversize: >68kg or >120cm
+  return CA_FBA.specialOversize.base + Math.ceil(Math.max(0,billWtKg-0.5)/0.5)*CA_FBA.specialOversize.per500g;
+}
+
+// ==================== JP FBA FEE CALC ====================
+function calcJPFbaFee(dimL, dimW, dimH, billWtKg, sellingPrice){
+  const longest = Math.max(dimL, dimW, dimH);
+  const over1000 = sellingPrice > 1000;
+  const idx = (hi, lo) => over1000 ? JP_FBA_FEES[hi] : JP_FBA_FEES[lo];
+
+  // Small: ≤25x18x2.0cm, ≤250g
+  if(dimL<=25 && dimW<=18 && dimH<=2.0 && billWtKg<=0.25) return idx(0,0).hi || JP_FBA_FEES[0].hi;
+  // Standard 1: ≤35x30x3.3cm, ≤1kg
+  if(dimL<=35 && dimW<=30 && dimH<=3.3 && billWtKg<=1) return over1000?JP_FBA_FEES[1].hi:JP_FBA_FEES[1].lo;
+  // Standard 2a-2e: longest ≤20/30/40/50/60cm, ≤2kg
+  if(billWtKg<=2){
+    if(longest<=20) return over1000?JP_FBA_FEES[2].hi:JP_FBA_FEES[2].lo;
+    if(longest<=30) return over1000?JP_FBA_FEES[3].hi:JP_FBA_FEES[3].lo;
+    if(longest<=40) return over1000?JP_FBA_FEES[4].hi:JP_FBA_FEES[4].lo;
+    if(longest<=50) return over1000?JP_FBA_FEES[5].hi:JP_FBA_FEES[5].lo;
+    if(longest<=60) return over1000?JP_FBA_FEES[6].hi:JP_FBA_FEES[6].lo;
+  }
+  // Standard 3: ≤80cm, ≤5kg
+  if(longest<=80 && billWtKg<=5) return over1000?JP_FBA_FEES[7].hi:JP_FBA_FEES[7].lo;
+  // Standard 4: ≤100cm, ≤9kg
+  if(longest<=100 && billWtKg<=9) return over1000?JP_FBA_FEES[8].hi:JP_FBA_FEES[8].lo;
+  // Large 1-8
+  if(longest<=60 && billWtKg<=2) return over1000?JP_FBA_FEES[9].hi:JP_FBA_FEES[9].lo;
+  if(longest<=80 && billWtKg<=5) return over1000?JP_FBA_FEES[10].hi:JP_FBA_FEES[10].lo;
+  if(longest<=100 && billWtKg<=10) return over1000?JP_FBA_FEES[11].hi:JP_FBA_FEES[11].lo;
+  if(longest<=120 && billWtKg<=15) return over1000?JP_FBA_FEES[12].hi:JP_FBA_FEES[12].lo;
+  if(longest<=140 && billWtKg<=20) return over1000?JP_FBA_FEES[13].hi:JP_FBA_FEES[13].lo;
+  if(longest<=160 && billWtKg<=25) return over1000?JP_FBA_FEES[14].hi:JP_FBA_FEES[14].lo;
+  if(longest<=180 && billWtKg<=30) return over1000?JP_FBA_FEES[15].hi:JP_FBA_FEES[15].lo;
+  if(longest<=200 && billWtKg<=40) return over1000?JP_FBA_FEES[16].hi:JP_FBA_FEES[16].lo;
+  // Oversize 1-4
+  if(longest<=200 && billWtKg<=50) return over1000?JP_FBA_FEES[17].hi:JP_FBA_FEES[17].lo;
+  if(longest<=220) return over1000?JP_FBA_FEES[18].hi:JP_FBA_FEES[18].lo;
+  if(longest<=240) return over1000?JP_FBA_FEES[19].hi:JP_FBA_FEES[19].lo;
+  if(longest<=260) return over1000?JP_FBA_FEES[20].hi:JP_FBA_FEES[20].lo;
+  return over1000?JP_FBA_FEES[21].hi:JP_FBA_FEES[21].lo;
+}
+
+// ==================== CALCULATION ENGINE ====================
+function calcAll(){
+  const mkt=getMkt(), mktCode=$('market').value;
+  const L=parseFloat($('dimL').value)||0, W=parseFloat($('dimW').value)||0, H=parseFloat($('dimH').value)||0;
+  const actWt=parseFloat($('actualWeight').value)||0;
+
+  // Dimensional weight
+  let dimWt = mkt.dimDiv>0 ? (L*W*H)/mkt.dimDiv : 0;
+  let billWt = Math.max(actWt, dimWt);
+  // For US, display dim weight in lb; convert actual lb to oz for billing if small
+  let displayDimWt = dimWt;
+  $('dimWeight').value = dimWt.toFixed(2);
+
+  // Determine size tier
+  let sizeTierLabel='', sizeTierVal='';
+  if(mktCode==='US'){
+    if(L<=15&&W<=12&&H<=0.75&&actWt<=0.75){sizeTierLabel=US_TIER_LABELS[0];sizeTierVal='us_small';}
+    else if(L<=18&&W<=14&&H<=8&&billWt<=20){sizeTierLabel=US_TIER_LABELS[1];sizeTierVal='us_large';}
+    else if(L<=37&&W<=28&&H<=20){sizeTierLabel=US_TIER_LABELS[2];sizeTierVal='us_sov';}
+    else if(L<=59&&W<=33&&H<=33){sizeTierLabel=US_TIER_LABELS[3];sizeTierVal='us_lov';}
+    else if(billWt<=50){sizeTierLabel=US_TIER_LABELS[4];sizeTierVal='xl050';}
+    else if(billWt<=70){sizeTierLabel=US_TIER_LABELS[5];sizeTierVal='xl5070';}
+    else if(billWt<=150){sizeTierLabel=US_TIER_LABELS[6];sizeTierVal='xl70150';}
+    else{sizeTierLabel=US_TIER_LABELS[7];sizeTierVal='xl150plus';}
+  }else if(mktCode==='CA'){
+    const longest=Math.max(L,W,H);
+    if(L<=33&&W<=23&&H<=2.5&&billWt<=0.5){sizeTierLabel=CA_TIER_LABELS[0];sizeTierVal='ca_0';}
+    else if(L<=45&&W<=34&&H<=26){sizeTierLabel=CA_TIER_LABELS[1];sizeTierVal='ca_1';}
+    else if(longest<=61&&billWt<=32){sizeTierLabel=CA_TIER_LABELS[2];sizeTierVal='ca_2';}
+    else if(longest<=101&&billWt<=68){sizeTierLabel=CA_TIER_LABELS[3];sizeTierVal='ca_3';}
+    else if(longest<=120&&billWt<=68){sizeTierLabel=CA_TIER_LABELS[4];sizeTierVal='ca_4';}
+    else{sizeTierLabel=CA_TIER_LABELS[5];sizeTierVal='ca_5';}
+  }else if(mktCode==='JP'){
+    const longest=Math.max(L,W,H);
+    if(L<=25&&W<=18&&H<=2.0&&billWt<=0.25){sizeTierLabel=JP_TIER_LABELS[0];sizeTierVal='jp_sm';}
+    else if(L<=35&&W<=30&&H<=3.3&&billWt<=1){sizeTierLabel=JP_TIER_LABELS[1];sizeTierVal='jp_s1';}
+    else if(billWt<=2){
+      if(longest<=20){sizeTierLabel=JP_TIER_LABELS[2];sizeTierVal='jp_s2a';}
+      else if(longest<=30){sizeTierLabel=JP_TIER_LABELS[3];sizeTierVal='jp_s2b';}
+      else if(longest<=40){sizeTierLabel=JP_TIER_LABELS[4];sizeTierVal='jp_s2c';}
+      else if(longest<=50){sizeTierLabel=JP_TIER_LABELS[5];sizeTierVal='jp_s2d';}
+      else if(longest<=60){sizeTierLabel=JP_TIER_LABELS[6];sizeTierVal='jp_s2e';}
+      else{sizeTierLabel=JP_TIER_LABELS[7];sizeTierVal='jp_s3';}
+    }
+    else if(longest<=80&&billWt<=5){sizeTierLabel=JP_TIER_LABELS[7];sizeTierVal='jp_s3';}
+    else if(longest<=100&&billWt<=9){sizeTierLabel=JP_TIER_LABELS[8];sizeTierVal='jp_s4';}
+    else if(longest<=60&&billWt<=2){sizeTierLabel=JP_TIER_LABELS[9];sizeTierVal='jp_l1';}
+    else if(longest<=80&&billWt<=5){sizeTierLabel=JP_TIER_LABELS[10];sizeTierVal='jp_l2';}
+    else if(longest<=100&&billWt<=10){sizeTierLabel=JP_TIER_LABELS[11];sizeTierVal='jp_l3';}
+    else if(longest<=120&&billWt<=15){sizeTierLabel=JP_TIER_LABELS[12];sizeTierVal='jp_l4';}
+    else if(longest<=140&&billWt<=20){sizeTierLabel=JP_TIER_LABELS[13];sizeTierVal='jp_l5';}
+    else if(longest<=160&&billWt<=25){sizeTierLabel=JP_TIER_LABELS[14];sizeTierVal='jp_l6';}
+    else if(longest<=180&&billWt<=30){sizeTierLabel=JP_TIER_LABELS[15];sizeTierVal='jp_l7';}
+    else if(longest<=200&&billWt<=40){sizeTierLabel=JP_TIER_LABELS[16];sizeTierVal='jp_l8';}
+    else if(longest<=200&&billWt<=50){sizeTierLabel=JP_TIER_LABELS[17];sizeTierVal='jp_o1';}
+    else if(longest<=220){sizeTierLabel=JP_TIER_LABELS[18];sizeTierVal='jp_o2';}
+    else if(longest<=240){sizeTierLabel=JP_TIER_LABELS[19];sizeTierVal='jp_o3';}
+    else if(longest<=260){sizeTierLabel=JP_TIER_LABELS[20];sizeTierVal='jp_o4a';}
+    else{sizeTierLabel=JP_TIER_LABELS[21];sizeTierVal='jp_o4b';}
+  }else{
+    // EU markets (10-tier labels)
+    if(L<=33&&W<=23&&H<=2.5){sizeTierLabel=billWt<0.2?EU_TIER_LABELS[0]:EU_TIER_LABELS[1];sizeTierVal=billWt<0.2?'eu_0':'eu_1';}
+    else if(L<=33&&W<=23&&H<=4){sizeTierLabel=EU_TIER_LABELS[2];sizeTierVal='eu_2';}
+    else if(L<=33&&W<=23&&H<=6){sizeTierLabel=EU_TIER_LABELS[3];sizeTierVal='eu_3';}
+    else if(L<=35&&W<=25&&H<=12){sizeTierLabel=EU_TIER_LABELS[4];sizeTierVal='eu_4';}
+    else if(L<=45&&W<=34&&H<=26){sizeTierLabel=EU_TIER_LABELS[5];sizeTierVal='eu_5';}
+    else if(L<=61&&W<=46&&H<=46){sizeTierLabel=EU_TIER_LABELS[6];sizeTierVal='eu_6';}
+    else if(L<=120&&W<=60&&H<=60){sizeTierLabel=EU_TIER_LABELS[7];sizeTierVal='eu_7';}
+    else{sizeTierLabel=EU_TIER_LABELS[8];sizeTierVal='eu_8';}
+  }
+  $('sizeTier').value=sizeTierVal;
+
+  // Auto-calc FBA fee
+  let autoFba=null;
+  const sellPrice=parseFloat($('sellingPrice').value)||0;
+  if(mktCode==='US'){
+    autoFba=calcUSFbaFee(L,W,H,actWt,sellPrice);
+  }else if(['UK','DE','FR','IT','ES','NL','SE','PL','BE'].includes(mktCode)){
+    autoFba=calcEUFbaFee(mktCode,L,W,H,billWt);
+  }else if(mktCode==='CA'){
+    autoFba=calcCAFbaFee(L,W,H,billWt);
+  }else if(mktCode==='JP'){
+    autoFba=calcJPFbaFee(L,W,H,billWt,sellPrice);
+  }
+  if(autoFba!==null) $('fbaFee').value=autoFba.toFixed(2);
+
+  // Get values
+  const price=parseFloat($('sellingPrice').value)||0;
+  // VAT: auto-computed from market rate, but user may override the amount (e.g. type 0 to see the no-tax case)
+  let vatAmt;
+  if(vatManual){
+    vatAmt=parseFloat($('vatAmount').value)||0;
+    if(vatAmt<0)vatAmt=0;
+    if(vatAmt>price)vatAmt=price;
+  }else{
+    vatAmt=mkt.vat>0?price-price/(1+mkt.vat):0;
+    $('vatAmount').value=vatAmt.toFixed(2);
+  }
+  const priceExVat=price-vatAmt;
+  // Effective VAT rate (reflects manual override; 0 when user sets VAT to 0)
+  const vatRate=priceExVat>0?vatAmt/priceExVat:0;
+  $('priceExVat').value=priceExVat.toFixed(2);
+
+  const refPct=parseFloat($('referralFeePct').value)||0;
+  const fbaFee=parseFloat($('fbaFee').value)||0;
+  const fuelRate=mkt.fuelRate;
+  const fuelAmt=fbaFee*fuelRate;
+  $('fuelSurchargeAmt').value=fuelAmt.toFixed(2);
+
+  const dsfRate=mkt.dsfRate; // DSF now computed after refAmt (charged on referral + FBA fees)
+
+  // Auto-calc storage fee from dimensions: rate × volume (assume full month)
+  const vol = (L*W*H) / mkt.volDiv;
+  const autoStorage = mkt.storageRate * vol;
+  $('storageFee').value = autoStorage.toFixed(4);
+
+  const storage=parseFloat($('storageFee').value)||0;
+  const ship=parseFloat($('inboundShipping').value)||0;
+  // Ad cost is now a percentage of selling price
+  // Ad / Return / Deal ratios — read from right-panel inputs (defaults on first run before they render)
+  const adRaw = $('adCost') ? parseFloat($('adCost').value) : NaN;
+  const adPct = (isNaN(adRaw) ? 6 : adRaw)/100;
+  const ad=price*adPct;
+  const retRaw = $('returnsRate') ? parseFloat($('returnsRate').value) : NaN;
+  const retPct = (isNaN(retRaw) ? 5 : retRaw)/100;
+  const dealRaw = $('dealFeeRatio') ? parseFloat($('dealFeeRatio').value) : NaN;
+  const dealPct = (isNaN(dealRaw) ? 1 : dealRaw)/100;
+  const dealFee=price*dealPct;
+  const units=parseInt($('monthlyUnits')?$('monthlyUnits').value:100)||100;
+  const cogs=parseFloat($('cogs').value)||0;
+
+  // Referral fee with min: refAmt = max(price × refPct/100, minFee)
+  const selCat=$('category');
+  const catObj=selCat.options[selCat.selectedIndex]?._data;
+  const minFee=catObj?catObj.min||0:0;
+  const refAmt=Math.max(price*(refPct/100), minFee);
+
+  // Digital Services Fee: charged on (referral fee + FBA fee), not on price  [U13]
+  const dsfAmt=(refAmt+fbaFee)*dsfRate;
+  $('digitalFeeAmt').value=dsfAmt.toFixed(2);
+
+  // Total Amazon fees
+  const amazonFees=refAmt+fbaFee+fuelAmt+storage+dsfAmt;
+
+  // Initial cost
+  const initialCost=cogs+ship;
+
+  // Total cost per unit = amazonFees + initialCost  [M8]
+  const totalCost=amazonFees+initialCost;
+
+  // Refund admin fee: min(refAmt × 20%, 5)  [M12]
+  const refundAdmin=Math.min(refAmt*0.2,5);
+
+  // Fixed costs (excl. referral, which scales with price)  [M14]
+  const fixedCosts=cogs+ship+fbaFee+fuelAmt+dsfAmt+storage;
+
+  // Per-unit profit  [P1] : Net Profit per Unit = priceExVat - refAmt - fixedCosts
+  const effProfitPerUnit=priceExVat-refAmt-fixedCosts;
+
+  // Margin  [P2] : / priceExVat
+  const margin=priceExVat>0?(effProfitPerUnit/priceExVat)*100:0;
+  // ROI
+  const roi=cogs>0?(effProfitPerUnit/cogs)*100:0;
+
+  // Break-even  [P4] : fixedCosts / ((1 - refPct) / (1 + vatRate))
+  const beDenom=(1-refPct/100)/(1+vatRate);
+  const breakeven=beDenom>0?fixedCosts/beDenom:999999;
+
+  // 20-pt / 30-pt prices  [P5][P6] : fixedCosts / ((1 - refPct)/(1 + vatRate) - margin)
+  const d20=beDenom-0.20;
+  const price20=d20>0?fixedCosts/d20:999999;
+  const d30=beDenom-0.30;
+  const price30=d30>0?fixedCosts/d30:999999;
+
+  // Monthly figures
+  const monthlyGross=price*units;                                 // Y1 Gross Sales (incl. VAT)
+  const monthlyNetRevenue=monthlyGross-units*vatAmt;              // Y2 Net Sales (excl. VAT) = priceExVat × units
+  const monthlyTotalCost=units*totalCost+units*retPct*refundAdmin; // Y3: refund admin fee only on returned units
+  const monthlyNet=monthlyNetRevenue-monthlyTotalCost-monthlyNetRevenue*(adPct+retPct+dealPct); // Y4
+  const monthlyProfitMargin=monthlyNetRevenue>0?(monthlyNet/monthlyNetRevenue)*100:0;           // Y5
+  const monthlyROI=cogs>0&&units>0?((monthlyNet)/(cogs*units))*100:0;                           // Y6
+
+  return{
+    mkt,price,vatAmt,priceExVat,refAmt,fbaFee,fuelAmt,dsfAmt,storage,ship,ad,dealFee,cogs,
+    amazonFees,initialCost,totalCost,effProfitPerUnit,refundAdmin,
+    margin,roi,breakeven,price20,price30,adPct,
+    units,monthlyGross,monthlyNetRevenue,monthlyTotalCost,monthlyNet,monthlyProfitMargin,monthlyROI,
+    retPct,dealPct,fixedCosts,vatRate,
+  };
+}
+
+// ==================== UI UPDATE ====================
+function updateAll(r){
+  const s=r.mkt.symbol;
+
+  // Top boxes
+  $('rNetProfit').textContent=fmtC(r.effProfitPerUnit,s);
+  $('rNetProfit').style.color=r.effProfitPerUnit>=0?'var(--green)':'var(--red)';
+  $('rMargin').textContent=fmtP(r.margin);
+  const ms=r.margin>=25?'Excellent':r.margin>=15?'Healthy':r.margin>=10?'Average':r.margin>=5?'Thin':'Risky';
+  const msc=r.margin>=25?'stag-g':r.margin>=15?'stag-g':r.margin>=10?'stag-o':'stag-r';
+  $('rMargin').style.color=r.margin>=15?'var(--primary)':r.margin>=5?'var(--orange)':'var(--red)';
+  $('rMarginTag').innerHTML=`<span class="stag ${msc}">${ms}</span>`;
+
+  // Per-unit profit rows
+  const unitRows=[
+    {l:'Total Cost per Unit',v:fmtC(r.totalCost,s),c:'strong'},
+    {l:'Break-even Price',v:fmtC(r.breakeven,s),c:''},
+    {l:'20-Point Price (20% margin)',v:fmtC(r.price20,s),c:''},
+    {l:'30-Point Price (30% margin)',v:fmtC(r.price30,s),c:''},
+  ];
+
+  // Monthly profit rows start here
+  const monthlyRows=[
+    {l:'Monthly Units Sold',input:'monthlyUnits',val:r.units,c:''},
+    {l:'Gross Sales (including VAT)',v:fmtC(r.monthlyGross,s),c:''},
+    {l:'Estimated Monthly Ad Spend Ratio',input:'adCost',val:+(r.adPct*100).toFixed(2),suf:'%',c:''},
+    {l:'Estimated Monthly Return Rate',input:'returnsRate',val:+(r.retPct*100).toFixed(2),suf:'%',c:''},
+    {l:'Estimated Monthly Deal Fee Ratio',input:'dealFeeRatio',val:+(r.dealPct*100).toFixed(2),suf:'%',c:''},
+    {l:'Net Sales (excluding VAT)',v:fmtC(r.monthlyNetRevenue,s),c:''},
+    {l:'Monthly Net Profit',v:fmtC(r.monthlyNet,s),c:r.monthlyNet>=0?'green':'red'},
+    {l:'Monthly Profit Margin',v:fmtP(r.monthlyProfitMargin),c:''},
+    {l:'Monthly ROI',v:fmtP(r.monthlyROI),c:r.monthlyROI>=50?'green':''},
+  ];
+
+  function renderResultRows(rows){
+    let html='';
+    rows.forEach(row=>{
+      const cls=row.c==='strong'?'res-item strong':'res-item';
+      const vcls=row.c==='green'?'rival green':row.c==='red'?'rival red':'rival';
+      if(row.input){
+        const inp=`<input type="number" class="riinp" id="${row.input}" value="${row.val}" ${row.suf?'min="0" max="100" step="0.1"':'min="1"'} onchange="recalc()">`;
+        const wrap=row.suf?`<span class="riwrap">${inp}<span class="suf">${row.suf}</span></span>`:`<span>${inp}</span>`;
+        html+=`<div class="${cls}"><span class="riname">${row.l}</span>${wrap}</div>`;
+      }else{
+        html+=`<div class="${cls}"><span class="riname">${row.l}</span><span class="${vcls}">${row.v}</span></div>`;
+      }
+    });
+    return html;
+  }
+
+  $('unitResultList').innerHTML=renderResultRows(unitRows);
+  $('monthlyResultList').innerHTML=renderResultRows(monthlyRows);
+
+  // Charts
+  updateWaterfall(r);
+  updateDonut(r);
+  updateVolumeTable(r);
+  updateScenarios(r);
+  updatePriceLadder(r);
+}
+
+// ==================== CHARTS ====================
+let wfChart=null, donutChart=null;
+function updateWaterfall(r){
+  const ctx=$('waterfallChart').getContext('2d');
+  if(wfChart)wfChart.destroy();
+  const s=r.mkt.symbol;
+  const lbls=['Price (excl. VAT)','COGS','Referral','FBA','Fuel','DSF','Storage','Shipping','Net'];
+  const cls=['#6E56CF','#dc2626','#dc2626','#dc2626','#dc2626','#dc2626','#dc2626','#dc2626','#0d8a4e'];
+  const vals=[r.priceExVat,-r.cogs,-r.refAmt,-r.fbaFee,-r.fuelAmt,-r.dsfAmt,-r.storage,-r.ship,r.effProfitPerUnit];
+  const data=[];let run=0;
+  for(let i=0;i<vals.length;i++){
+    if(i===0){data.push([0,vals[i]]);run=vals[i];}
+    else{data.push([run+Math.min(0,vals[i]),Math.abs(vals[i])]);run+=vals[i];}
+  }
+  wfChart=new Chart(ctx,{type:'bar',data:{labels:lbls,datasets:[{data:data.map(d=>d[1]),backgroundColor:cls,borderRadius:3,barPercentage:0.7}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>s+c.raw.toFixed(2)}}},
+    scales:{x:{ticks:{font:{size:10},maxRotation:45},grid:{display:false}},y:{ticks:{callback:v=>s+v,font:{size:11}},grid:{color:'#f0f1f3'}}}}});
+}
+function updateDonut(r){
+  const ctx=$('donutChart').getContext('2d');
+  if(donutChart)donutChart.destroy();
+  const d=[{l:'COGS',v:r.cogs,c:'#6E56CF'},{l:'Amazon Fees',v:r.amazonFees,c:'#f59e0b'},{l:'Shipping',v:r.ship,c:'#8b5cf6'},{l:'Net Profit',v:Math.max(0,r.effProfitPerUnit),c:'#10b981'}];
+  donutChart=new Chart(ctx,{type:'doughnut',data:{labels:d.map(x=>x.l),datasets:[{data:d.map(x=>x.v),backgroundColor:d.map(x=>x.c),borderColor:'#fff',borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:16,font:{size:11},usePointStyle:true}},
+    tooltip:{callbacks:{label:c=>` ${c.label}: ${r.mkt.symbol}${c.raw.toFixed(2)} (${((c.raw/r.priceExVat)*100).toFixed(1)}%)`}}}}});
+}
+
+// ==================== VOLUME TABLE ====================
+function updateVolumeTable(r){
+  const vols=[50,100,250,500,1000,2500,5000],s=r.mkt.symbol;
+  let html='';
+  vols.forEach(v=>{
+    const gr=r.price*v;                                   // gross sales (incl. VAT)
+    const netRev=r.priceExVat*v;                          // net sales (excl. VAT)
+    const tcost=v*r.totalCost+v*r.retPct*r.refundAdmin;   // Y3: refund admin only on returned units
+    const mn=netRev-tcost-netRev*(r.adPct+r.retPct+r.dealPct);
+    const mgn=netRev>0?(mn/netRev)*100:0;
+    const hl=v===r.units?' hl':'';
+    html+=`<tr class="${hl}"><td>${v.toLocaleString()}</td><td>${fmtC(gr,s)}</td><td>${fmtC(Math.abs(tcost),s)}</td><td class="${mn>=0?'green':'red'}">${fmtC(mn,s)}</td><td>${fmtP(mgn)}</td></tr>`;
+  });
+  $('volumeTable').querySelector('tbody').innerHTML=html;
+}
+
+// ==================== SCENARIOS ====================
+function updateScenarios(r){
+  const base=r.monthlyNet;
+  // Compute margin under each scenario
+  const scVals=[
+    {n:'Base case',d:'Your numbers as entered',m:base,mgn:r.monthlyProfitMargin,base:true},
+    {n:'Q4 peak storage',d:'Oct–Dec storage runs about 3\u00d7',m:recalcM(r,{st:r.storage*3}),mgn:recalcMgn(r,{st:r.storage*3})},
+    {n:'Price \u221210%',d:'A rival undercuts your price',m:recalcM(r,{p:r.price*0.9}),mgn:recalcMgn(r,{p:r.price*0.9})},
+    {n:'COGS +15%',d:'Your supplier raises the unit cost',m:recalcM(r,{c:r.cogs*1.15}),mgn:recalcMgn(r,{c:r.cogs*1.15})},
+    {n:'Returns double',d:'Return rate doubles',m:recalcM(r,{rt:Math.min(1,r.retPct*2)}),mgn:recalcMgn(r,{rt:Math.min(1,r.retPct*2)})},
+    {n:'Ad spend +50%',d:'PPC gets more expensive',m:recalcM(r,{adPct:r.adPct*1.5}),mgn:recalcMgn(r,{adPct:r.adPct*1.5})},
+  ];
+  let h='';
+  scVals.forEach((s,i)=>{
+    const badge=s.base?'<div class="sbadge now">Now</div>':(function(){const diff=s.m-base, dpct=base!==0?((diff/Math.abs(base))*100):0;const arrow='\u2193';return `<div class="sbadge down">${arrow} ${fmtP(Math.abs(dpct))} vs now</div>`;})();
+    // No card starts as "base" (blue) by default; user clicks to select
+    h+=`<div class="scard" data-idx="${i}">
+      <div class="shead"><div><div class="stitle">${s.n}</div><div class="sdesc">${s.d}</div></div>${badge}</div>
+      <div class="sbody"><div class="slbl">Monthly Profit</div><div class="sval">${fmtC(s.m,r.mkt.symbol)}</div></div>
+      <div class="sfooter"><span class="sml">Net margin</span><span class="smv">${fmtP(s.mgn)}</span></div>
+    </div>`;
+  });
+  $('scenarioGrid').innerHTML=h;
+  // Click to select (highlight)
+  $('scenarioGrid').querySelectorAll('.scard').forEach(card=>{
+    card.addEventListener('click',()=>{
+      $('scenarioGrid').querySelectorAll('.scard').forEach(c=>c.classList.remove('base'));
+      card.classList.add('base');
+    });
+  });
+}
+// Scenario re-computation using the new (Y1-Y6) monthly model
+function scenarioCalc(r,ov){
+  const p=ov.p??r.price, c=ov.c??r.cogs, st=ov.st??r.storage, rt=ov.rt??r.retPct, adP=ov.adPct??r.adPct;
+  const vat=r.vatRate||0;
+  const pxv=vat>0?p/(1+vat):p;
+  // Referral scales with price (approx.: keep same effective %)
+  const refAmt=r.price>0?r.refAmt*(p/r.price):r.refAmt;
+  const dsfAmt=(refAmt+r.fbaFee)*(r.mkt.dsfRate||0);
+  const totalCost=refAmt+r.fbaFee+r.fuelAmt+st+dsfAmt+c+r.ship;
+  const refundAdmin=Math.min(refAmt*0.2,5);
+  const netRev=pxv*r.units;
+  const tcost=r.units*totalCost+r.units*rt*refundAdmin;   // Y3: refund admin only on returned units
+  const mn=netRev-tcost-netRev*(adP+rt+r.dealPct);
+  const mgn=netRev>0?(mn/netRev)*100:0;
+  return {mn,mgn};
+}
+function recalcMgn(r,ov){return scenarioCalc(r,ov).mgn;}
+function recalcM(r,ov){return scenarioCalc(r,ov).mn;}
+
+// ==================== PRICE LADDER ====================
+// Rerun the full per-unit + monthly model at an arbitrary price p (same formulas as calcAll)
+function ladderRow(r,p){
+  const vat=r.vatRate||0;
+  const pxv=vat>0?p/(1+vat):p;
+  const refPct=parseFloat($('referralFeePct').value)||0;
+  const selCat=$('category');
+  const catObj=selCat.options[selCat.selectedIndex]?._data;
+  const minFee=catObj?catObj.min||0:0;
+  const refAmt=Math.max(p*(refPct/100),minFee);
+  const dsfAmt=(refAmt+r.fbaFee)*(r.mkt.dsfRate||0);        // U13
+  const fixed=r.cogs+r.ship+r.fbaFee+r.fuelAmt+dsfAmt+r.storage; // M14
+  const profitUnit=pxv-refAmt-fixed;                        // P1
+  const margin=pxv>0?(profitUnit/pxv)*100:0;                // P2
+  const roi=r.cogs>0?(profitUnit/r.cogs)*100:0;             // P3
+  const totalCost=refAmt+fixed;                             // M8
+  const refundAdmin=Math.min(refAmt*0.2,5);                 // M12
+  const netRev=pxv*r.units;                                 // Y2
+  const tcost=r.units*totalCost+r.units*r.retPct*refundAdmin; // Y3
+  const mn=netRev-tcost-netRev*(r.adPct+r.retPct+r.dealPct);  // Y4
+  return{p,margin,profitUnit,mn,roi};
+}
+function updatePriceLadder(r){
+  const tbody=$('ladderTable').querySelector('tbody');
+  const s=r.mkt.symbol, p0=r.price;
+  if(!(p0>0)){tbody.innerHTML='';return;}
+  const pts=[];
+  const push=(p,tag,cls)=>{if(p>0&&isFinite(p)&&p<999999)pts.push({p,tag,cls});};
+  [0.85,0.925,1.075,1.15,1.25,1.4].forEach(m=>{
+    const pct=Math.round(Math.abs(m-1)*1000)/10;
+    push(p0*m,(m>1?'+':'\u2212')+pct+'% vs now','dim');
+  });
+  push(r.breakeven,'\u2190 Break-even','be');
+  const cushion=r.breakeven>0&&r.breakeven<999999?((p0-r.breakeven)/r.breakeven)*100:null;
+  const nowTag=cushion===null?'\u2190 Your price'
+    :cushion>=0?`\u2190 Your price (+${cushion.toFixed(0)}% above break-even)`
+    :`\u2190 Your price (below break-even!)`;
+  push(p0,nowTag,'now');
+  pts.sort((a,b)=>a.p-b.p);
+  // De-dupe rows closer than ~1.2% of current price; tagged rows win over plain % rows
+  const rows=[];
+  pts.forEach(pt=>{
+    const near=rows.find(x=>Math.abs(x.p-pt.p)/p0<0.012);
+    if(near){if(pt.cls!=='dim')Object.assign(near,pt);return;}
+    rows.push(pt);
+  });
+  let html='';
+  rows.forEach(pt=>{
+    const m=ladderRow(r,pt.p);
+    const dotC=m.margin>=15?'var(--green)':m.margin>=5?'var(--orange)':'var(--red)';
+    const trCls=pt.cls==='now'?' class="pl-now"':'';
+    const tag=pt.cls==='now'?`<span class="pl-note-tag">${pt.tag}</span>`
+      :pt.cls==='be'?`<span class="pl-note-dim" style="font-weight:700">${pt.tag}</span>`
+      :`<span class="pl-note-dim">${pt.tag}</span>`;
+    html+=`<tr${trCls}><td class="pl-price">${fmtC(m.p,s)}</td>`
+      +`<td><span class="pl-dot" style="background:${dotC}"></span>${fmtP(m.margin)}</td>`
+      +`<td class="${m.profitUnit>=0?'green':'red'}">${fmtC(m.profitUnit,s)}</td>`
+      +`<td class="${m.mn>=0?'green':'red'}">${fmtC(m.mn,s)}</td>`
+      +`<td>${fmtP(m.roi)}</td><td>${tag}</td></tr>`;
+  });
+  tbody.innerHTML=html;
+}
+
+// ==================== MARKET SWITCH ====================
+function switchMarket(){
+  const mktCode=$('market').value, mkt=getMkt();
+  if(!mkt){console.error('[switchMarket] No market config for', mktCode);return;}
+
+  // Update currency prefixes
+  document.querySelectorAll('.pref').forEach(el=>{el.textContent=mkt.symbol;});
+
+  // Update dimension unit labels
+  document.querySelectorAll('.dim-unit-label').forEach(el=>{
+    const id=el.dataset.unitId;
+    if(id==='dimUL'||id==='dimUW'||id==='dimUH') el.textContent='('+mkt.lenLabel+')';
+    else if(id==='dimUDW'||id==='dimUAW') el.textContent='('+mkt.wtLabel+')';
+  });
+
+  // Update hints
+  vatManual=false; // market switch restores auto VAT
+  $('vatHint').textContent=mkt.vat>0?(mkt.vat*100)+'%':'N/A';
+  $('fuelHint').textContent=parseFloat((mkt.fuelRate*100).toFixed(1))+'%';
+  $('dsfHint').textContent=mkt.dsfRate>0?(mkt.dsfRate*100)+'%':'0%';
+
+  // ====== CATEGORY DROPDOWN ======
+  const cats=getCats(mktCode);
+  let catOpts='';
+  cats.forEach(c=>{
+    const pct=(c.rate*100).toFixed(1);
+    catOpts+='<option value="'+pct+'" data-rate="'+c.rate+'">'+c.name+'</option>';
+  });
+  $('category').innerHTML=catOpts;
+
+  // ====== FBA SIZE TIER DROPDOWN ======
+  let tierOpts='';
+  if(mktCode==='US'){
+    const vals=['us_small','us_large','us_sov','us_lov','xl050','xl5070','xl70150','xl150plus'];
+    US_TIER_LABELS.forEach((label,i)=>{tierOpts+='<option value="'+(vals[i]||'')+'">'+label+'</option>';});
+    tierOpts+='<option value="">— Custom —</option>';
+  }else if(['UK','DE','FR','IT','ES','NL','SE','PL','BE'].includes(mktCode)){
+    EU_TIER_LABELS.forEach((label,i)=>{tierOpts+='<option value="eu_'+i+'">'+label+'</option>';});
+    tierOpts+='<option value="">— Custom —</option>';
+  }else if(mktCode==='CA'){
+    CA_TIER_LABELS.forEach((label,i)=>{tierOpts+='<option value="ca_'+i+'">'+label+'</option>';});
+    tierOpts+='<option value="">— Custom —</option>';
+  }else if(mktCode==='JP'){
+    JP_TIER_LABELS.forEach((label,i)=>{
+      const fee=JP_FBA_FEES[i];
+      tierOpts+='<option value="'+fee.hi+'">'+label+' ('+fee.hi+' JPY)</option>';
+    });
+    tierOpts+='<option value="">— Custom —</option>';
+  }
+  $('sizeTier').innerHTML=tierOpts;
+
+  // ====== APPLY STATIC DEFAULTS ======
+  const def=DEFAULTS[mktCode];
+  if(def){
+    $('sellingPrice').value=def.price;$('cogs').value=def.cogs;$('referralFeePct').value=def.refPct;
+    $('fbaFee').value=def.fba;$('storageFee').value=def.storage;$('inboundShipping').value=def.ship;
+    $('dimL').value=def.dimL;$('dimW').value=def.dimW;$('dimH').value=def.dimH;
+    $('actualWeight').value=def.actWt;
+    // Try to select matching category
+    const catSel=$('category');
+    for(let i=0;i<catSel.options.length;i++){
+      if(catSel.options[i].text.includes(def.cat)){catSel.selectedIndex=i;break;}
+    }
+  }
+
+  recalc(); // FIRST render → creates the dynamic right-panel inputs (adCost, returnsRate, dealFeeRatio, monthlyUnits)
+
+  // Apply dynamic defaults now that the inputs exist (reset to user-spec 6% / 5% / 1% on every market switch)
+  if($('adCost')) $('adCost').value = 6;
+  if($('returnsRate')) $('returnsRate').value = 5;
+  if($('dealFeeRatio')) $('dealFeeRatio').value = 1;
+
+  recalc(); // SECOND render → reflects the defaults above
+}
+
+// Size tier dropdown change
+$('sizeTier').addEventListener('change',function(){
+  const v=this.value;
+  if(v&&!isNaN(parseFloat(v))){$('fbaFee').value=v;recalc();}
+  else if(v===''){/* custom, do nothing */}
+  else{recalc();}
+});
+
+// ==================== EVENTS ====================
+function recalc(){
+  const r=calcAll();
+  updateAll(r);
+}
+
+$('market').addEventListener('change',switchMarket);
+$('category').addEventListener('change',function(){
+  const opt=this.options[this.selectedIndex];
+  if(opt && opt.dataset.rate){$('referralFeePct').value=(parseFloat(opt.dataset.rate)*100).toFixed(1);}
+  recalc();
+});
+// VAT manual override: once the user edits the Est. VAT box (e.g. types 0 for the no-tax case),
+// stop auto-overwriting it; reset on market switch
+let vatManual=false;
+$('vatAmount').addEventListener('input',()=>{vatManual=true;recalc();});
+$('referralFeePct').addEventListener('input',recalc);
+$('fbaFee').addEventListener('input',recalc);
+$('sellingPrice').addEventListener('input',recalc);
+$('cogs').addEventListener('input',recalc);
+$('storageFee').addEventListener('input',recalc);
+$('inboundShipping').addEventListener('input',recalc);
+$('dimL').addEventListener('input',recalc);
+$('dimW').addEventListener('input',recalc);
+$('dimH').addEventListener('input',recalc);
+$('actualWeight').addEventListener('input',recalc);
+
+// ==================== INIT ====================
+// First render (creates dynamic right-panel inputs)
+switchMarket();
+
+// Load from URL hash — applied AFTER first render so dynamic inputs exist
+const qp=new URLSearchParams(location.search);
+if(qp.has('price')){
+  if(qp.get('market')){$('market').value=qp.get('market');switchMarket();}
+  $('sellingPrice').value=qp.get('price');$('cogs').value=qp.get('cogs')||10.33;
+  $('referralFeePct').value=qp.get('ref')||15;$('fbaFee').value=qp.get('fba')||4.60;
+  $('storageFee').value=qp.get('storage')||0.18;$('inboundShipping').value=qp.get('ship')||0.65;
+  $('dimL').value=qp.get('dl')||12;$('dimW').value=qp.get('dw')||8;$('dimH').value=qp.get('dh')||2;
+  $('actualWeight').value=qp.get('aw')||0.4;
+  if($('adCost')) $('adCost').value=qp.get('ad')||6;
+  if($('returnsRate')) $('returnsRate').value=qp.get('ret')||5;
+  if($('dealFeeRatio')) $('dealFeeRatio').value=qp.get('deal')||1;
+  recalc();
+}
+</script>
+</body>
+</html>

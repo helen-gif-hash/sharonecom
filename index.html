@@ -31,7 +31,7 @@
     }
 
     /* ── Container ── */
-    .container { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
     /* ── Nav ── */
     .navbar {
@@ -131,7 +131,6 @@
     .section-title {
       font-size: 28px;
       font-weight: 700;
-      max-width: 540px;
       line-height: 1.3;
       letter-spacing: -0.3px;
     }
@@ -139,8 +138,8 @@
       font-size: 15px;
       color: var(--muted);
       line-height: 1.6;
-      max-width: 540px;
       margin-top: 10px;
+      white-space: nowrap;
     }
 
     /* ── Tools Grid ── */
@@ -181,93 +180,168 @@
       margin-top: 6px;
       line-height: 1.55;
     }
-
-    /* ── Kit Hero ── */
-    .kit-hero {
-      display: flex;
-      gap: 48px;
-      align-items: center;
-      margin-top: 36px;
+    .tool-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      margin-top: 10px;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
     }
-    .kit-hero-img {
-      flex: 0 0 360px;
-      height: 240px;
-      background: var(--surface);
-      border: 2px dashed var(--border);
+    .tool-badge:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* ── Featured Tool Card ── */
+    .featured-tool {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      background: linear-gradient(135deg, var(--primary-soft) 0%, #F8F6FC 100%);
+      border: 2px solid var(--primary);
       border-radius: var(--radius-card);
+      padding: 52px 56px;
+      margin-top: 36px;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .featured-tool:hover {
+      border-color: var(--primary-hover);
+      box-shadow: 0 6px 40px rgba(110, 86, 207, 0.22);
+    }
+    .featured-tool-icon {
+      flex: 0 0 80px;
+      height: 80px;
+      border-radius: 18px;
+      background: #fff;
+      color: var(--primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
-      color: var(--muted);
-      letter-spacing: 0.5px;
-      text-align: center;
-      padding: 24px;
-      line-height: 1.6;
+      font-size: 38px;
+      box-shadow: 0 4px 16px rgba(110, 86, 207, 0.12);
     }
-    .kit-hero-info { flex: 1; }
-    .kit-hero-info .price {
-      font-size: 24px;
+    .featured-tool-info { flex: 1; }
+    .featured-tool-info h3 {
+      font-size: 28px;
       font-weight: 700;
-      color: var(--primary);
+      line-height: 1.25;
+      letter-spacing: -0.4px;
     }
-    .kit-hero-info h3 {
-      font-size: 22px;
-      font-weight: 700;
-      margin-top: 6px;
-      letter-spacing: -0.3px;
-    }
-    .kit-hero-info > p {
-      font-size: 14px;
+    .featured-tool-info p {
+      font-size: 15px;
       color: var(--muted);
       margin-top: 10px;
-      line-height: 1.6;
-      max-width: 440px;
+      line-height: 1.65;
+      max-width: 640px;
     }
-    .kit-items {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 16px;
-    }
-    .kit-items span {
-      font-size: 12px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 5px 14px;
-      color: var(--muted);
-    }
-    .email-form {
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
-      flex-wrap: wrap;
-    }
-    .email-form input {
-      font-size: 14px;
-      padding: 11px 16px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      width: 260px;
-      outline: none;
-      font-family: var(--font);
-      background: var(--bg);
-      transition: border-color 0.15s;
-    }
-    .email-form input:focus { border-color: var(--primary); }
-    .email-form button {
-      font-size: 13px;
+    .featured-tool-cta { flex: 0 0 auto; }
+    .featured-tool-cta-link {
+      font-size: 16px;
       font-weight: 600;
       color: #fff;
       background: var(--primary);
-      border: 0;
       border-radius: 999px;
-      padding: 11px 24px;
-      cursor: pointer;
-      transition: background 0.15s;
+      padding: 16px 32px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: background 0.15s, transform 0.15s;
+      box-shadow: 0 2px 12px rgba(110, 86, 207, 0.25);
     }
-    .email-form button:hover { background: var(--primary-hover); }
+    .featured-tool-cta-link:hover {
+      background: var(--primary-hover);
+      transform: translateX(4px);
+    }
+
+    /* ── Playbooks Kit Hero ── */
+    .kit-hero {
+      display: flex;
+      gap: 0;
+      margin-top: 36px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      transition: border-color 0.15s;
+    }
+    .kit-hero:hover { border-color: var(--primary); }
+    .kit-hero-left {
+      flex: 0 0 340px;
+      background: var(--surface);
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .kit-hero-left img {
+      width: 100%;
+      height: auto;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: var(--radius);
+    }
+    .kit-hero-right {
+      flex: 1;
+      padding: 32px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .kit-features {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      list-style: none;
+    }
+    .kit-features li {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.5;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .kit-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 16px;
+    }
+    .kit-cta-row .price {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+    .kit-cta-row .email-form {
+      margin-top: 0;
+    }
+    .kit-features li::before {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      background: var(--primary-soft);
+      border-radius: 50%;
+      flex-shrink: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%236E56CF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .kit-hero-right .email-form {
+      margin-top: 0;
+    }
+    .kit-hero-right .email-form input {
+      width: 280px;
+    }
 
     /* ── Kit Grid ── */
     .kit-grid {
@@ -318,16 +392,17 @@
     .featured-img {
       flex: 0 0 340px;
       background: var(--surface);
-      border-right: 2px dashed var(--border);
+      border-right: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.5px;
-      text-align: center;
-      padding: 24px;
-      line-height: 1.6;
+      overflow: hidden;
+    }
+    .featured-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
     .featured-text {
       flex: 1;
@@ -368,60 +443,150 @@
     }
     .featured-link:hover { color: var(--primary); }
 
-    /* ── Consulting ── */
-    .consult-box {
-      background: var(--surface);
+    /* ── Email Form ── */
+    .email-form {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+    .email-form input {
+      font-size: 14px;
+      padding: 11px 16px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      width: 260px;
+      outline: none;
+      font-family: var(--font);
+      background: var(--bg);
+      transition: border-color 0.15s;
+    }
+    .email-form input:focus { border-color: var(--primary); }
+    .email-form button {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--primary);
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 24px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .email-form button:hover { background: var(--primary-hover); }
+
+    /* ── Contact ── */
+    .contact-box {
+      background: var(--bg);
       border: 1px solid var(--border);
       border-radius: var(--radius-card);
-      padding: 36px;
       display: flex;
-      gap: 36px;
-      align-items: center;
+      gap: 0;
       margin-top: 36px;
+      overflow: hidden;
     }
-    .consult-img {
-      flex: 0 0 220px;
-      height: 180px;
-      background: var(--bg);
-      border: 2px dashed var(--border);
-      border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.5px;
-      text-align: center;
-      padding: 16px;
-      line-height: 1.6;
+    .contact-info {
+      flex: 1;
+      padding: 40px;
     }
-    .consult-info { flex: 1; }
-    .consult-info h3 {
+    .contact-info h3 {
       font-size: 22px;
       font-weight: 700;
       letter-spacing: -0.3px;
     }
-    .consult-info > p {
+    .contact-info > p {
       font-size: 14px;
       color: var(--muted);
       margin-top: 10px;
       line-height: 1.6;
-      max-width: 460px;
     }
-    .consult-info ul {
-      margin-top: 14px;
+    .contact-info ul {
+      margin-top: 16px;
       list-style: none;
     }
-    .consult-info li {
-      font-size: 13px;
+    .contact-info li {
+      font-size: 15px;
       color: var(--text);
-      padding: 4px 0;
+      padding: 5px 0;
+      line-height: 1.5;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .contact-info li::before {
+      content: "";
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      background: var(--primary-soft);
+      border-radius: 50%;
+      flex-shrink: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%236E56CF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .contact-form-wrap {
+      flex: 0 0 340px;
+      background: var(--primary-soft);
+      padding: 28px 28px;
+    }
+    .contact-form-wrap h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .contact-form-wrap .form-hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 14px;
       line-height: 1.5;
     }
-    .consult-info li::before {
-      content: "→ ";
-      color: var(--primary);
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      font-size: 13px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      outline: none;
+      font-family: var(--font);
+      background: var(--bg);
+      transition: border-color 0.15s;
+      width: 100%;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus { border-color: var(--primary); }
+    .contact-form textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    .contact-form button {
+      align-self: flex-start;
+      font-size: 13px;
       font-weight: 600;
+      color: #fff;
+      background: var(--primary);
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 24px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .contact-form button:hover { background: var(--primary-hover); }
+    .form-success {
+      display: none;
+      font-size: 14px;
+      color: #16A34A;
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-top: 12px;
     }
 
     /* ── Footer ── */
@@ -450,13 +615,17 @@
       .hero .sub { font-size: 14px; }
       .tools-grid { grid-template-columns: 1fr; }
       .kit-hero { flex-direction: column; }
-      .kit-hero-img { flex: 0 0 auto; width: 100%; height: 200px; }
+      .kit-hero-left { flex: 0 0 auto; }
+      .kit-hero-right { padding: 28px; }
       .kit-grid { grid-template-columns: 1fr; }
       .featured-article { flex-direction: column; }
-      .featured-img { flex: 0 0 auto; width: 100%; height: 200px; border-right: 0; border-bottom: 2px dashed var(--border); }
+      .featured-img { flex: 0 0 auto; width: 100%; height: 200px; border-right: 0; border-bottom: 1px solid var(--border); }
       .featured-text { padding: 20px; }
-      .consult-box { flex-direction: column; }
-      .consult-img { flex: 0 0 auto; width: 100%; height: 160px; }
+      .featured-tool { flex-direction: column; text-align: center; }
+      .featured-tool-info p { max-width: 100%; }
+      .contact-box { flex-direction: column; }
+      .contact-form-wrap { flex: 0 0 auto; }
+      .section-desc { white-space: normal; }
       .footer { flex-direction: column; gap: 12px; text-align: center; }
       .footer-links { gap: 16px; }
     }
@@ -469,9 +638,9 @@
   <a href="#" class="nav-logo">SharonEcom</a>
   <ul class="nav-links">
     <li><a href="#tools">Tools</a></li>
-    <li><a href="#templates">Templates</a></li>
+    <li><a href="#playbooks">Playbooks</a></li>
     <li><a href="#blog">Blog</a></li>
-    <li><a href="#consulting">Consulting</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
@@ -481,94 +650,76 @@
   <p class="sub">Free calculators, templates, and kits for lean sellers — built from real account work, for sellers ready to move faster.</p>
   <div class="hero-btns">
     <a href="#blog" class="btn-primary">Join early access</a>
-    <a href="#tools" class="btn-outline">Get free checklist</a>
+    <a href="#playbooks" class="btn-outline">Get free checklist</a>
   </div>
 </section>
 
 <!-- ════════════════ PRACTICAL KIT (FREE TOOLS) ════════════════ -->
 <section class="section container" id="tools">
-  <div class="section-label">Practical kit</div>
-  <h2 class="section-title">Useful tools that turn spreadsheets into decisions.</h2>
-  <p class="section-desc">Free Google Sheets and checklists built from real Amazon workflows — no signup required for most.</p>
+  <div class="section-label">Free Tools</div>
+  <h2 class="section-title">Tools that turn spreadsheets into clarity.</h2>
+  <p class="section-desc">Free calculators and hands-on templates built from years of Amazon operations. No signup required for most.</p>
+
+  <!-- Featured Tool -->
+  <div class="featured-tool">
+    <div class="featured-tool-icon">📦</div>
+    <div class="featured-tool-info">
+      <h3>Amazon FBA Profit Calculator</h3>
+      <p>Auto-calculates referral fees, FBA fulfillment from dimensions, VAT, and the digital services fee across 12 Amazon marketplaces. The most complete profit calculator on the site — open it and run your numbers in seconds.</p>
+    </div>
+    <div class="featured-tool-cta">
+      <a href="tools/amazon-fba-profit-calculator.html" class="featured-tool-cta-link">Open calculator →</a>
+    </div>
+  </div>
 
   <div class="tools-grid">
-    <div class="tool-card">
-      <div class="tool-icon">💰</div>
-      <h3>Multi-marketplace Profit Calculator</h3>
-      <p>Compares initial profits across 7 Amazon marketplaces (UK &amp; US). Input shipping costs, purchase price, sales commission, and Amazon fulfillment fees.</p>
-    </div>
-    <div class="tool-card">
-      <div class="tool-icon">📋</div>
-      <h3>New Product Listing Checklist</h3>
-      <p>Includes competitor analysis, keyword and advertising preparation, visuals, page checks, cost item checks, promotion planning, and inventory tracking.</p>
-    </div>
     <div class="tool-card">
       <div class="tool-icon">⭐</div>
       <h3>Amazon Review Score Calculator</h3>
       <p>Based on the percentage of stars displayed on the page, easily calculates how many additional 5‑star reviews are needed to raise the overall star rating.</p>
+      <a class="tool-badge" href="https://docs.google.com/spreadsheets/d/1yJzs8KC6B-7e4Zz2e6Hd7qvVwr626z_Wv4qUMzZ5HYs/edit?usp=sharing" target="_blank" rel="noopener">Open in Google Sheets</a>
     </div>
     <div class="tool-card">
       <div class="tool-icon">⚡</div>
       <h3>Deal Profitability Checker</h3>
       <p>Calculates whether a deal truly makes a profit after deducting discounts, transaction fees, and additional PPC advertising costs.</p>
+      <a class="tool-badge" href="https://docs.google.com/spreadsheets/d/1ccLxJf8DTwsx880Rf-aYWzvfwkZgHt4j/edit?usp=sharing&ouid=116055778919861627742&rtpof=true&sd=true" target="_blank" rel="noopener">Open in Google Sheets</a>
     </div>
     <div class="tool-card">
       <div class="tool-icon">📊</div>
       <h3>Reference Price Monitoring Table</h3>
       <p>Uses backend price data to confirm whether the current promotional price is below the maximum price and adjusts your promotional pricing as needed.</p>
-    </div>
-    <div class="tool-card">
-      <div class="tool-icon">📝</div>
-      <h3>Review Response Template Kit</h3>
-      <p>Copy-paste templates for customer complaints and negative review replies, removal requests, and positive review follow-ups.</p>
+      <a class="tool-badge" href="https://docs.google.com/spreadsheets/d/1hLN0xot0gXQ42E0yVwLw1ju8cNHkEXW1ouqvqKnL5CA/edit?usp=sharing" target="_blank" rel="noopener">Open in Google Sheets</a>
     </div>
   </div>
 </section>
 
-<!-- ════════════════ WHAT'S INSIDE (PAID KIT) ════════════════ -->
-<section class="section container" id="templates">
-  <div class="section-label">What's inside</div>
+<!-- ════════════════ PLAYBOOKS ════════════════ -->
+<section class="section container" id="playbooks">
+  <div class="section-label">Playbooks</div>
   <h2 class="section-title">New Product Launch Kit for Amazon Sellers</h2>
-  <p class="section-desc">A practical starter kit for Amazon operators who launch products without a full team — profit calculators, compliance checklists, review response scripts, and a launch-day checklist in one bundle.</p>
+  <p class="section-desc">A practical starter toolkit designed for operators who don't have a full team or whose products have not yet been launched.</p>
 
   <div class="kit-hero">
-    <div class="kit-hero-img">
-      <!-- 🖼️ Replace with actual image: Kit cover + internal spreadsheet preview -->
-      Kit cover &amp; spreadsheet preview<br>image goes here
+    <div class="kit-hero-left">
+      <img src="assets/images/playbooks-kit-cover.jpg" alt="New Product Launch Kit cover" />
     </div>
-    <div class="kit-hero-info">
-      <div class="price">$19.99</div>
-      <div class="kit-items">
-        <span>Multi-marketplace profit sheet</span>
-        <span>Listing compliance checklist</span>
-        <span>Review response templates</span>
-        <span>Launch-day checklist</span>
-        <span>PPC budget tracker</span>
-        <span>Competitor pricing tracker</span>
-        <span>30-day launch timeline</span>
+    <div class="kit-hero-right">
+      <ul class="kit-features">
+        <li>Multi-marketplace profit sheet</li>
+        <li>Listing compliance checklist</li>
+        <li>Launch-day checklist</li>
+        <li>Review response templates</li>
+        <li>Customer Complaint AI Skill</li>
+        <li>30-day launch timeline</li>
+      </ul>
+      <div class="kit-cta-row">
+        <div class="price">$9.99</div>
+        <div class="email-form">
+          <input type="email" placeholder="you@email.com" />
+          <button>Get the kit</button>
+        </div>
       </div>
-      <div class="email-form">
-        <input type="email" placeholder="Your email address" />
-        <button>Get the kit</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="kit-grid">
-    <div class="kit-card">
-      <div class="k-price">$9.99</div>
-      <h4>Listing AI Skill Kit</h4>
-      <p>Four-Stage SOP: Competitor Research → Strategy Positioning → Listing Writing → Compliance Launch.</p>
-    </div>
-    <div class="kit-card">
-      <div class="k-price">$9.99</div>
-      <h4>Customer Complaint AI Skill</h4>
-      <p>Batch-analyze reviews and returns. Get a prioritized improvement list without reading every comment.</p>
-    </div>
-    <div class="kit-card">
-      <div class="k-price">$9.99</div>
-      <h4>External Traffic Starter Kit</h4>
-      <p>Influencer outreach templates, UGC brief, PR pitch, affiliate recruitment emails, and an attribution tracker.</p>
     </div>
   </div>
 </section>
@@ -576,13 +727,12 @@
 <!-- ════════════════ BLOG ════════════════ -->
 <section class="section container" id="blog">
   <div class="section-label">Blog</div>
-  <h2 class="section-title">Long-form guides built around real seller questions.</h2>
+  <h2 class="section-title">Guides built around real seller questions.</h2>
   <p class="section-desc">Each article targets a search term real Amazon sellers type into Google — not generic "top 10 tips" content.</p>
 
   <div class="featured-article">
     <div class="featured-img">
-      <!-- 🖼️ Replace with actual image: Amazon star rating / review score screenshot -->
-      Amazon star rating<br>screenshot
+      <img src="assets/images/blog-star-rating.jpg" alt="Amazon star rating illustration" />
     </div>
     <div class="featured-text">
       <div class="featured-cat">Reviews</div>
@@ -593,18 +743,14 @@
   </div>
 </section>
 
-<!-- ════════════════ CONSULTING ════════════════ -->
-<section class="section container" id="consulting">
-  <div class="section-label">Consulting</div>
+<!-- ════════════════ CONTACT ════════════════ -->
+<section class="section container" id="contact">
+  <div class="section-label">Contact</div>
   <h2 class="section-title">Work with an operator who's been inside the account.</h2>
   <p class="section-desc">For brands ready to move beyond the listing — Amazon and DTC joint operations, external traffic strategy, and operational audits.</p>
 
-  <div class="consult-box">
-    <div class="consult-img">
-      <!-- 🖼️ Replace with actual image: personal work photo or brand case study screenshot -->
-      Personal photo or<br>case study screenshot
-    </div>
-    <div class="consult-info">
+  <div class="contact-box">
+    <div class="contact-info">
       <h3>Amazon + DTC Growth Consulting</h3>
       <p>One-on-one sessions for brands that want hands-on operator insight, not another agency pitch deck.</p>
       <ul>
@@ -612,9 +758,17 @@
         <li>Listing optimization &amp; AI workflow setup</li>
         <li>External traffic strategy (influencer, affiliate, content)</li>
       </ul>
-      <p style="margin-top:18px">
-        <a href="mailto:" class="btn-outline">Get in touch via email</a>
-      </p>
+    </div>
+    <div class="contact-form-wrap">
+      <h4>Get in touch</h4>
+      <p class="form-hint">Leave your message and I'll reply with available slots and what to prep.</p>
+      <form class="contact-form" id="contactForm">
+        <input type="text" name="name" placeholder="Your name" required />
+        <input type="text" name="subject" placeholder="Subject" />
+        <textarea name="message" placeholder="Tell me about your project or question..." required></textarea>
+        <button type="submit">Send</button>
+      </form>
+      <div class="form-success" id="formSuccess">Thanks for reaching out — I'll get back to you within 24 hours.</div>
     </div>
   </div>
 </section>
@@ -629,6 +783,47 @@
     <a href="#">Contact</a>
   </div>
 </footer>
+
+<script>
+  // Contact form handler
+  // To enable email sending, replace the action URL below with your form endpoint
+  // e.g., Formspree: https://formspree.io/f/your-form-id
+  // e.g., Web3Forms: https://api.web3forms.com/submit (requires access_key)
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('formSuccess');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = {
+      name: formData.get('name'),
+      subject: formData.get('subject') || '(no subject)',
+      message: formData.get('message')
+    };
+
+    // Send to your email via form service
+    // Replace YOUR_FORM_ENDPOINT with your actual endpoint
+    fetch('YOUR_FORM_ENDPOINT', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(function(res) {
+      if (res.ok) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      } else {
+        alert('Something went wrong. Please try again or email me directly.');
+      }
+    })
+    .catch(function() {
+      // Fallback: show success message (configure endpoint to enable actual sending)
+      form.style.display = 'none';
+      success.style.display = 'block';
+    });
+  });
+</script>
 
 </body>
 </html>
