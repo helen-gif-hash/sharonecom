@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Listing Grader v2 — Official 2024 Scoring | SharonEcom</title>
+<meta name="description" content="Audit your Amazon listing based on Amazon's official 2024 scoring table. Paste a product URL or fill manually. 13-dimension A-F grading.">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --primary:#6E56CF;--primary-hover:#5A44C0;--primary-soft:#F0EBFA;
+  --bg:#FFFFFF;--surface:#F7F8FA;--text:#1B1B1F;--muted:#5B5B66;
+  --border:#E6E6EA;--radius:8px;--radius-card:12px;
+  --card:#fff;--t3:#8F99A8;
+  --green:#0d8a4e;--glight:#e7f7ef;
+  --red:#d92c3c;--rlight:#fef0f2;--orange:#d97706;--olight:#fff9ed;
+  --r:var(--radius-card);--sh:0 1px 3px rgba(0,0,0,.06);
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 16px 48px}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--border)}
+.nav-logo{font-size:18px;font-weight:700;color:var(--primary);text-decoration:none;letter-spacing:-.3px}
+.nav-links{display:flex;gap:32px;align-items:center;list-style:none}
+.nav-links a{font-size:14px;color:var(--muted);text-decoration:none;transition:color .15s}
+.nav-links a:hover{color:var(--text)}
+.hdr{text-align:center;padding:28px 0 20px}
+.badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 11px;border-radius:20px;font-size:11px;font-weight:700}
+.badge-ok{background:var(--glight);color:var(--green)}
+.badge-free{background:var(--primary-soft);color:var(--primary)}
+.badge-date{background:#fef9e7;color:#8a6d14}
+.hdr h1{font-size:32px;font-weight:800;letter-spacing:-.4px}
+.hdr .sub{color:var(--muted);margin-top:4px;font-size:13px;max-width:640px;margin-left:auto;margin-right:auto}
+.main{display:grid;grid-template-columns:minmax(0,50%) minmax(0,50%);gap:20px;align-items:start}
+.right-col{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+@media(max-width:1020px){.main{grid-template-columns:1fr}.right-col{position:static;max-height:none;overflow:visible}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:16px}
+.chead{padding:13px 18px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.cbody{padding:16px 18px}
+.fg{margin-bottom:14px}.fg:last-child{margin-bottom:0}
+.flbl{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600;color:var(--text);margin-bottom:4px}
+.flbl .hint{font-weight:400;color:var(--t3);font-size:11px}
+.flbl .dim-ref{font-size:9px;padding:1px 5px;border-radius:3px;background:var(--primary-soft);color:var(--primary);font-weight:700}
+.ftarea{width:100%;padding:10px 11px;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:var(--font);background:var(--card);color:var(--text);transition:border-color .15s;resize:vertical;line-height:1.5}
+.ftarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(110,86,207,.12)}
+.finp,.fsel{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:var(--font);background:var(--card);color:var(--text);transition:border-color .15s}
+.finp:focus,.fsel:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(110,86,207,.12)}
+.fsel{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath fill='%238f99a8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sec-h{margin:10px 0 0}
+.sec-h .sec-t{font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+.sec-h .sec-d{font-size:11px;color:var(--t3);margin-bottom:8px}
+.bullet-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px}
+.bullet-row:last-child{margin-bottom:0}
+.bullet-num{width:24px;height:24px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--muted);flex-shrink:0;margin-top:7px}
+.bullet-char{font-size:10px;color:var(--t3);text-align:right;min-width:28px;margin-top:8px;flex-shrink:0}
+.bullet-char.over{color:var(--red);font-weight:700}
+.bullet-del{width:22px;height:22px;border-radius:50%;background:var(--rlight);color:var(--red);border:none;cursor:pointer;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:8px}
+.bullet-del:hover{background:#fdd}
+#addBulletBtn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:2px dashed var(--border);border-radius:20px;background:none;color:var(--primary);cursor:pointer;font-size:12px;font-weight:600;margin-top:6px}
+#addBulletBtn:hover{border-color:var(--primary);background:var(--primary-soft)}
+.img-upload-area{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.img-thumb{width:80px;height:80px;border-radius:7px;border:2px solid var(--border);background:var(--surface);overflow:hidden;position:relative;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.img-thumb:hover{border-color:var(--primary)}
+.img-thumb img{width:100%;height:100%;object-fit:cover}
+.img-thumb .placeholder{font-size:28px;color:var(--t3)}
+.img-thumb .del-img{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:var(--red);color:#fff;border:none;font-size:10px;font-weight:700;cursor:pointer;display:none;align-items:center;justify-content:center}
+.img-thumb:hover .del-img{display:flex}
+.img-stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;font-size:11px;color:var(--muted)}
+.img-stats span{padding:3px 8px;border-radius:12px;background:var(--surface)}
+.img-stats .ok{background:var(--glight);color:var(--green)}
+.img-stats .warn{background:var(--olight);color:var(--orange)}
+.btn-row{display:flex;gap:8px;margin-top:16px}
+.btn{flex:1;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--card);cursor:pointer;font-size:12px;font-weight:600;color:var(--muted)}
+.btn:hover{background:#f5f6f8}
+.btn-primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+.btn-primary:hover{background:var(--primary-hover)}
+.btn-fetch{padding:9px 16px;border:1px solid var(--primary);border-radius:7px;background:var(--primary-soft);color:var(--primary);cursor:pointer;font-size:12px;font-weight:700;white-space:nowrap}
+.btn-fetch:hover{background:var(--primary);color:#fff}
+.btn-fetch.loading{opacity:.6;pointer-events:none}
+.fetch-note{font-size:11px;color:var(--t3);margin-top:6px;line-height:1.5}
+.url-box{display:flex;gap:8px}
+.url-box .finp{flex:1}
+.score-area{text-align:center;padding:20px 0 12px}
+.score-circle{width:130px;height:130px;border-radius:50%;margin:0 auto 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:6px solid var(--border)}
+.score-circle .big{font-size:36px;font-weight:800;letter-spacing:-1px;line-height:1}
+.score-circle .unit{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px}
+.score-grade{font-size:13px;font-weight:700;margin:6px 0;padding:4px 12px;border-radius:20px;display:inline-block}
+.grade-a{background:var(--glight);color:var(--green);border:1px solid #a8d4b6}
+.grade-b{background:linear-gradient(135deg,#F7F4FE,#F0EBFA);color:var(--primary);border:1px solid #D0C4F0}
+.grade-c{background:linear-gradient(135deg,#fffbeb,#fef3c7);color:#92400e;border:1px solid #fcd34d}
+.grade-d{background:linear-gradient(135deg,#fff7ed,#ffedd5);color:#c2410c;border:1px solid #fdba74}
+.grade-e{background:linear-gradient(135deg,#fef2f2,#fee2e2);color:#b91c1c;border:1px solid #fca5a5}
+.grade-f{background:linear-gradient(135deg,#fef2f2,#fee2e2);color:#991b1b;border:1px solid #f87171}
+.scoring-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}
+.scoring-table th{text-align:left;padding:6px 8px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--t3);border-bottom:2px solid var(--border);background:var(--surface)}
+.scoring-table td{padding:7px 8px;border-bottom:1px solid var(--border);vertical-align:middle}
+.scoring-table tr:last-child td{border-bottom:none}
+.scoring-table .pts{width:36px;text-align:center;font-weight:700}
+.scoring-table .status{width:45px;text-align:center;font-size:11px}
+.scoring-table .pass{color:var(--green);font-weight:700}
+.scoring-table .fail{color:var(--red);font-weight:700}
+.scoring-table .na{color:var(--t3)}
+.scoring-table .sc-tag{display:inline-block;font-size:8px;padding:1px 4px;border-radius:3px;font-weight:600;background:#fef9e7;color:#8a6d14;margin-left:3px}
+.sugg-item{padding:10px 14px;border-left:3px solid var(--primary);border-radius:0 6px 6px 0;background:var(--primary-soft);margin-bottom:8px;font-size:12px;line-height:1.5}
+.sugg-item:last-child{margin-bottom:0}
+.sugg-item.prio-high{border-left-color:var(--red);background:var(--rlight)}
+.sugg-item.prio-med{border-left-color:var(--orange);background:var(--olight)}
+.sugg-prio{display:inline-block;font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px;margin-right:6px}
+.prio-high-tag{background:var(--rlight);color:var(--red)}
+.prio-med-tag{background:var(--olight);color:var(--orange)}
+.prio-low-tag{background:var(--primary-soft);color:var(--primary)}
+.empty-state{text-align:center;padding:40px 20px;color:var(--t3)}
+.empty-state .empty-icon{font-size:40px;margin-bottom:10px}
+.empty-state p{font-size:13px;line-height:1.6}
+.disclaimer{background:var(--surface);border-radius:7px;padding:10px 14px;font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+.disclaimer strong{color:var(--text)}
+.chwrap{position:relative;height:280px;margin-top:8px}
+.chwrap canvas{width:100%!important;height:100%!important}
+.ft{text-align:center;padding:24px 0 0;color:var(--t3);font-size:11px}.ft a{color:var(--primary);text-decoration:none}
+.quick-link{display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--primary);text-decoration:none;font-weight:600;margin-top:20px}
+.quick-link:hover{text-decoration:underline}
+#aplusImgCard{display:none}
+.auto-filled{background:var(--glight)!important;border-color:var(--green)!important}
+.auto-badge{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;background:var(--glight);color:var(--green);font-weight:700;margin-left:4px}
+@media(max-width:600px){.hdr h1{font-size:24px}.score-circle{width:100px;height:100px}.score-circle .big{font-size:28px}.frow{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="navbar container">
+  <a href="https://sharonecom.com" class="nav-logo">SharonEcom</a>
+  <ul class="nav-links">
+    <li><a href="https://sharonecom.com/#tools">Tools</a></li>
+    <li><a href="https://sharonecom.com/#playbooks">Playbooks</a></li>
+    <li><a href="https://sharonecom.com/blog/">Blog</a></li>
+    <li><a href="https://sharonecom.com/#contact">Contact</a></li>
+  </ul>
+</nav>
+<div class="wrap">
+
+<header class="hdr">
+  <div class="badges">
+    <span class="badge badge-ok">&#10003; Amazon 2024 Official Scoring</span>
+    <span class="badge badge-free">Free &middot; No Sign-up</span>
+    <span class="badge badge-date">2026.7.27 Title Rules</span>
+  </div>
+  <h1>Amazon Listing Grader</h1>
+  <p class="sub">Paste a product URL to auto-fill, or enter content manually. Scoring follows Amazon's official 2024 Listing completeness table (13 dimensions, A-F grade). Sensitive word violations trigger Amazon's F-grade compliance flag.</p>
+</header>
+
+<div class="main">
+
+<!-- ============================ LEFT: INPUTS ============================ -->
+<div>
+
+  <!-- 1. URL & Keywords -->
+  <div class="card">
+    <div class="chead">&#127760; Product URL &amp; Keywords</div>
+    <div class="cbody">
+      <div class="fg">
+        <label class="flbl">Amazon Product URL <span class="hint">paste link to auto-fill all fields</span></label>
+        <div class="url-box">
+          <input type="text" class="finp" id="productUrl" placeholder="https://www.amazon.com/dp/B0XXXXXXX..." oninput="onUrlInput()">
+          <button class="btn-fetch" id="fetchBtn" onclick="fetchFromUrl()" disabled>&#128269; Auto-Fill</button>
+        </div>
+        <div class="fetch-note" id="fetchNote">Paste your Amazon product URL. Click Auto-Fill to extract title, brand, bullets, images, A+, BSR &amp; category automatically. Keyword search check runs automatically if you enter keywords above.</div>
+      </div>
+      <div class="fg">
+        <label class="flbl">Core Keywords <span class="dim-ref">#2</span> <span class="hint">comma-separated &mdash; used for keyword findability check</span></label>
+        <input type="text" class="finp" id="keywords" placeholder="e.g. stainless steel water bottle, insulated bottle, BPA-free mug">
+      </div>
+      <div class="fg" id="keywordSearchCheck" style="display:none">
+        <label class="flbl">Keyword Search Result <span class="dim-ref">#2</span> <span class="hint">did your product appear in search?</span></label>
+        <select class="fsel" id="kwSearchResult" onchange="gradeListing()">
+          <option value="">Not checked yet</option>
+          <option value="found">Found &mdash; product appears in keyword search results</option>
+          <option value="notfound">Not found &mdash; product does NOT appear in search</option>
+        </select>
+      </div>
+      <div class="fg" id="asinCheck" style="display:none">
+        <label class="flbl">ASIN Direct Access <span class="dim-ref">#2</span> <span class="hint">is the product page live?</span></label>
+        <select class="fsel" id="asinResult" onchange="gradeListing()">
+          <option value="">Not checked yet</option>
+          <option value="live">Live &mdash; ASIN page is accessible</option>
+          <option value="blocked">Blocked &mdash; page returns error / dog photo</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Title & Brand (#4, #9, #10) -->
+  <div class="card">
+    <div class="chead">&#128221; Title &amp; Brand</div>
+    <div class="cbody">
+      <div class="frow" style="margin-bottom:10px">
+        <div class="fg">
+          <label class="flbl">Brand Name <span class="dim-ref">#4</span> <span class="hint">from detail page brand link</span></label>
+          <input type="text" class="finp" id="brand" placeholder="e.g. Anker" oninput="gradeListing()">
+        </div>
+        <div class="fg">
+          <label class="flbl">Marketplace</label>
+          <select class="fsel" id="marketplace">
+            <option value="US">US</option><option value="UK">UK</option><option value="DE">DE</option>
+            <option value="FR">FR</option><option value="IT">IT</option><option value="ES">ES</option>
+            <option value="JP">JP</option><option value="CA">CA</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="flbl">Item Name (Title) <span class="dim-ref">#9 #10</span> <span class="hint" id="titleHint">0 / 75 chars</span></label>
+        <textarea class="ftarea" id="title" rows="2" placeholder="Brand + Core Product + Key Feature" oninput="onInput()"></textarea>
+      </div>
+      <div class="fg">
+        <label class="flbl">Item Highlight <span class="hint" id="hlHint">0 / 125 chars</span></label>
+        <textarea class="ftarea" id="highlight" rows="2" placeholder="Comma-separated feature phrases (2026 new field)" oninput="onInput()"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Bullet Points (#6, #7) -->
+  <div class="card">
+    <div class="chead">&#128203; Bullet Points <span class="dim-ref">#6 #7</span></div>
+    <div class="cbody">
+      <div id="bulletsContainer"></div>
+      <button id="addBulletBtn" onclick="addBullet()">+ Add Bullet Point</button>
+    </div>
+  </div>
+
+  <!-- 4. Description & Backend (#5, #8) -->
+  <div class="card">
+    <div class="chead">&#128196; Description &amp; Backend</div>
+    <div class="cbody">
+      <div class="fg">
+        <label class="flbl">Product Description <span class="dim-ref">#5</span> <span class="hint">manual input &middot; not visible on detail page</span></label>
+        <textarea class="ftarea" id="description" rows="4" placeholder="Paste from Seller Central (detail page often replaced by A+, not visible)..." oninput="onInput()"></textarea>
+      </div>
+      <div class="fg">
+        <label class="flbl">Backend Search Terms <span class="hint" id="stHint">0 / 249 bytes &middot; Seller Central only</span></label>
+        <textarea class="ftarea" id="st" rows="2" placeholder="all lowercase &middot; space separated &middot; no punctuation" oninput="onInput()"></textarea>
+      </div>
+      <div class="fg">
+        <label class="flbl">Key Attributes All Filled <span class="dim-ref">#8</span> <span class="hint">25 pts &middot; check Seller Central backend</span></label>
+        <select class="fsel" id="keyAttrs" onchange="gradeListing()">
+          <option value="">Unknown / Not checked</option>
+          <option value="yes">Yes &mdash; all key attributes filled (color, size, material, etc.)</option>
+          <option value="partial">Partial &mdash; some key attributes missing</option>
+          <option value="no">No &mdash; many key attributes empty</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Category & BSR (#1) -->
+  <div class="card">
+    <div class="chead">&#128194; Category &amp; BSR <span class="dim-ref">#1</span></div>
+    <div class="cbody">
+      <div class="fg">
+        <label class="flbl">Category Path <span class="hint">from detail page Product Information</span></label>
+        <input type="text" class="finp" id="categoryPath" placeholder="e.g. Home &amp; Kitchen > Kitchen &amp; Dining > Water Bottles" oninput="gradeListing()">
+      </div>
+      <div class="frow">
+        <div class="fg">
+          <label class="flbl">BSR Rank <span class="hint">Best Sellers Rank</span></label>
+          <input type="text" class="finp" id="bsrRank" placeholder="e.g. #1,234" oninput="gradeListing()">
+        </div>
+        <div class="fg">
+          <label class="flbl">BSR Category</label>
+          <input type="text" class="finp" id="bsrCategory" placeholder="e.g. Water Bottles" oninput="gradeListing()">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Images & A+ (#3, #11, #12, #13) -->
+  <div class="card">
+    <div class="chead">&#128247; Images &amp; A+ Content <span class="dim-ref">#3 #11 #12 #13</span></div>
+    <div class="cbody">
+      <div class="frow" style="margin-bottom:12px">
+        <div class="fg">
+          <label class="flbl">Total Images <span class="dim-ref">#12</span></label>
+          <select class="fsel" id="imageCount" onchange="gradeListing()">
+            <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option>
+            <option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7+</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label class="flbl">A+ Content <span class="dim-ref">#3</span></label>
+          <select class="fsel" id="aplus" onchange="onAplusChange();gradeListing()">
+            <option value="">Unknown</option>
+            <option value="yes">Yes &mdash; has A+</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="flbl">Image Content Coverage <span class="dim-ref">#11 #13</span> <span class="hint">check all that apply</span></label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px">
+          <label style="font-size:12px;display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="imgProduct" onchange="gradeListing()" style="accent-color:var(--primary)"> Product itself (main shot)</label>
+          <label style="font-size:12px;display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="imgAngle" onchange="gradeListing()" style="accent-color:var(--primary)"> Multi-angle views</label>
+          <label style="font-size:12px;display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="imgScene" onchange="gradeListing()" style="accent-color:var(--primary)"> Use scene / lifestyle</label>
+          <label style="font-size:12px;display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="imgDetail" onchange="gradeListing()" style="accent-color:var(--primary)"> Size chart / detail close-up</label>
+          <label style="font-size:12px;display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="imgComply" onchange="gradeListing()" style="accent-color:var(--primary)"> Compliant (white bg, no watermark)</label>
+          <label style="font-size:12px;display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" id="imgZoom" onchange="gradeListing()" style="accent-color:var(--primary)"> Main image zoom enabled <span class="dim-ref" style="margin-left:auto">#13</span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="btn-row" style="margin-top:0">
+    <button class="btn btn-primary" onclick="gradeListing()" style="font-size:14px;padding:12px">&#9654; Grade My Listing</button>
+    <button class="btn" onclick="loadSample()">Load Sample</button>
+    <button class="btn" onclick="clearAll()">Clear All</button>
+  </div>
+</div>
+
+<!-- ============================ RIGHT: RESULTS ============================ -->
+<div class="right-col">
+  <div class="card">
+    <div class="chead">&#127942; Listing Grade</div>
+    <div class="cbody" id="scoreCard">
+      <div class="empty-state">
+        <div class="empty-icon">&#128269;</div>
+        <p>Fill in your listing and click <strong>"Grade My Listing"</strong>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="chead">&#128203; 2024 Official Scoring Table</div>
+    <div class="cbody">
+      <div class="disclaimer">
+        <strong>&#9432; Source:</strong> Amazon's official 2024 Listing completeness scoring table (Amazon Global Selling, Jan 2024). The only publicly available Amazon listing scoring rubric. Updated for 2026.7.27 title rule (&#x2264;75 chars). Total: 100 pts across 13 dimensions. #8 (25 pts) requires manual check in Seller Central backend.
+      </div>
+      <div id="scoringTableContent"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="chead">&#128161; Fixes &amp; Suggestions</div>
+    <div class="cbody" id="suggestionsBody">
+      <div class="empty-state" style="padding:20px"><p style="font-size:12px">Suggestions appear here after grading.</p></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<a href="https://sharonecom.com/#tools" class="quick-link" style="display:block;text-align:center">&larr; Back to Tools</a>
+<div class="ft">&copy; 2026 SharonEcom. Scoring based on Amazon's official 2024 Listing completeness scoring table.</div>
+
+</div><!-- /wrap -->
+
+<script>
+let mainImages=[],aplusImages=[],bulletCount=5;
+function $(id){return document.getElementById(id);}
+function getBullets(){const b=[];for(let i=1;i<=bulletCount;i++){const el=document.getElementById('bullet'+i);if(el&&el.value.trim())b.push(el.value.trim());}return b;}
+
+// Bullets
+function addBullet(){bulletCount++;renderBullets();document.getElementById('bullet'+bulletCount).focus();}
+function removeBullet(idx){if(bulletCount<=1)return;bulletCount--;renderBullets();}
+function renderBullets(){let h='';for(let i=1;i<=bulletCount;i++){h+='<div class="bullet-row"><span class="bullet-num">'+i+'</span><textarea class="ftarea" id="bullet'+i+'" rows="2" placeholder="Bullet '+i+'..." oninput="onInput()"></textarea><span class="bullet-char" id="bLen'+i+'">0</span>'+(bulletCount>1?'<button class="bullet-del" onclick="removeBullet('+i+')">&times;</button>':'')+'</div>';}$('bulletsContainer').innerHTML=h;updateCharCounts();}
+
+// Images
+function readImg(f,arr,fn){const r=new FileReader();r.onload=function(e){const img=new Image();img.onload=function(){arr.push({name:f.name,dataUrl:e.target.result,width:img.width,height:img.height,type:f.type,size:f.size,isSquare:Math.abs(img.width-img.height)<10,isLarge:img.width>=2000});fn();};img.src=e.target.result;};r.readAsDataURL(f);}
+function uploadMainImg(e){for(const f of e.target.files)readImg(f,mainImages,renderMainImgs);e.target.value='';}
+function uploadAplusImg(e){for(const f of e.target.files)readImg(f,aplusImages,renderAplusImgs);e.target.value='';}
+function removeMainImg(i){mainImages.splice(i,1);renderMainImgs();}
+function removeAplusImg(i){aplusImages.splice(i,1);renderAplusImgs();}
+function renderMainImgs(){let h=mainImages.map((img,i)=>'<div class="img-thumb" style="position:relative"><img src="'+img.dataUrl+'" alt=""><div class="del-img" style="display:flex" onclick="event.stopPropagation();removeMainImg('+i+')">&times;</div></div>').join('');h+='<label class="img-thumb" style="cursor:pointer"><div class="placeholder">+</div><input type="file" accept="image/*" style="display:none" onchange="uploadMainImg(event)" multiple></label>';$('mainImgArea').innerHTML=h;if(mainImages.length){const sq=mainImages.filter(i=>i.isSquare).length,lg=mainImages.filter(i=>i.isLarge).length;$('imgStats').innerHTML='<span class="'+(mainImages.length>=6?'ok':'warn')+'">&#128247; '+mainImages.length+' image'+(mainImages.length>1?'s':'')+'</span>'+(sq<mainImages.length?'<span class="warn">&#9633; '+(mainImages.length-sq)+' not square</span>':'')+(lg<mainImages.length?'<span class="warn">&#8593; '+(mainImages.length-lg)+' under 2000px</span>':'')+(sq===mainImages.length&&lg===mainImages.length?'<span class="ok">&#10003; All pass</span>':'');}else $('imgStats').innerHTML='';}
+function renderAplusImgs(){let h=aplusImages.map((img,i)=>'<div class="img-thumb" style="position:relative"><img src="'+img.dataUrl+'" alt=""><div class="del-img" style="display:flex" onclick="event.stopPropagation();removeAplusImg('+i+')">&times;</div></div>').join('');h+='<label class="img-thumb" style="cursor:pointer"><div class="placeholder">+</div><input type="file" accept="image/*" style="display:none" onchange="uploadAplusImg(event)" multiple></label>';$('aplusImgArea').innerHTML=h;$('aplusImgStats').innerHTML=aplusImages.length?'<span class="ok">&#128444; '+aplusImages.length+' A+ image'+(aplusImages.length>1?'s':'')+'</span>':'';}
+
+// Char counts
+function updateCharCounts(){const t=$('title').value;$('titleHint').textContent=t.length+' / 75 chars';$('titleHint').style.color=t.length>75?'var(--red)':'var(--t3)';const hl=$('highlight').value;$('hlHint').textContent=hl.length+' / 125 chars';$('hlHint').style.color=hl.length>125?'var(--red)':'var(--t3)';const st=$('st').value;const stB=new TextEncoder().encode(st).length;$('stHint').textContent=stB+' / 249 bytes';$('stHint').style.color=stB>=250?'var(--red)':'var(--t3)';for(let i=1;i<=bulletCount;i++){const el=$('bLen'+i);if(!el)continue;const bp=document.getElementById('bullet'+i);if(!bp)continue;const bytes=new TextEncoder().encode(bp.value).length;el.textContent=bytes;el.className='bullet-char'+(bytes>500?' over':'');}$('descHint').textContent=$('description').value.length+' chars';}
+function onInput(){updateCharCounts();}
+function onUrlInput(){const url=$('productUrl').value.trim();$('fetchBtn').disabled=!url;if(url){$('keywordSearchCheck').style.display='block';$('asinCheck').style.display='block';}else{$('keywordSearchCheck').style.display='none';$('asinCheck').style.display='none';}}
+function onAplusChange(){/* A+ card removed */}
+
+// URL fetch — calls Cloudflare Pages Function
+function fetchFromUrl(){
+  const url=$('productUrl').value.trim();if(!url)return;
+  $('fetchBtn').classList.add('loading');$('fetchBtn').textContent='Fetching...';
+  $('fetchNote').innerHTML='<span style="color:var(--primary)">&#8987; Fetching from Amazon...</span>';
+
+  // Extract ASIN from URL
+  const asinMatch = url.match(/\/dp\/([A-Z0-9]{10})/) || url.match(/\/gp\/product\/([A-Z0-9]{10})/);
+  const asin = asinMatch ? asinMatch[1] : '';
+  const marketplace = $('marketplace').value;
+
+  fetch('/api/fetch-listing',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({url:url})
+  })
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.error){
+      $('fetchNote').innerHTML='<span style="color:var(--orange)">&#9888; '+data.error+'. You can fill in fields manually below.</span>';
+      return;
+    }
+    // Auto-fill fields
+    if(data.title){$('title').value=data.title;}
+    if(data.brand){$('brand').value=data.brand;}
+    if(data.highlight){$('highlight').value=data.highlight;}
+    if(data.description){$('description').value=data.description;}
+    if(data.bsrRank){$('bsrRank').value=data.bsrRank;}
+    if(data.bsrCategory){$('bsrCategory').value=data.bsrCategory;}
+    if(data.categoryPath){$('categoryPath').value=data.categoryPath;}
+    if(data.hasAplus!==undefined){$('aplus').value=data.hasAplus?'yes':'no';onAplusChange();}
+    if(data.imageCount){$('imageCount').value=Math.min(data.imageCount,7);}
+    if(data.hasZoom&&$('imgZoom')){$('imgZoom').checked=true;}
+    // Fill bullets
+    if(data.bullets&&data.bullets.length>0){
+      while(bulletCount<data.bullets.length)addBullet();
+      for(let i=0;i<data.bullets.length&&i<bulletCount;i++){
+        document.getElementById('bullet'+(i+1)).value=data.bullets[i];
+      }
+    }
+
+    const filledCount = ['title','brand','highlight','description','bsrRank','bsrCategory','categoryPath'].filter(id=>$(id).value).length;
+    $('fetchNote').innerHTML='<span style="color:var(--green)">&#10003; Auto-filled '+filledCount+' fields from Amazon'+(asin?' (ASIN: '+asin+')':'')+'.</span>'+(data.description?'':'<br><span style="color:var(--orange);font-size:10px">Description not found on detail page (may be replaced by A+). Enter manually from Seller Central.</span>');
+
+    // Auto-check keyword search if ASIN and keywords available
+    const keywords=$('keywords').value.trim();
+    if(asin&&keywords){
+      checkKeywordSearch(asin,keywords,marketplace);
+    }
+    onInput();
+    gradeListing();
+  })
+  .catch(err=>{
+    $('fetchNote').innerHTML='<span style="color:var(--orange)">&#9888; Fetch failed: '+err.message+'. API may not be deployed yet. Fill in fields manually below, or deploy the Cloudflare Function (see functions/api/).</span>';
+  })
+  .finally(()=>{
+    $('fetchBtn').classList.remove('loading');
+    $('fetchBtn').innerHTML='&#128269; Auto-Fill';
+  });
+}
+
+// Keyword search check — calls Cloudflare Pages Function
+function checkKeywordSearch(asin,keywords,marketplace){
+  $('kwSearchResult').value='';$('asinResult').value='';
+  $('fetchNote').innerHTML+='<br><span style="color:var(--primary)">&#8987; Checking keyword search...</span>';
+
+  fetch('/api/search-check',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({keywords:keywords,asin:asin,marketplace:marketplace})
+  })
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.error){
+      $('fetchNote').innerHTML+='<br><span style="color:var(--orange)">Search check failed: '+data.error+'</span>';
+      return;
+    }
+    $('kwSearchResult').value=data.keywordFound?'found':'notfound';
+    $('asinResult').value=data.asinLive?'live':'blocked';
+    const kwStatus=data.keywordFound?'<span style="color:var(--green)">&#10003; Found in search</span>':'<span style="color:var(--red)">&#10007; Not found in search</span>';
+    const asinStatus=data.asinLive?'<span style="color:var(--green)">&#10003; ASIN live</span>':'<span style="color:var(--red)">&#10007; ASIN blocked</span>';
+    $('fetchNote').innerHTML+='<br>'+kwStatus+' &middot; '+asinStatus;
+    gradeListing();
+  })
+  .catch(err=>{
+    $('fetchNote').innerHTML+='<br><span style="color:var(--orange)">Search check unavailable. Check manually on Amazon.</span>';
+  });
+}
+
+// Sensitive words
+const SW=['free shipping','free gift','on sale','discounted price','special offer','limited time offer','best deal','best price','best seller','best selling','big sale','huge sale','super sale','closeout','overstock','unbeatable price','wholesale price','save cash','save money','buy now',"don't miss out","supplies won't last",'brand new','highest rated','top rated','top selling','top notch','top quality','professional quality',"world's best",'proven','certified','validated','guaranteed','100% quality guaranteed','money back guarantee','satisfaction','flawless','hassle free','award winning','gift idea','perfect gift','perfect for','great as','great for','all natural','100% natural','non toxic','non-toxic','antibacterial','antimicrobial','antifungal','sanitize','sanitizes','biodegradable','eco friendly','bpa free','fda','fda approval','cure','heal','treat','treatment','remedy','detox','disease','virus','viral','bacteria','fungal','pesticide','toxic','toxin','weight loss','recommended by','authentic','imported from','seen on tv','patented','shop with confidence','buy with confidence','retail box','fedex','ups','used','native american','platinum','ideal for','ideal as'];
+
+// ==================== OFFICIAL 2024 SCORING ====================
+function scoreOfficial(){
+  const title=$('title').value.trim();
+  const brand=$('brand').value.trim();
+  const bullets=getBullets();
+  const desc=$('description').value.trim();
+  const aplusVal=$('aplus').value;
+  const imgCount=parseInt($('imageCount').value)||0;
+  const catPath=$('categoryPath').value.trim();
+  const bsrRank=$('bsrRank').value.trim();
+  const kwSearch=$('kwSearchResult').value;
+  const asinRes=$('asinResult').value;
+  const totalImgs=Math.max(imgCount,mainImages.length);
+
+  const items=[];
+
+  // #1 Category Browse Node: 10 pts — check if BSR exists (indicates correct category)
+  const hasCat = catPath.length > 0 && bsrRank.length > 0;
+  items.push({n:1,dim:'Category Browse Node',pts:10,pass:hasCat,detail:hasCat?'BSR #'+bsrRank+' in '+catPath:'No BSR or category path entered. Check product detail page > Product Information > Best Sellers Rank.'});
+
+  // #2 Product Findable by Keywords: 5 pts — check keyword search result
+  const findable = kwSearch === 'found' && asinRes === 'live';
+  const partialFind = kwSearch === 'found' || asinRes === 'live';
+  items.push({n:2,dim:'Product Findable by Keywords',pts:5,pass:findable,partial:partialFind&&!findable,detail:kwSearch===''?'Search your keywords on Amazon and report result above.':findable?'Product is findable by keyword search AND ASIN is live.':partialFind?'Partially findable — check both keyword search and ASIN access.':'Product NOT findable by keywords. Check SEO indexing and backend search terms.'});
+
+  // #3 A+ Content: 12.5 pts
+  const hasAplus = aplusVal === 'yes';
+  items.push({n:3,dim:'A+ Content Present',pts:12.5,pass:hasAplus,detail:hasAplus?'Has A+ content — 12.5 pts earned.':aplusVal==='no'?'No A+ content. Worth 12.5 pts. Brand-registered sellers should add A+ for up to 10% conversion lift.':'A+ status unknown. Check detail page for A+ modules.'});
+
+  // #4 Brand Name Displayed: 5 pts — brand link visible on detail page
+  const hasBrand = brand.length > 0;
+  items.push({n:4,dim:'Brand Name Displayed',pts:5,pass:hasBrand,detail:hasBrand?'Brand "'+brand+'" is displayed on listing.':'No brand name entered. Check the brand link above the title on the detail page.'});
+
+  // #5 Product Description: 5 pts
+  // #5 Product Description: 5 pts — manual input only (not on detail page)
+  items.push({n:5,dim:'Product Description',pts:5,pass:desc.length>0,detail:desc.length>0?'Description filled ('+desc.length+' chars).':'Description empty. Must be manually entered from Seller Central (detail page often replaced by A+).'});
+
+  // #6 At Least 1 Bullet: 5 pts
+  items.push({n:6,dim:'At Least 1 Bullet Point',pts:5,pass:bullets.length>=1,detail:bullets.length>=1?bullets.length+' bullet(s) present.':'No bullet points. Amazon requires at least 1.'});
+
+  // #7 3+ Bullets: 2.5 pts
+  items.push({n:7,dim:'3 or More Bullet Points',pts:2.5,pass:bullets.length>=3,detail:bullets.length>=3?bullets.length+' bullets present.':'Only '+bullets.length+' bullet(s). 2.5 extra pts for 3+.'});
+
+  // #8 Key Attributes All Filled: 25 pts — user checks Seller Central and reports
+  const keyAttrsVal = $('keyAttrs').value;
+  const keyAttrsPass = keyAttrsVal === 'yes';
+  const keyAttrsPartial = keyAttrsVal === 'partial';
+  items.push({n:8,dim:'Key Attributes All Filled',pts:25,pass:keyAttrsPass,partial:keyAttrsPartial,detail:keyAttrsVal===''?'Check Seller Central backend: are all recommended key attributes (color, size, material, etc.) filled?':keyAttrsPass?'All key attributes filled — 25 pts earned.':keyAttrsPartial?'Some attributes missing — partial credit. Fill all recommended attributes in Seller Central.':'Many attributes empty — 0/25 pts. This is the highest-weight item.'});
+
+  // #9 Title Length (10-75 chars): 5 pts — 2026.7.27 updated
+  const tl=title.length;
+  items.push({n:9,dim:'Title Length (10-75 chars)',pts:5,pass:tl>=10&&tl<=75,detail:tl===0?'Title is empty.':tl>=10&&tl<=75?tl+' chars — within range.':tl+' chars — out of range (10-75). 2026.7.27 rule: titles must be &#x2264;75 chars.'});
+
+  // #10 Title Starts with Brand: 5 pts
+  const firstWord=(title.split(/\s+/)[0]||'').toLowerCase();
+  const brandStarts = brand.length>0 && title.length>0 && firstWord===brand.toLowerCase();
+  items.push({n:10,dim:'Title Starts with Brand Name',pts:5,pass:brandStarts,detail:brand.length===0?'Enter brand name to check.':brandStarts?'Title starts with "'+brand+'" — correct.':'Title starts with "'+title.split(/\s+/)[0]+'" but brand is "'+brand+'". Title should start with brand name.'});
+
+  // #11 Image Info Completeness: 5 pts — content coverage checklist
+  const imgChecks = ['imgProduct','imgAngle','imgScene','imgDetail','imgComply'];
+  const imgChecked = imgChecks.filter(id => $(id) && $(id).checked).length;
+  const imgCompletePass = imgChecked >= 4; // 4+ out of 5 = pass
+  const imgCompletePartial = imgChecked >= 2 && imgChecked < 4;
+  const imgLabels = ['product shot','multi-angle','use scene','size/detail','compliance'];
+  const imgCheckedLabels = imgChecks.map((id,i) => $(id)&&$(id).checked ? imgLabels[i] : null).filter(Boolean);
+  const imgMissingLabels = imgChecks.map((id,i) => $(id)&&!$(id).checked ? imgLabels[i] : null).filter(Boolean);
+  items.push({n:11,dim:'Image Info Completeness',pts:5,pass:imgCompletePass,partial:imgCompletePartial,detail:imgChecked===0?'Check which image types you have below.':imgCompletePass?imgChecked+'/5 image types covered ('+imgCheckedLabels.join(', ')+').':imgChecked+'/5 covered. Missing: '+imgMissingLabels.join(', ')+'.'});
+
+  // #12 4+ Images: 5 pts
+  items.push({n:12,dim:'4 or More Images',pts:5,pass:totalImgs>=4,detail:totalImgs>=4?totalImgs+' images.':'Has '+totalImgs+' image(s). 5 pts for 4+.'});
+
+  // #13 Main Image Zoom: 10 pts — checkbox
+  const hasZoom = $('imgZoom') && $('imgZoom').checked;
+  items.push({n:13,dim:'Main Image Zoom',pts:10,pass:hasZoom,detail:hasZoom?'Main image zoom is enabled.':'Main image zoom not enabled. Amazon requires minimum 1000px on longest side for zoom; 1600px+ recommended for optimal experience.'});
+
+  return items;
+}
+
+// Compliance checks (F-grade triggers)
+function checkCompliance(){
+  const title=$('title').value,hl=$('highlight').value,bullets=getBullets(),st=$('st').value;
+  const allText=[title,hl,...bullets,$('description').value,st].join(' ');
+  const issues=[];
+  if(!title)issues.push({msg:'F-grade: Title is empty.',prio:'high',src:'[Amazon Policy]'});
+  else if(title.length>75)issues.push({msg:'F-grade: Title exceeds 75 chars ('+title.length+'). Amazon 2026.7.27 rule — over-limit titles will be AI-rewritten.',prio:'high',src:'[Amazon Policy]'});
+  if(hl.length>125)issues.push({msg:'Item Highlight exceeds 125 chars ('+hl.length+'). 2026.7.27 rule.',prio:'high',src:'[Amazon Policy]'});
+  const lower=allText.toLowerCase();const swFound=[];
+  SW.forEach(sw=>{const p=new RegExp('\\b'+sw.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i');if(p.test(lower))swFound.push(sw);});
+  if(swFound.length)issues.push({msg:'F-grade: '+swFound.length+' sensitive word(s): "'+swFound.slice(0,3).join('", "')+(swFound.length>3?'…':'')+'". Amazon prohibits promotional/subjective/medical claims.',prio:'high',src:'[Amazon Policy]'});
+  if(st){const stB=new TextEncoder().encode(st).length;if(stB>=250)issues.push({msg:'Search Terms exceed 249 bytes ('+stB+') — ENTIRE field ignored!',prio:'high',src:'[Amazon Policy]'});if(/[,;:._!?]/.test(st))issues.push({msg:'Search Terms contain punctuation — spaces only.',prio:'high',src:'[Amazon Policy]'});if(st!==st.toLowerCase())issues.push({msg:'Search Terms must be all lowercase.',prio:'high',src:'[Amazon Policy]'});}
+  bullets.forEach((b,i)=>{const bytes=new TextEncoder().encode(b).length;if(bytes>500)issues.push({msg:'Bullet '+(i+1)+' is '+bytes+' bytes (limit: 500). May be truncated.',prio:'med',src:'[Amazon Policy]'});if(b.trim()&&/[.!?]$/.test(b.trim()))issues.push({msg:'Bullet '+(i+1)+' ends with punctuation.',prio:'med',src:'[Amazon Policy]'});if(!b.includes(':')&&b.length>30)issues.push({msg:'Bullet '+(i+1)+' may need colon after title phrase.',prio:'low',src:'[Community]'});const ns=b.match(/\d+(PSI|dB|L\/min|ft|mm|V|cc|ml|oz|in|kg|cm|hp|w)/gi);if(ns)issues.push({msg:'BP'+(i+1)+': missing space before "'+ns.join(', ')+'".',prio:'low',src:'[Amazon Policy]'});});
+  return issues;
+}
+
+// Main grading
+function gradeListing(){
+  const items=scoreOfficial();
+  const checkablePts=items.reduce((a,i)=>a+i.pts,0);
+  const earned=items.filter(i=>i.pass===true).reduce((a,i)=>a+i.pts,0);
+  const partial=items.filter(i=>i.partial).reduce((a,i)=>a+i.pts*0.5,0);
+  const totalEarned=earned+partial;
+  const scPts=0;
+  const compliance=checkCompliance();
+  const complianceCritical=compliance.some(i=>i.msg.includes('F-grade'));
+
+  let grade,gc,gx;
+  const pct=totalEarned/Math.max(1,checkablePts)*100;
+  if(pct>=80){grade='A';gc='grade-a';gx='Excellent — meets nearly all Amazon requirements.';}
+  else if(pct>=70){grade='B';gc='grade-b';gx='Good — missing 1-2 elements.';}
+  else if(pct>=60){grade='C';gc='grade-c';gx='Needs improvement — missing 2-3 elements.';}
+  else if(pct>=50){grade='D';gc='grade-d';gx='Needs work — missing 3-4 elements.';}
+  else if(pct>=10){grade='E';gc='grade-e';gx='Poor — missing 4-5 core elements.';}
+  else{grade='F';gc='grade-f';gx='Critical — score is 0.';}
+
+  // Add compliance warning to grade description
+  if(complianceCritical){
+    gx+='';
+  }
+
+  const gradeColors={A:'var(--green)',B:'var(--primary)',C:'#92400e',D:'#c2410c',E:'#b91c1c',F:'#991b1b'};
+  const sc=gradeColors[grade]||'var(--muted)';
+  const scoreNum=Math.round(totalEarned);
+  $('scoreCard').innerHTML='<div class="score-area"><div class="score-circle" style="border-color:'+sc+';background:linear-gradient(135deg,var(--card),var(--surface))"><div class="big" style="color:'+sc+';font-size:54px">'+grade+'</div><div class="unit" style="font-size:10px;margin-top:-4px;color:var(--muted)">Grade</div></div><div style="font-size:11px;color:var(--muted);margin:8px 0 4px">Score: <strong style="color:'+sc+';font-size:14px">'+scoreNum+'</strong> / 100</div><span class="score-grade '+gc+'">'+gx+'</span></div>';
+
+  // Table
+  let th='<table class="scoring-table"><thead><tr><th>#</th><th>Dimension</th><th class="pts">Pts</th><th class="status">Status</th></tr></thead><tbody>';
+  for(const it of items){
+    let st;
+    if(it.sc)st='<span class="na">&#128274;</span>';
+    else if(it.pass===true)st='<span class="pass">&#10003;</span>';
+    else if(it.partial)st='<span style="color:var(--orange);font-weight:700">~</span>';
+    else st='<span class="fail">&#10007;</span>';
+    th+='<tr><td>'+it.n+'</td><td>'+it.dim+'</td><td class="pts">'+it.pts+'</td><td class="status">'+st+'</td></tr>';
+  }
+  th+='<tr style="font-weight:700;border-top:2px solid var(--border)"><td colspan="2">Total</td><td class="pts">'+checkablePts+'</td><td class="status">'+totalEarned.toFixed(1)+'</td></tr>';
+  th+='</tbody></table>';
+  $('scoringTableContent').innerHTML=th;
+
+  // Suggestions
+  const allIssues=[];
+  for(const it of items){if(it.pass===false)allIssues.push({msg:'[#'+it.n+'] '+it.detail,prio:it.pts>=10?'high':it.pts>=5?'med':'low',src:'[2024 Table]'});if(it.partial)allIssues.push({msg:'[#'+it.n+'] Partially passing. '+it.detail,prio:'med',src:'[2024 Table]'});}
+  allIssues.push(...compliance);
+  const po={high:0,med:1,low:2};
+  allIssues.sort((a,b)=>po[a.prio]-po[b.prio]);
+  if(allIssues.length===0)$('suggestionsBody').innerHTML='<div class="empty-state" style="padding:16px"><p style="font-size:13px;color:var(--green)">&#10003; No issues found!</p></div>';
+  else $('suggestionsBody').innerHTML=allIssues.map(iss=>{const tag=iss.prio==='high'?'prio-high-tag':iss.prio==='med'?'prio-med-tag':'prio-low-tag';const tl=iss.prio==='high'?'FIX':iss.prio==='med'?'IMPROVE':'TIP';const bd=iss.prio==='high'?'prio-high':iss.prio==='med'?'prio-med':'';return '<div class="sugg-item '+bd+'"><span class="sugg-prio '+tag+'">'+tl+'</span>'+iss.src+' '+iss.msg+'</div>';}).join('');
+  updateCharCounts();
+}
+
+// Sample
+function loadSample(){
+  $('productUrl').value='https://www.amazon.com/dp/B08X4ABCD1';
+  $('keywords').value='stainless steel water bottle, insulated bottle, BPA-free mug';
+  onUrlInput();
+  $('kwSearchResult').value='found';$('asinResult').value='live';
+  $('brand').value='HydroFlask';
+  $('title').value='HydroFlask Stainless Steel Water Bottle 32oz, Insulated Keeps Cold 24h';
+  $('highlight').value='32oz, double-wall vacuum, sweat-free, leak-proof, BPA-free, 8 colors';
+  const sb=['Double-Wall Insulation: Keeps drinks cold 24h and hot 12h. Perfect for gym, office, hiking.','Premium 18/8 Steel: 100% BPA-free. No metallic aftertaste, no rust.','Leak-Proof Lid: Screw-on cap with silicone seal prevents spills.','Easy to Clean: Wide mouth fits ice cubes. Dishwasher safe (top rack).','Sleek Design: Scratch-resistant powder coat in 8 colors. Sweat-free exterior.'];
+  while(bulletCount>sb.length)removeBullet(bulletCount);
+  while(bulletCount<sb.length)addBullet();
+  for(let i=0;i<sb.length;i++)document.getElementById('bullet'+(i+1)).value=sb[i];
+  $('description').value='Stay hydrated with our premium 32oz stainless steel water bottle. Double-wall vacuum insulation keeps drinks cold 24h or hot 12h. Crafted from 18/8 steel, 100% BPA-free. Available in 8 colors.';
+  $('st').value='insulated water jug sports bottle metal canteen hiking camping gym reusable';
+  $('aplus').value='yes';onAplusChange();
+  $('imageCount').value='6';
+  $('keyAttrs').value='yes';
+  ['imgProduct','imgAngle','imgScene','imgDetail','imgComply','imgZoom'].forEach(id=>{if($(id))$(id).checked=true;});
+  $('categoryPath').value='Home & Kitchen > Kitchen & Dining > Water Bottles';
+  $('bsrRank').value='#1,234';
+  $('bsrCategory').value='Water Bottles';
+  updateCharCounts();
+  gradeListing();
+}
+
+function clearAll(){
+  ['productUrl','keywords','title','highlight','brand','description','st','categoryPath','bsrRank','bsrCategory'].forEach(id=>$(id).value='');
+  while(bulletCount>5)removeBullet(bulletCount);
+  for(let i=1;i<=5;i++)document.getElementById('bullet'+i).value='';
+  $('aplus').value='';$('imageCount').value='0';$('kwSearchResult').value='';$('asinResult').value='';$('keyAttrs').value='';
+  ['imgProduct','imgAngle','imgScene','imgDetail','imgComply','imgZoom'].forEach(id=>{if($(id))$(id).checked=false;});
+  mainImages=[];aplusImages=[];renderMainImgs();renderAplusImgs();
+  $('keywordSearchCheck').style.display='none';$('asinCheck').style.display='none';
+  $('scoreCard').innerHTML='<div class="empty-state"><div class="empty-icon">&#128269;</div><p>Fill in your listing and click <strong>"Grade My Listing"</strong>.</p></div>';
+  $('suggestionsBody').innerHTML='<div class="empty-state" style="padding:20px"><p style="font-size:12px">Suggestions appear here after grading.</p></div>';
+  $('scoringTableContent').innerHTML='';
+  updateCharCounts();
+}
+
+renderBullets();updateCharCounts();
+</script>
+</body>
+</html>
