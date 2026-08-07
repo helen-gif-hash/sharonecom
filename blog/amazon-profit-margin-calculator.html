@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Before you source a single unit, use this free pre-launch profit calculator to estimate your Amazon FBA margin across 12 markets. Covers referral, FBA, fuel surcharge, storage, and COGS — 2026 rates.">
+  <title>How to Calculate Amazon Profit Margin Before You Launch — Free Pre-Launch Calculator — SharonEcom</title>
+  <style>
+    :root {
+      --primary: #6E56CF;
+      --primary-hover: #5A44C0;
+      --primary-soft: #F0EBFA;
+      --accent: #FFCD4D;
+      --bg: #FFFFFF;
+      --surface: #F7F8FA;
+      --text: #1B1B1F;
+      --muted: #5B5B66;
+      --border: #E6E6EA;
+      --radius: 8px;
+      --radius-card: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .article-header {
+      padding: 64px 0 40px;
+      text-align: center;
+    }
+    .article-header h1 {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .article-meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .article-meta .dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+    .article-content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+    }
+    .article-content .lead {
+      font-size: 18px;
+      color: var(--text);
+      line-height: 1.65;
+      margin-bottom: 32px;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+    }
+    .article-content h2 {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+      margin-top: 48px;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .article-content h3 {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.2px;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .article-content p {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+    .article-content strong {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .article-content ul, .article-content ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+    .article-content li {
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .article-content a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .article-content a:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
+    }
+    .highlight-box {
+      background: var(--primary-soft);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius-card);
+      padding: 28px 32px;
+      margin: 32px 0;
+    }
+    .highlight-box p {
+      margin-bottom: 12px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .highlight-box p:last-child {
+      margin-bottom: 0;
+    }
+    .highlight-box strong {
+      color: var(--primary);
+    }
+    .formula-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 24px 28px;
+      margin: 28px 0;
+      font-family: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", monospace;
+    }
+    .formula-box .formula-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-family: var(--font);
+    }
+    .formula-box .formula {
+      font-size: 15px;
+      line-height: 1.9;
+      color: var(--text);
+    }
+    .formula-box .formula .op { color: var(--primary); font-weight: 600; }
+    .formula-box .formula .result { color: var(--primary); font-weight: 700; }
+    .example-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      background: var(--bg);
+    }
+    .example-card .example-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 14px;
+    }
+    .example-card .line-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 14px;
+      border-bottom: 1px solid #f0f0f3;
+    }
+    .example-card .line-item:last-child {
+      border-bottom: none;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 15px;
+      padding-top: 10px;
+    }
+    .example-card .line-item .neg { color: #DC2626; }
+    .example-card .line-item .pos { color: #0d8a4e; }
+    .whats-not-included {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 24px 28px;
+      margin: 32px 0;
+      background: #fefce8;
+    }
+    .whats-not-included h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #8a6d14;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    .whats-not-included p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .whats-not-included p:last-child {
+      margin-bottom: 0;
+    }
+    .tool-cta {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 28px 32px;
+      margin: 32px 0;
+      text-align: center;
+    }
+    .tool-cta .tool-cta-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    .tool-cta h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    .tool-cta p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .tool-cta .btn-primary {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--primary);
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 28px;
+      cursor: pointer;
+      transition: background 0.15s;
+      text-decoration: none;
+    }
+    .tool-cta .btn-primary:hover { background: var(--primary-hover); }
+    .author-bio {
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+      padding-top: 32px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .author-bio .author-avatar {
+      flex: 0 0 48px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .author-bio .author-info h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .author-bio .author-info p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 0;
+    }
+    .back-link-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .back-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .back-link:hover { color: var(--primary-hover); }
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text); }
+    @media (max-width: 768px) {
+      .nav-links { gap: 18px; }
+      .nav-links a { font-size: 12px; }
+      .article-header h1 { font-size: 26px; }
+      .article-content .lead { font-size: 16px; }
+      .article-content h2 { font-size: 20px; }
+      .article-content h3 { font-size: 16px; }
+      .article-content p, .article-content li { font-size: 15px; }
+      .highlight-box, .formula-box, .example-card, .whats-not-included, .tool-cta { padding: 20px; }
+      .formula-box .formula { font-size: 13px; }
+      .footer { flex-direction: column; gap: 12px; text-align: center; }
+      .footer-links { gap: 16px; }
+      .author-bio { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar container">
+  <a href="/" class="nav-logo">SharonEcom</a>
+  <ul class="nav-links">
+    <li><a href="/#tools">Tools</a></li>
+    <li><a href="/#playbooks">Playbooks</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/contact/">Contact</a></li>
+  </ul>
+</nav>
+<header class="article-header container">
+<h1>How to Calculate Amazon Profit Margin Before You Launch — Free Pre-Launch Calculator</h1>
+  <div class="article-meta">
+    <span>Sharon</span>
+    <span class="dot"></span>
+    <span>Amazon Operations</span>
+    <span class="dot"></span>
+    <span>6 min read</span>
+  </div>
+</header>
+<div class="article-content">
+  <p class="lead">You found a product. You have a quote from a supplier. You have a rough idea of shipping. Before you wire a single dollar — before you even order samples — you need to know one thing: will this product make money after Amazon takes its cut? This is exactly what the SharonEcom FBA Profit Calculator is built for: pre-launch profit estimation across 12 markets, with zero sign-up and zero guesswork.</p>
+
+  <p>Every Amazon fee matters. Skip one, and you will see a margin on your spreadsheet that never shows up in your bank account. The calculator walks through every fee line in order — exactly the way the money actually moves — and gives you three things no spreadsheet gives you out of the box: a <strong>break-even price</strong>, a <strong>price ladder</strong> to find your sweet spot, and <strong>stress-test scenarios</strong> that show what happens when things go wrong.</p>
+
+  <h2>The Formula: Exactly What the Calculator Computes</h2>
+
+  <p>The calculator runs one clean, linear formula per unit. Here it is, line by line, in the exact same order the tool uses:</p>
+
+  <div class="formula-box">
+    <div class="formula-title">Per-Unit Calculation (2026 rates)</div>
+    <div class="formula">
+      <strong>Selling Price (excl. VAT)</strong><br>
+      <span class="op">−</span> Product Cost (COGS — your landed manufacturing cost)<br>
+      <span class="op">−</span> Referral Fee (category-based, 8%–20% of selling price)<br>
+      <span class="op">−</span> FBA Fulfillment Fee (auto-detected from product dimensions + weight)<br>
+      <span class="op">−</span> Fuel &amp; Logistics Surcharge (3.5% of fulfillment fee, US/CA)<br>
+      <span class="op">−</span> Digital Services Fee (market-dependent; 0% for US, 2% UK, 3% FR/IT/ES)<br>
+      <span class="op">−</span> Monthly Storage Fee (per-unit estimate based on cubic volume)<br>
+      <span class="op">−</span> Inbound Shipping (sea/air freight per unit to Amazon FBA)<br>
+      <span class="op">=</span> <span class="result">Net Profit per Unit</span>
+    </div>
+  </div>
+
+  <p>That is the core of the tool. Every number is either auto-filled from official 2026 Amazon rates (referral fee by category, FBA fee by size tier, fuel surcharge, storage rate) or pulled from the numbers you enter (selling price, COGS, dimensions, inbound shipping).</p>
+
+  <h3>The Monthly Projection Layer</h3>
+
+  <p>Once the per-unit profit is calculated, the tool adds a monthly projection. You set three adjustable ratios, and it projects your full monthly P&amp;L:</p>
+
+  <div class="formula-box">
+    <div class="formula-title">Monthly Projection</div>
+    <div class="formula">
+      Gross Sales (incl. VAT) <span class="op">=</span> Selling Price <span class="op">×</span> Monthly Units Sold<br>
+      Net Sales (excl. VAT) <span class="op">=</span> Gross Sales <span class="op">−</span> VAT<br>
+      Total Cost <span class="op">=</span> Units <span class="op">×</span> Per-Unit Cost <span class="op">+</span> Refund Admin Reserve<br><br>
+      <strong>Monthly Net Profit</strong> <span class="op">=</span> Net Sales <span class="op">−</span> Total Cost<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="op">−</span> Ad Spend (your adjustable % ratio)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="op">−</span> Return Reserve (your adjustable % ratio)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="op">−</span> Deal Fee Reserve (your adjustable % ratio)<br>
+      <span class="op">=</span> <span class="result">Monthly Net Profit</span>
+    </div>
+  </div>
+
+  <p>Ad spend, return rate, and deal fees are <strong>estimates you control</strong> — adjustable sliders that let you model different assumptions. This is a pre-launch projection, not a replacement for your actual monthly accounting.</p>
+
+  <h2>Worked Example: Pre-Launch Estimate for a $24.99 Kitchen Gadget</h2>
+
+  <p>Let me walk through a realistic pre-launch scenario. You are evaluating a kitchen gadget from a supplier in China. Here is what you know (or can estimate) before placing an order:</p>
+
+  <div class="example-card">
+    <div class="example-label">What You Enter in the Calculator</div>
+    <div class="line-item"><span>Market</span><span>US ($)</span></div>
+    <div class="line-item"><span>Selling Price</span><span>$24.99</span></div>
+    <div class="line-item"><span>Product Cost (COGS)</span><span>$6.80</span></div>
+    <div class="line-item"><span>Inbound Shipping (per unit)</span><span>$0.65</span></div>
+    <div class="line-item"><span>Category</span><span>Home &amp; Kitchen (15% referral)</span></div>
+    <div class="line-item"><span>Package Dimensions (L × W × H)</span><span>12 × 8 × 2 in</span></div>
+    <div class="line-item"><span>Actual Weight</span><span>1.2 lb</span></div>
+    <div class="line-item"><span>Monthly Units (estimate)</span><span>300</span></div>
+    <div class="line-item"><span>Ad Spend Ratio (estimate)</span><span>10%</span></div>
+    <div class="line-item"><span>Return Rate (estimate)</span><span>3%</span></div>
+  </div>
+
+  <div class="example-card">
+    <div class="example-label">What the Calculator Outputs Automatically</div>
+    <div class="line-item"><span>Price (excl. VAT)</span><span>$24.99</span></div>
+    <div class="line-item"><span>Referral Fee (15%)</span><span class="neg">−$3.75</span></div>
+    <div class="line-item"><span>FBA Fulfillment Fee (Large Standard, 1.2 lb)</span><span class="neg">−$5.30</span></div>
+    <div class="line-item"><span>Fuel Surcharge (3.5%)</span><span class="neg">−$0.19</span></div>
+    <div class="line-item"><span>Digital Services Fee</span><span class="neg">$0.00</span></div>
+    <div class="line-item"><span>Storage Fee (per unit)</span><span class="neg">−$0.12</span></div>
+    <div class="line-item"><span>Product Cost (COGS)</span><span class="neg">−$6.80</span></div>
+    <div class="line-item"><span>Inbound Shipping</span><span class="neg">−$0.65</span></div>
+    <div class="line-item" style="border-top: 2px solid var(--border); margin-top: 6px; padding-top: 10px;">
+      <span>Initial Profit per Unit</span>
+      <span class="pos">$8.18</span>
+    </div>
+    <div class="line-item"><span>Profit Margin</span><span class="pos">32.7%</span></div>
+    <div class="line-item"><span>Total Cost per Unit</span><span>$16.81</span></div>
+    <div class="line-item"><span>Break-even Price</span><span>$17.22</span></div>
+    <div class="line-item"><span>20-Point Price (20% margin target)</span><span>$21.53</span></div>
+    <div class="line-item"><span>30-Point Price (30% margin target)</span><span>$24.60</span></div>
+  </div>
+
+  <p>Before you even order samples, the calculator tells you:</p>
+
+  <ul>
+    <li><strong>At $24.99, you clear 32.7% margin.</strong> Healthy. The tool flags this as "Excellent" (≥25%).</li>
+    <li><strong>Break-even is $17.22.</strong> Your current price has a comfortable cushion — about 31% above break-even. Even if a competitor forces you to drop, you have room.</li>
+    <li><strong>To hit 30% margin you need $24.60.</strong> Your $24.99 price is right on target. To hit 20% you could go as low as $21.53.</li>
+  </ul>
+
+  <p>Then the monthly projection, factoring in ad spend (10%), returns (3%), and deal fees (0%):</p>
+
+  <div class="example-card">
+    <div class="example-label">Monthly Projection (300 units)</div>
+    <div class="line-item"><span>Gross Sales (incl. VAT)</span><span>$7,497.00</span></div>
+    <div class="line-item"><span>Net Sales (excl. VAT)</span><span>$7,497.00</span></div>
+    <div class="line-item"><span>Monthly Net Profit</span><span class="pos">$1,480.65</span></div>
+    <div class="line-item"><span>Monthly Profit Margin</span><span>19.8%</span></div>
+    <div class="line-item"><span>Monthly ROI</span><span>72.6%</span></div>
+  </div>
+
+  <p>Notice the gap between per-unit margin (32.7%) and monthly margin (19.8%). That is the ad spend and return reserve doing their work. The per-unit number is your <strong>theoretical ceiling</strong> — the monthly number is your <strong>realistic floor</strong> once you factor in customer acquisition and operational drag.</p>
+
+  <h2>What the Stress-Test Scenarios Show</h2>
+
+  <p>One of the most useful features is the stress-test module. It reruns the full calculation under six scenarios — without you changing a single input:</p>
+
+  <ol>
+    <li><strong>Base case</strong> — your numbers as entered</li>
+    <li><strong>Q4 peak storage</strong> — storage fee triples (Oct–Dec rate)</li>
+    <li><strong>Price −10%</strong> — a competitor undercuts your listing</li>
+    <li><strong>COGS +15%</strong> — your supplier raises prices or freight spikes</li>
+    <li><strong>Return rate doubles</strong> — from 3% to 6%</li>
+    <li><strong>Ad spend surges</strong> — your ACOS climbs 50% above plan</li>
+  </ol>
+
+  <p>If your product only looks profitable in the base case and turns red the moment something shifts — that is a deal worth rethinking before you commit capital.</p>
+
+  <h2>Price Ladder: Find Your Sweet Spot in One Click</h2>
+
+  <p>This is the feature I use most. The Price Ladder reruns the full calculation at seven price points above and below your current price — starting at −15%, up to +40%. You get a table showing margin, profit per unit, monthly profit, and ROI at each price.</p>
+
+  <p>It answers one question: <strong>what is the lowest price this product can sell at and still hit my margin target?</strong> If you see that $22.99 gets you 25% margin and $19.99 drops to 18%, you now have a real-world price floor — and you can decide whether the volume trade-off is worth it.</p>
+
+  <h2>What This Calculator Does NOT Include (And Why)</h2>
+
+  <div class="whats-not-included">
+    <h3>These fees are not in the pre-launch calculator:</h3>
+    <p><strong>Inbound Placement Fee (US only)</strong> — this is the fee for shipping to a single Amazon fulfillment center without splitting your shipment. If you split across multiple FCs, the fee is lower or waived. Only applies to the US marketplace. This is a shipment-level decision you make when creating your first shipping plan, not something you can pre-calculate before you have the exact shipment details.</p>
+    <p><strong>Low-Inventory-Level Fee</strong> — triggered when your FNSKU dips below 28 days of cover. Shows up operationally after you are actively selling.</p>
+    <p><strong>Aged Inventory Surcharge</strong> — kicks in at 181+ days in FBA. A pre-launch estimate should assume healthy turnover; if inventory sits that long, you have a bigger problem than the surcharge.</p>
+    <p><strong>How to handle these:</strong> The calculator already accounts for return costs (via the adjustable Return Rate ratio) and promotion fees (via the Deal Fee Ratio). These three items above — inbound placement, low-inventory, and aged inventory — are the ones you reconcile after actual monthly financial reports come in from Seller Central. Use the calculator for your pre-launch baseline, then layer real-world operational costs on top.</p>
+  </div>
+
+  <h2>Free Tool: Amazon FBA Profit Calculator with 2026 Rates</h2>
+  <div class="tool-cta">
+    <div class="tool-cta-icon">🧮</div>
+    <h3>Amazon FBA Profit Calculator — Pre-Launch Estimation Tool</h3>
+    <p>Covers all 12 Amazon markets with auto-detected FBA fees by size and weight, referral fees by category, the 2026 fuel surcharge, VAT, and digital services fee. The monthly projection layer adds adjustable ratios for ad spend, return rate, and deal/coupon fees — so you can model realistic scenarios before launch. Also includes break-even price, 20/30-point price targets, stress-test scenarios, and a price ladder to find your sweet spot.</p>
+    <a href="/tools/amazon-fba-profit-calculator.html" class="btn-primary">Try the FBA Profit Calculator →</a>
+    <p style="margin-top: 12px; font-size: 12px; color: var(--muted);">100% free. No sign-up. Rates updated July 2026. Works in US, UK, DE, FR, IT, ES, NL, SE, PL, BE, CA, JP.</p>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>How I use it in my workflow:</strong> Before I contact a supplier, I run the calculator with a rough selling price and estimated COGS. If the margin comes back below 15%, I pass — no amount of volume will save a structurally unprofitable product. If it clears 25%, I move to samples. The calculator saves me from the most expensive mistake in Amazon FBA: launching a product that was never going to make money in the first place.</p>
+  </div>
+
+  <h2>The Bottom Line</h2>
+  <p>Amazon FBA profit calculation does not need to be complicated. The fee structure is public. The math is linear. What trips sellers up is skipping line items or guessing at numbers that are actually knowable in advance.</p>
+  <p>This calculator gives you a complete pre-launch profit estimate across 12 markets — not a simplified "revenue minus fees" approximation, but a full per-unit and monthly projection with price optimization and stress-testing built in. Use it before you commit capital. Use it again when supplier quotes change. Use it before you expand to a new market.</p>
+  <p>Because the cheapest way to make money on Amazon is to <strong>not launch the products that lose it.</strong></p>
+
+  <div class="author-bio">
+    <div class="author-avatar">S</div>
+    <div class="author-info">
+      <h4>Sharon</h4>
+      <p>Amazon operator based in China. I manage seller accounts daily — product sourcing, PPC, reviews, listing optimization, and FBA cost analysis. I built the free tools on this site from real operational workflows. No theory, just what works.</p>
+    </div>
+  </div>
+</div>
+<div class="back-link-wrap">
+  <a href="/blog/" class="back-link">← Back to Blog</a>
+</div>
+<footer class="footer">
+  <span>© 2026 SharonEcom</span>
+  <div class="footer-links">
+    <a href="#">Affiliate Disclosure</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+</body>
+</html>

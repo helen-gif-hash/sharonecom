@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Amazon FBA fees changed in 2026: fulfillment increases, fuel surcharge (1.5%–3.5% by market), new aged inventory tiers, and FNSKU-level low-inventory fees. Full breakdown with real numbers.">
+  <title>Amazon FBA Fees 2026 Complete Breakdown — What Changed and How to Recalculate — SharonEcom</title>
+  <style>
+    :root {
+      --primary: #6E56CF;
+      --primary-hover: #5A44C0;
+      --primary-soft: #F0EBFA;
+      --accent: #FFCD4D;
+      --bg: #FFFFFF;
+      --surface: #F7F8FA;
+      --text: #1B1B1F;
+      --muted: #5B5B66;
+      --border: #E6E6EA;
+      --radius: 8px;
+      --radius-card: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .article-header {
+      padding: 64px 0 40px;
+      text-align: center;
+    }
+    .article-header h1 {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .article-meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .article-meta .dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+    .article-content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+    }
+    .article-content .lead {
+      font-size: 18px;
+      color: var(--text);
+      line-height: 1.65;
+      margin-bottom: 32px;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+    }
+    .article-content h2 {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+      margin-top: 48px;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .article-content h3 {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.2px;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .article-content p {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+    .article-content strong {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .article-content ul, .article-content ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+    .article-content li {
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .article-content a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .article-content a:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
+    }
+    .highlight-box {
+      background: var(--primary-soft);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius-card);
+      padding: 28px 32px;
+      margin: 32px 0;
+    }
+    .highlight-box p {
+      margin-bottom: 12px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .highlight-box p:last-child {
+      margin-bottom: 0;
+    }
+    .highlight-box strong {
+      color: var(--primary);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+    }
+    th {
+      background: var(--surface);
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    tr:last-child td { border-bottom: none; }
+    .fee-up { color: #DC2626; font-weight: 600; }
+    .fee-down { color: #0d8a4e; font-weight: 600; }
+    .tool-cta {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 28px 32px;
+      margin: 32px 0;
+      text-align: center;
+    }
+    .tool-cta .tool-cta-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    .tool-cta h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    .tool-cta p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .tool-cta .btn-primary {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--primary);
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 28px;
+      cursor: pointer;
+      transition: background 0.15s;
+      text-decoration: none;
+    }
+    .tool-cta .btn-primary:hover { background: var(--primary-hover); }
+    .author-bio {
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+      padding-top: 32px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .author-bio .author-avatar {
+      flex: 0 0 48px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .author-bio .author-info h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .author-bio .author-info p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 0;
+    }
+    .back-link-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .back-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .back-link:hover { color: var(--primary-hover); }
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text); }
+    @media (max-width: 768px) {
+      .nav-links { gap: 18px; }
+      .nav-links a { font-size: 12px; }
+      .article-header h1 { font-size: 26px; }
+      .article-content .lead { font-size: 16px; }
+      .article-content h2 { font-size: 20px; }
+      .article-content h3 { font-size: 16px; }
+      .article-content p, .article-content li { font-size: 15px; }
+      .highlight-box, .tool-cta { padding: 20px; }
+      table { font-size: 12px; }
+      th, td { padding: 8px 10px; }
+      .footer { flex-direction: column; gap: 12px; text-align: center; }
+      .footer-links { gap: 16px; }
+      .author-bio { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar container">
+  <a href="/" class="nav-logo">SharonEcom</a>
+  <ul class="nav-links">
+    <li><a href="/#tools">Tools</a></li>
+    <li><a href="/#playbooks">Playbooks</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/contact/">Contact</a></li>
+  </ul>
+</nav>
+<header class="article-header container">
+<h1>Amazon FBA Fees 2026 Complete Breakdown — What Changed and How to Recalculate</h1>
+  <div class="article-meta">
+    <span>Sharon</span>
+    <span class="dot"></span>
+    <span>Amazon Operations</span>
+    <span class="dot"></span>
+    <span>8 min read</span>
+  </div>
+</header>
+<div class="article-content">
+  <p class="lead">Amazon updates its fee structure every year. In 2026, the changes are subtle on the surface — an average $0.08 increase per unit — but the real story is in the details. A new fuel surcharge, restructured aged-inventory tiers, and a shift to FNSKU-level low-inventory fees are quietly reshaping how profitable your SKUs actually are.</p>
+
+  <p>If you ran your numbers once in Q4 2025 and never looked back, you are almost certainly overestimating your margins on some products and underestimating the cost of slow-moving inventory on others.</p>
+
+  <p>Here is a complete, no-fluff breakdown of every <strong>Amazon FBA fee change in 2026</strong> — what moved, by how much, and exactly how to recalculate your unit economics so you are not leaving money on the table.</p>
+
+  <h2>What Changed in Amazon FBA Fees for 2026: The Summary</h2>
+
+  <p>Amazon announced the 2026 fee changes in late 2025, and they took effect on <strong>January 15, 2026</strong>. The headline numbers are modest — but combine them with the April 17 fuel surcharge and the restructured aged-inventory penalties, and the cumulative impact on some products is not trivial.</p>
+
+  <p>Here is the quick-reference table:</p>
+
+  <table>
+    <tr>
+      <th>Fee Type</th>
+      <th>What Changed</th>
+      <th>Effective</th>
+    </tr>
+    <tr>
+      <td>Fulfillment (Standard)</td>
+      <td><span class="fee-up">+$0.05 to +$0.51/unit</span> depending on size and price tier; under-$10 products got a <span class="fee-down">−$0.86 discount</span></td>
+      <td>Jan 15, 2026</td>
+    </tr>
+    <tr>
+      <td>Fuel &amp; Logistics Surcharge</td>
+      <td><span class="fee-up">+1.5% to +3.5%</span> on all FBA fulfillment fees (varies by market)</td>
+      <td>Apr 17, 2026</td>
+    </tr>
+    <tr>
+      <td>Aged Inventory Surcharge</td>
+      <td><span class="fee-up">New tiered structure</span> from 181 days, with sharper increases at 271+ days, and new 456+ day tier</td>
+      <td>Jan 16, 2026</td>
+    </tr>
+    <tr>
+      <td>Low-Inventory-Level Fee</td>
+      <td>Now applies at <strong>FNSKU level</strong> (not parent-ASIN); expanded to bulky products</td>
+      <td>Jan 15, 2026</td>
+    </tr>
+    <tr>
+      <td>Returns Processing</td>
+      <td>Threshold-based: only charged when return rate <strong>exceeds category benchmark</strong> (apparel &amp; shoes exempt — per-unit on every return)</td>
+      <td>Jan 15, 2026</td>
+    </tr>
+    <tr>
+      <td>FBA Prep &amp; Labeling</td>
+      <td><span class="fee-up">Discontinued entirely in the US</span> — all products must arrive prepped</td>
+      <td>Jan 1, 2026</td>
+    </tr>
+    <tr>
+      <td>Inbound Placement</td>
+      <td><span class="fee-up">+$0.05/unit avg</span> for minimal splits; more granular weight tiers</td>
+      <td>Jan 15, 2026</td>
+    </tr>
+    <tr>
+      <td>Payout Timing</td>
+      <td>Shifted to <strong>DD+7</strong> (7 days after delivery) — adds ~10-14 days to cash cycle</td>
+      <td>Mar 12, 2026</td>
+    </tr>
+  </table>
+
+  <div class="highlight-box">
+    <p><strong>No new fee types were introduced in 2026.</strong> The structure is the same as 2025 — referral, fulfillment, storage, and surcharges. What changed is the rates, the tier boundaries, and the conditions under which certain fees trigger.</p>
+  </div>
+
+  <h2>2026 Amazon FBA Fulfillment Fee Changes by Size and Price Tier</h2>
+
+  <p>Fulfillment fees are the biggest line item in your FBA cost stack, and the 2026 changes are not uniform across all products. Amazon has made the fee structure more granular — which means some products got hit harder than others.</p>
+
+  <p>Here is the breakdown by size tier and price range:</p>
+
+  <table>
+    <tr>
+      <th>Size Tier</th>
+      <th>Price Range</th>
+      <th>Fee Change</th>
+      <th>Who Feels It</th>
+    </tr>
+    <tr>
+      <td>Small Standard</td>
+      <td>$10 – $50</td>
+      <td><span class="fee-up">+$0.25</span></td>
+      <td>Most private-label products. Modest impact.</td>
+    </tr>
+    <tr>
+      <td>Large Standard</td>
+      <td>$10 – $50</td>
+      <td><span class="fee-up">+$0.05</span></td>
+      <td>Minimal. Nearly unchanged.</td>
+    </tr>
+    <tr>
+      <td>Small Standard</td>
+      <td>Above $50</td>
+      <td><span class="fee-up">+$0.51</span></td>
+      <td><strong>The biggest hit.</strong> Premium-priced small items. If you can drop the price to $49.99 without hurting perception, you avoid this tier entirely.</td>
+    </tr>
+    <tr>
+      <td>Large Standard</td>
+      <td>Above $50</td>
+      <td><span class="fee-up">+$0.31</span></td>
+      <td>Noticeable at volume. Worth reviewing packaging to see if you can shift to a smaller tier.</td>
+    </tr>
+    <tr>
+      <td>Any Size</td>
+      <td>Under $10</td>
+      <td><span class="fee-down">−$0.86 discount</span></td>
+      <td><strong>Winner.</strong> Low-price products got an increased discount from $0.77 to $0.86. If your cost structure works at sub-$10 pricing, this is the year to lean into it.</td>
+    </tr>
+  </table>
+
+  <p>And then there is the <strong>fuel and logistics surcharge</strong> that came into effect on April 17, 2026. It applies on top of all FBA fulfillment fees — <strong>3.5% for US and Canada, 1.5% for European markets, and 0% for Japan</strong>. So that $0.25 increase on a US small standard product effectively becomes closer to $0.35-$0.40 depending on the base fee.</p>
+
+  <p>The key takeaway: if your product is priced just above $50 and you are in the small standard tier, <strong>you are paying the highest per-unit increase of any product bracket.</strong> A pricing adjustment from $52.99 to $49.99 could save you the $0.51 fee hike plus some referral fee — often a net-positive trade if volume is elastic.</p>
+
+  <h2>Aged Inventory Surcharge: The Tiered System That Punishes Slow Movers</h2>
+
+  <p>This is where the 2026 changes get expensive for sellers who are not tracking inventory age closely. Before 2026, the aged inventory surcharge had a simpler structure. The new system introduces <strong>monthly tiered brackets starting at 181 days</strong>, and the rates escalate sharply:</p>
+
+  <table>
+    <tr>
+      <th>Days in FBA</th>
+      <th>Per Cubic Foot</th>
+      <th>Per-Unit Minimum</th>
+    </tr>
+    <tr>
+      <td>0 – 180</td>
+      <td>$0.00</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>181 – 210</td>
+      <td>$0.50</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>211 – 240</td>
+      <td>$1.00</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>241 – 270</td>
+      <td>$1.50</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>271 – 300</td>
+      <td><strong>$5.45</strong></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>301 – 330</td>
+      <td>$5.70</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>331 – 365</td>
+      <td>$5.90</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>366 – 455</td>
+      <td>$6.90</td>
+      <td>$0.30/unit</td>
+    </tr>
+    <tr>
+      <td>456+</td>
+      <td><strong>$7.90</strong></td>
+      <td>$0.35/unit</td>
+    </tr>
+  </table>
+
+  <p>Look at the jump from 270 days ($1.50/cu ft) to 271 days ($5.45/cu ft). That is a <strong>263% increase overnight</strong>. If you have a pallet of slow-moving inventory sitting at 260 days, you have a 10-day window to either sell through or submit a removal order — or you eat a massive fee spike.</p>
+
+  <div class="highlight-box">
+    <p><strong>Pro tip:</strong> Set a calendar reminder for the <strong>10th-12th of each month</strong>. Removal orders must be submitted before 11:59 PM PT on the 14th to avoid the next month's aged inventory charge. Once submitted, you are protected — even if the physical removal takes two weeks.</p>
+  </div>
+
+  <p>Also worth noting: Apparel, shoes, bags, jewelry, and watches are <strong>excluded from the 181–270 day bands</strong> in 2026. If you sell in those categories, you have a longer grace period before the surcharge kicks in — but once it does (at 271 days), you pay the same steep rates as everyone else.</p>
+
+  <h2>Low-Inventory-Level Fee Now at FNSKU Level</h2>
+
+  <p>Previously, the low-inventory-level fee was calculated at the parent-ASIN level. That meant one well-stocked variation could mask an out-of-stock child ASIN. In 2026, Amazon moved this fee to the <strong>FNSKU level</strong> — each individual variation is now tracked and penalized independently.</p>
+
+  <p>This matters if you sell products with multiple size or color variations. A popular black variant that keeps selling out while the less popular white variant is fully stocked will now trigger the low-inventory fee on the black variant, even though the parent ASIN appears healthy overall. The fee also expanded to cover Small and Large Bulky products, which were previously exempt.</p>
+
+  <p>The practical implication: <strong>your replenishment planning needs to happen at the variation level, not the parent level.</strong> Set restock alerts at 35 days of cover per FNSKU, not per parent listing.</p>
+
+  <h2>How to Recalculate Your Unit Economics for 2026</h2>
+
+  <p>Here is a practical, step-by-step process to update your profit calculations for the current fee environment:</p>
+
+  <ol>
+    <li><strong>Pull your current fee breakdown</strong> from Seller Central (Reports → Fee and Economics Preview, or use the Revenue Calculator). Run every active SKU through it.</li>
+    <li><strong>Add the fuel surcharge</strong> on top of the fulfillment fee (3.5% US/CA, 1.5% EU, 0% JP). This is not included in the base rate — it is a separate line item. If your base fulfillment fee is $5.10 in the US, the surcharge adds $0.18.</li>
+    <li><strong>Check inventory age</strong> in the FBA Inventory tool. For any SKU approaching 150+ days, run a removal-or-discount decision: can you sell through before day 180, or is it cheaper to remove?</li>
+    <li><strong>Re-evaluate your price points.</strong> If any SKU is priced between $50.01 and $55, do the math on dropping to $49.99 to avoid the $0.51 fulfillment hike. Check conversion rate at the lower price versus margin saved.</li>
+    <li><strong>Model the low-inventory fee</strong> for your top-selling variations. If you consistently dip below 28 days of cover on a specific FNSKU, the fee adds $0.32-$0.97 per unit — factor that into your COGS calculation.</li>
+  </ol>
+
+  <h2>Free Tool: FBA Profit Calculator with 2026 Rates</h2>
+  <div class="tool-cta">
+    <div class="tool-cta-icon">🧮</div>
+    <h3>Amazon FBA Profit Calculator</h3>
+    <p>I built a free tool that auto-calculates referral fees, FBA fulfillment (with market-specific fuel surcharges), storage estimates, and net profit margin — across all 12 Amazon markets. Drop in your numbers and see the 2026 fee impact instantly.</p>
+    <a href="/tools/amazon-fba-profit-calculator.html" class="btn-primary">Try the FBA Profit Calculator →</a>
+    <p style="margin-top: 12px; font-size: 12px; color: var(--muted);">Free. No sign-up. Works for US, UK, DE, FR, IT, ES, CA, JP, AU, NL, SE, PL.</p>
+  </div>
+
+  <h2>The Bottom Line</h2>
+  <p>The 2026 fee changes look small on a per-unit basis — and for most standard-size products, they are. But three things make this year different: the fuel surcharge is a separate line item that many sellers forget to factor in, the aged-inventory escalation from $1.50 to $5.45 per cubic foot at day 271 is aggressive, and the FNSKU-level low-inventory fee has silently expanded to cover variations and bulky products.</p>
+
+  <p>Recalculating your unit economics takes maybe an hour for a catalog of 20-30 SKUs. The cost of <em>not</em> doing it? That depends on how many units you move — and how many slow movers are quietly approaching day 180.</p>
+
+  <div class="author-bio">
+    <div class="author-avatar">S</div>
+    <div class="author-info">
+      <h4>Sharon</h4>
+      <p>Amazon operator based in China. I manage seller accounts daily — PPC, reviews, listing optimization, and FBA cost analysis. I built the free tools on this site from real operational workflows. No theory, just what works.</p>
+    </div>
+  </div>
+</div>
+<div class="back-link-wrap">
+  <a href="/blog/" class="back-link">← Back to Blog</a>
+</div>
+<footer class="footer">
+  <span>© 2026 SharonEcom</span>
+  <div class="footer-links">
+    <a href="#">Affiliate Disclosure</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+</body>
+</html>
