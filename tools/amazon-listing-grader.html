@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Amazon Listing Grader v2 — Official 2024 Scoring | SharonEcom</title>
-<meta name="description" content="Audit your Amazon listing based on Amazon's official 2024 scoring table. Paste a product URL or fill manually. 13-dimension A-F grading.">
+<title>Amazon Listing Grader 2026 — Official Scoring Table, Title Rules &amp; Compliance Check | SharonEcom</title>
+<meta name="description" content="Score your Amazon listing against the official scoring table. 13-dimension A-F audit covering title, bullets, description, keywords, and 2026.7.27 title compliance rules. Free, no sign-up.">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
 :root {
@@ -147,7 +147,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
     <span class="badge badge-free">Free &middot; No Sign-up</span>
     <span class="badge badge-date">2026.7.27 Title Rules</span>
   </div>
-  <h1>Amazon Listing Grader</h1>
+  <h1>Amazon Listing Grader — Score Your Listing Against Amazon's Official Table</h1>
   <p class="sub">Paste a product URL to auto-fill, or enter content manually. Scoring follows Amazon's official 2024 Listing completeness table (13 dimensions, A-F grade). Sensitive word violations trigger Amazon's F-grade compliance flag.</p>
 </header>
 
@@ -370,8 +370,8 @@ function uploadMainImg(e){for(const f of e.target.files)readImg(f,mainImages,ren
 function uploadAplusImg(e){for(const f of e.target.files)readImg(f,aplusImages,renderAplusImgs);e.target.value='';}
 function removeMainImg(i){mainImages.splice(i,1);renderMainImgs();}
 function removeAplusImg(i){aplusImages.splice(i,1);renderAplusImgs();}
-function renderMainImgs(){let h=mainImages.map((img,i)=>'<div class="img-thumb" style="position:relative"><img src="'+img.dataUrl+'" alt=""><div class="del-img" style="display:flex" onclick="event.stopPropagation();removeMainImg('+i+')">&times;</div></div>').join('');h+='<label class="img-thumb" style="cursor:pointer"><div class="placeholder">+</div><input type="file" accept="image/*" style="display:none" onchange="uploadMainImg(event)" multiple></label>';$('mainImgArea').innerHTML=h;if(mainImages.length){const sq=mainImages.filter(i=>i.isSquare).length,lg=mainImages.filter(i=>i.isLarge).length;$('imgStats').innerHTML='<span class="'+(mainImages.length>=6?'ok':'warn')+'">&#128247; '+mainImages.length+' image'+(mainImages.length>1?'s':'')+'</span>'+(sq<mainImages.length?'<span class="warn">&#9633; '+(mainImages.length-sq)+' not square</span>':'')+(lg<mainImages.length?'<span class="warn">&#8593; '+(mainImages.length-lg)+' under 2000px</span>':'')+(sq===mainImages.length&&lg===mainImages.length?'<span class="ok">&#10003; All pass</span>':'');}else $('imgStats').innerHTML='';}
-function renderAplusImgs(){let h=aplusImages.map((img,i)=>'<div class="img-thumb" style="position:relative"><img src="'+img.dataUrl+'" alt=""><div class="del-img" style="display:flex" onclick="event.stopPropagation();removeAplusImg('+i+')">&times;</div></div>').join('');h+='<label class="img-thumb" style="cursor:pointer"><div class="placeholder">+</div><input type="file" accept="image/*" style="display:none" onchange="uploadAplusImg(event)" multiple></label>';$('aplusImgArea').innerHTML=h;$('aplusImgStats').innerHTML=aplusImages.length?'<span class="ok">&#128444; '+aplusImages.length+' A+ image'+(aplusImages.length>1?'s':'')+'</span>':'';}
+function renderMainImgs(){let h=mainImages.map((img,i)=>'<div class="img-thumb" style="position:relative"><img src="'+img.dataUrl+'" alt="Amazon product listing image"><div class="del-img" style="display:flex" onclick="event.stopPropagation();removeMainImg('+i+')">&times;</div></div>').join('');h+='<label class="img-thumb" style="cursor:pointer"><div class="placeholder">+</div><input type="file" accept="image/*" style="display:none" onchange="uploadMainImg(event)" multiple></label>';$('mainImgArea').innerHTML=h;if(mainImages.length){const sq=mainImages.filter(i=>i.isSquare).length,lg=mainImages.filter(i=>i.isLarge).length;$('imgStats').innerHTML='<span class="'+(mainImages.length>=6?'ok':'warn')+'">&#128247; '+mainImages.length+' image'+(mainImages.length>1?'s':'')+'</span>'+(sq<mainImages.length?'<span class="warn">&#9633; '+(mainImages.length-sq)+' not square</span>':'')+(lg<mainImages.length?'<span class="warn">&#8593; '+(mainImages.length-lg)+' under 2000px</span>':'')+(sq===mainImages.length&&lg===mainImages.length?'<span class="ok">&#10003; All pass</span>':'');}else $('imgStats').innerHTML='';}
+function renderAplusImgs(){let h=aplusImages.map((img,i)=>'<div class="img-thumb" style="position:relative"><img src="'+img.dataUrl+'" alt="Amazon product listing image"><div class="del-img" style="display:flex" onclick="event.stopPropagation();removeAplusImg('+i+')">&times;</div></div>').join('');h+='<label class="img-thumb" style="cursor:pointer"><div class="placeholder">+</div><input type="file" accept="image/*" style="display:none" onchange="uploadAplusImg(event)" multiple></label>';$('aplusImgArea').innerHTML=h;$('aplusImgStats').innerHTML=aplusImages.length?'<span class="ok">&#128444; '+aplusImages.length+' A+ image'+(aplusImages.length>1?'s':'')+'</span>':'';}
 
 // Char counts
 function updateCharCounts(){const t=$('title').value;$('titleHint').textContent=t.length+' / 75 chars';$('titleHint').style.color=t.length>75?'var(--red)':'var(--t3)';const hl=$('highlight').value;$('hlHint').textContent=hl.length+' / 125 chars';$('hlHint').style.color=hl.length>125?'var(--red)':'var(--t3)';const st=$('st').value;const stB=new TextEncoder().encode(st).length;$('stHint').textContent=stB+' / 249 bytes';$('stHint').style.color=stB>=250?'var(--red)':'var(--t3)';for(let i=1;i<=bulletCount;i++){const el=$('bLen'+i);if(!el)continue;const bp=document.getElementById('bullet'+i);if(!bp)continue;const bytes=new TextEncoder().encode(bp.value).length;el.textContent=bytes;el.className='bullet-char'+(bytes>500?' over':'');}$('descHint').textContent=$('description').value.length+' chars';}
