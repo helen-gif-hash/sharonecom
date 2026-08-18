@@ -784,6 +784,7 @@
       <p class="form-hint">Leave your message and I'll reply with available slots and what to prep.</p>
       <form class="contact-form" id="contactForm">
         <input type="text" name="name" placeholder="Your name" required />
+        <input type="email" name="email" placeholder="Your email" required />
         <input type="text" name="subject" placeholder="Subject" />
         <textarea name="message" placeholder="Tell me about your project or question..." required></textarea>
         <button type="submit">Send</button>
@@ -805,42 +806,55 @@
 </footer>
 
 <script>
-  // Contact form handler
-  // To enable email sending, replace the action URL below with your form endpoint
-  // e.g., Formspree: https://formspree.io/f/your-form-id
-  // e.g., Web3Forms: https://api.web3forms.com/submit (requires access_key)
+  // Contact form → Web3Forms (https://web3forms.com)
+  // Free 250 submissions/month. Get your access key at web3forms.com (submit your email),
+  // then paste it below. The key is safe to expose in frontend HTML.
+  const WEB3FORMS_ACCESS_KEY = "b16eb5e6-f5b3-4737-9fa6-dce5f8bd3e25";
+
   const form = document.getElementById('contactForm');
   const success = document.getElementById('formSuccess');
+  const button = form.querySelector('button[type="submit"]');
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
 
     const formData = new FormData(form);
-    const data = {
+    const payload = {
+      access_key: WEB3FORMS_ACCESS_KEY,
+      from_name: "SharonEcom Contact",
       name: formData.get('name'),
-      subject: formData.get('subject') || '(no subject)',
+      email: formData.get('email'),
+      subject: formData.get('subject') || 'New message from SharonEcom contact form',
       message: formData.get('message')
     };
 
-    // Send to your email via form service
-    // Replace YOUR_FORM_ENDPOINT with your actual endpoint
-    fetch('YOUR_FORM_ENDPOINT', {
+    button.disabled = true;
+    button.textContent = 'Sending…';
+
+    fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
     })
     .then(function(res) {
-      if (res.ok) {
+      return res.json().then(function(body) {
+        return { ok: res.ok && body.success === true, body: body };
+      });
+    })
+    .then(function(result) {
+      if (result.ok) {
         form.style.display = 'none';
         success.style.display = 'block';
       } else {
         alert('Something went wrong. Please try again or email me directly.');
+        button.disabled = false;
+        button.textContent = 'Send';
       }
     })
     .catch(function() {
-      // Fallback: show success message (configure endpoint to enable actual sending)
-      form.style.display = 'none';
-      success.style.display = 'block';
+      alert('Network error. Please try again or email me directly.');
+      button.disabled = false;
+      button.textContent = 'Send';
     });
   });
 </script>

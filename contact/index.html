@@ -256,6 +256,7 @@
       <p class="form-hint">Leave your message and I will reply with available slots and what to prep.</p>
       <form class="contact-form" id="contactForm">
         <input type="text" name="name" placeholder="Your name" required />
+        <input type="email" name="email" placeholder="Your email" required />
         <input type="text" name="subject" placeholder="Subject" />
         <textarea name="message" placeholder="Tell me about your project or question..." required></textarea>
         <button type="submit">Send</button>
@@ -274,32 +275,53 @@
   </div>
 </footer>
 <script>
+  // Contact form → Web3Forms (https://web3forms.com)
+  // Free 250 submissions/month. Get your access key at web3forms.com (submit your email),
+  // then paste it below. The key is safe to expose in frontend HTML.
+  var WEB3FORMS_ACCESS_KEY = "b16eb5e6-f5b3-4737-9fa6-dce5f8bd3e25";
+
   var form = document.getElementById("contactForm");
   var success = document.getElementById("formSuccess");
+  var button = form.querySelector('button[type="submit"]');
   form.addEventListener("submit", function(e) {
     e.preventDefault();
     var formData = new FormData(form);
-    var data = {
+    var payload = {
+      access_key: WEB3FORMS_ACCESS_KEY,
+      from_name: "SharonEcom Contact",
       name: formData.get("name"),
-      subject: formData.get("subject") || "(no subject)",
+      email: formData.get("email"),
+      subject: formData.get("subject") || "New message from SharonEcom contact form",
       message: formData.get("message")
     };
-    fetch("YOUR_FORM_ENDPOINT", {
+
+    button.disabled = true;
+    button.textContent = "Sending…";
+
+    fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(payload)
     })
     .then(function(res) {
-      if (res.ok) {
+      return res.json().then(function(body) {
+        return { ok: res.ok && body.success === true, body: body };
+      });
+    })
+    .then(function(result) {
+      if (result.ok) {
         form.style.display = "none";
         success.style.display = "block";
       } else {
         alert("Something went wrong. Please try again or email me directly.");
+        button.disabled = false;
+        button.textContent = "Send";
       }
     })
     .catch(function() {
-      form.style.display = "none";
-      success.style.display = "block";
+      alert("Network error. Please try again or email me directly.");
+      button.disabled = false;
+      button.textContent = "Send";
     });
   });
 </script>
