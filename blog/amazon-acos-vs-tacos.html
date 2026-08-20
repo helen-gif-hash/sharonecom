@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FVRCJN284X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FVRCJN284X');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ACOS measures ad efficiency; TACOS measures ad dependency. Learn the difference, how to calculate your break-even ACOS from gross margin, and the healthy ranges for 2026 Amazon PPC.">
+  <meta property="og:image" content="https://sharonecom.com/assets/images/blog-acos-vs-tacos.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>Amazon ACOS vs TACOS: What's the Difference and How to Find Your Break-Even — SharonEcom</title>
+  <style>
+    :root {
+      --primary: #6E56CF;
+      --primary-hover: #5A44C0;
+      --primary-soft: #F0EBFA;
+      --accent: #FFCD4D;
+      --bg: #FFFFFF;
+      --surface: #F7F8FA;
+      --text: #1B1B1F;
+      --muted: #5B5B66;
+      --border: #E6E6EA;
+      --radius: 8px;
+      --radius-card: 12px;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: -0.3px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .article-header {
+      padding: 64px 0 40px;
+      text-align: center;
+    }
+    .article-header h1 {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .article-meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .article-meta .dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+    .article-content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+    }
+    .article-content .lead {
+      font-size: 18px;
+      color: var(--text);
+      line-height: 1.65;
+      margin-bottom: 32px;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+    }
+    .article-content h2 {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+      margin-top: 48px;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .article-content h3 {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.2px;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .article-content p {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+    .article-content strong {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .article-content ul, .article-content ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+    .article-content li {
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .article-content a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .article-content a:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
+    }
+    .highlight-box {
+      background: var(--primary-soft);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius-card);
+      padding: 28px 32px;
+      margin: 32px 0;
+    }
+    .highlight-box p {
+      margin-bottom: 12px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .highlight-box p:last-child {
+      margin-bottom: 0;
+    }
+    .highlight-box strong {
+      color: var(--primary);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+    }
+    th {
+      background: var(--surface);
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    tr:last-child td { border-bottom: none; }
+    .fee-up { color: #DC2626; font-weight: 600; }
+    .fee-down { color: #0d8a4e; font-weight: 600; }
+    .tool-cta {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 28px 32px;
+      margin: 32px 0;
+      text-align: center;
+    }
+    .tool-cta .tool-cta-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    .tool-cta h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    .tool-cta p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .tool-cta .btn-primary {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--primary);
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 28px;
+      cursor: pointer;
+      transition: background 0.15s;
+      text-decoration: none;
+    }
+    .tool-cta .btn-primary:hover { background: var(--primary-hover); }
+    .author-bio {
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+      padding-top: 32px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .author-bio .author-avatar {
+      flex: 0 0 48px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .author-bio .author-info h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .author-bio .author-info p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 0;
+    }
+    .back-link-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .back-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .back-link:hover { color: var(--primary-hover); }
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--muted);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text); }
+    @media (max-width: 768px) {
+      .nav-links { gap: 18px; }
+      .nav-links a { font-size: 12px; }
+      .article-header h1 { font-size: 26px; }
+      .article-content .lead { font-size: 16px; }
+      .article-content h2 { font-size: 20px; }
+      .article-content h3 { font-size: 16px; }
+      .article-content p, .article-content li { font-size: 15px; }
+      .highlight-box, .tool-cta { padding: 20px; }
+      table { font-size: 12px; }
+      th, td { padding: 8px 10px; }
+      .footer { flex-direction: column; gap: 12px; text-align: center; }
+      .footer-links { gap: 16px; }
+      .author-bio { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar container">
+  <a href="/" class="nav-logo">SharonEcom</a>
+  <ul class="nav-links">
+    <li><a href="/tools/">Tools</a></li>
+    <li><a href="/#playbooks">Playbooks</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/contact/">Contact</a></li>
+  </ul>
+</nav>
+<header class="article-header container">
+<h1>Amazon ACOS vs TACOS: What's the Difference and How to Find Your Break-Even</h1>
+  <div class="article-meta">
+    <span>Sharon</span>
+    <span class="dot"></span>
+    <span>Amazon Operations</span>
+    <span class="dot"></span>
+    <span>7 min read</span>
+  </div>
+</header>
+<div class="article-content">
+  <p class="lead">Amazon ACOS vs TACOS is one of the most confused pairs of metrics in PPC — and getting it wrong quietly drains margin. ACOS tells you how efficiently your ads convert spend into attributed sales; TACOS tells you how dependent your whole business is on those ads. They answer different questions, and you need both to know whether your account is healthy. This guide breaks down exactly what each metric measures, the formula for finding your break-even ACOS from your gross margin, and the ranges that separate a profitable campaign from a money pit in 2026.</p>
+
+  <p>If you only track one, you will miss the other half of the story. Here is the full picture.</p>
+
+  <h2>What ACOS Actually Measures</h2>
+
+  <p><strong>ACOS (Advertising Cost of Sale)</strong> = ad spend ÷ ad-attributed sales. If you spend $20 to drive $100 in attributed sales, your ACOS is 20%.</p>
+
+  <p>It is a measure of <strong>efficiency</strong>. Lower ACOS means each ad dollar is pulling in more attributed revenue. Amazon reports it per campaign, per ad group, per keyword, and at the account level, which makes it the default metric sellers obsess over.</p>
+
+  <p>The trap: a "good" ACOS in isolation tells you nothing about profit. A 15% ACOS looks great until you realize your product only has a 12% gross margin — in which case every ad-attributed sale loses you money.</p>
+
+  <h2>What TACOS Actually Measures</h2>
+
+  <p><strong>TACOS (Total Advertising Cost of Sale)</strong> = total ad spend ÷ total revenue (organic <em>plus</em> PPC). If you spend $20 on ads but your total sales for the period are $400, your TACOS is 5%.</p>
+
+  <p>It is a measure of <strong>dependency</strong>. TACOS shows what share of your entire business is propped up by paid traffic. A low, stable TACOS means organic sales are carrying the load and ads are just accelerating growth. A rising TACOS means you are buying more of your revenue every month — a warning sign that rank is slipping or the market is getting more competitive.</p>
+
+  <h2>ACOS vs TACOS: The Key Difference</h2>
+
+  <table>
+    <tr>
+      <th>Metric</th>
+      <th>What it measures</th>
+      <th>Numerator</th>
+      <th>Denominator</th>
+      <th>Question it answers</th>
+    </tr>
+    <tr>
+      <td>ACOS</td>
+      <td>Ad efficiency</td>
+      <td>Ad spend</td>
+      <td>Ad-attributed sales</td>
+      <td>"Is this campaign spending well?"</td>
+    </tr>
+    <tr>
+      <td>TACOS</td>
+      <td>Ad dependency</td>
+      <td>Ad spend</td>
+      <td>Total sales (organic + PPC)</td>
+      <td>"How much of my business needs ads to survive?"</td>
+    </tr>
+  </table>
+
+  <div class="highlight-box">
+    <p><strong>The relationship:</strong> ACOS can be healthy while TACOS climbs. Early on, you might run a 25% ACOS that still drives a 40% TACOS because almost all your sales come from ads. As organic rank builds, the same ACOS produces a falling TACOS — that is the trajectory you want to see.</p>
+  </div>
+
+  <h2>How to Calculate Your Break-Even ACOS</h2>
+
+  <p>This is the number every Amazon advertiser should have memorized for their products. Your <strong>break-even ACOS equals your gross profit margin</strong> as a percentage of the sale price.</p>
+
+  <p><strong>Break-even ACOS = (Sale price − COGS − Amazon fees) ÷ Sale price × 100</strong></p>
+
+  <p>Worked example: a product sells for $29.99. COGS is $7.00. Amazon takes roughly $11.50 in referral + FBA fees. Your pre-ad profit is $11.49, so your gross margin is about <strong>38.3%</strong>. That means your break-even ACOS is <strong>38.3%</strong>. Any campaign running above 38.3% ACOS on this product is losing money on the ad-attributed portion of sales.</p>
+
+  <p>The reason is simple: once ad spend pushes past your margin, the ad-attributed sale no longer covers the cost of the product and fulfillment. You are paying to lose money. Use our <a href="/tools/amazon-fba-profit-calculator.html">FBA Profit Calculator</a> to pull your exact margin per product before you set bid ceilings.</p>
+
+  <h2>How to Use TACOS to Spot Over-Reliance on Ads</h2>
+
+  <p>TACOS is your early-warning system. Track it month over month, not week over week (seasonality distorts short windows).</p>
+
+  <ul>
+    <li><strong>Falling or flat TACOS with rising sales</strong> — ideal. Organic is compounding and ads are efficient.</li>
+    <li><strong>Rising TACOS with flat sales</strong> — danger. You are spending more to stand still; rank or conversion is degrading.</li>
+    <li><strong>TACOS above 25–30% long term</strong> — review whether the account can survive a bid pullback. Many cannot, which means the listing is fundamentally weak on organic.</li>
+  </ul>
+
+  <h2>What Counts as a "Good" ACOS in 2026</h2>
+
+  <p>There is no universal target — it is always relative to your margin. A useful rule of thumb:</p>
+
+  <table>
+    <tr>
+      <th>Scenario</th>
+      <th>Healthy ACOS</th>
+      <th>Why</th>
+    </tr>
+    <tr>
+      <td>High-margin private label (40%+)</td>
+      <td>Up to ~35%</td>
+      <td>Room to spend and still profit</td>
+    </tr>
+    <tr>
+      <td>Mid-margin (20–30%)</td>
+      <td>15–25%</td>
+      <td>Tight, but defensible</td>
+    </tr>
+    <tr>
+      <td>Low-margin / competitive (under 20%)</td>
+      <td>Below 15%</td>
+      <td>Little room before break-even</td>
+    </tr>
+    <tr>
+      <td>Launch phase (any margin)</td>
+      <td>Can exceed break-even temporarily</td>
+      <td>Buying rank; cap the duration</td>
+    </tr>
+  </table>
+
+  <p>The launch exception matters: during a ranked push you may intentionally run ACOS above break-even to climb. The discipline is capping <em>how long</em> you do it — a launch that never comes down is not a launch, it is a subsidy.</p>
+
+  <h2>Free Tool: PPC Dashboard</h2>
+  <div class="tool-cta">
+    <div class="tool-cta-icon">📊</div>
+    <h3>Amazon PPC Dashboard</h3>
+    <p>I built a free interactive dashboard that turns your own numbers into a live ACOS, TACOS, ROAS and break-even view. Drag the CPC slider to watch the ACOS line cross your break-even, run a what-if scenario (CPC +20%, conversion −15%, or a combined stress test), and see exactly where your ads stop making money. Pull your Initial Profit / Unit straight from the <a href="/tools/amazon-fba-profit-calculator.html">FBA Profit Calculator</a> and you are set in 30 seconds.</p>
+    <a href="/tools/amazon-ppc-dashboard.html" class="btn-primary">Open the PPC Dashboard →</a>
+    <p style="margin-top: 12px; font-size: 12px; color: var(--muted);">Free. No sign-up. Live ACOS, TACOS, ROAS and break-even — no spreadsheet required.</p>
+  </div>
+
+  <h2>The Bottom Line</h2>
+  <p>ACOS and TACOS are not competitors — they are two instruments on the same dashboard. ACOS tells you whether a campaign is efficient; TACOS tells you whether your business is addicted to ads. The one number that makes either of them meaningful is your break-even ACOS, which is just your gross margin. The PPC Dashboard above calculates this automatically and also outputs your break-even CPC and daily net profit, so you see the whole margin picture in one place. Set your bid ceilings off that, watch TACOS trend month over month, and you will stop guessing whether your PPC is actually making money. Most sellers never calculate the break-even line — which is exactly why most of them over-spend.</p>
+
+  <div class="author-bio">
+    <div class="author-avatar">S</div>
+    <div class="author-info">
+      <h4>Sharon</h4>
+      <p>Amazon operator based in China. I manage seller accounts daily — PPC, reviews, listing optimization, and FBA cost analysis. I built the free tools on this site from real operational workflows. No theory, just what works.</p>
+    </div>
+  </div>
+</div>
+<div class="back-link-wrap">
+  <a href="/blog/" class="back-link">← Back to Blog</a>
+</div>
+<footer class="footer">
+  <span>© 2026 SharonEcom</span>
+  <div class="footer-links">
+    <a href="#">Affiliate Disclosure</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+</body>
+</html>
