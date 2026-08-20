@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FVRCJN284X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FVRCJN284X');
+  </script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon PPC Dashboard 2026 — ACOS, TACOS, ROAS &amp; Break-Even Visualizer | SharonEcom</title>
+<meta name="description" content="Free Amazon PPC dashboard. Visualize ACOS, TACOS, ROAS and your break-even ACOS in real time. Adjust your numbers, run what-if scenarios (CPC +20%, conversion -15%), and see exactly where your ads stop making money.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Amazon PPC ACOS / TACOS Dashboard",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "Free interactive Amazon PPC dashboard that visualizes ACOS, TACOS, ROAS and break-even ACOS from your inputs, with what-if scenarios.",
+  "url": "https://sharonecom.com/tools/amazon-ppc-dashboard.html",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Real-time ACOS, TACOS and ROAS",
+    "Break-even ACOS line on chart",
+    "Live ACOS / TACOS / ROAS charts from your inputs",
+    "What-if scenarios: CPC +20%, conversion -15%",
+    "Daily profit vs bid visualization"
+  ]
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --primary:       #6E56CF;
+  --primary-hover: #5A44C0;
+  --primary-soft:  #F0EBFA;
+  --accent:        #FFCD4D;
+  --bg:            #FFFFFF;
+  --surface:       #F7F8FA;
+  --text:          #1B1B1F;
+  --muted:         #5B5B66;
+  --border:        #E6E6EA;
+  --radius:        8px;
+  --radius-card:   12px;
+  --card:#fff; --t3:#8F99A8;
+  --green:#0d8a4e; --glight:#e7f7ef;
+  --red:#d92c3c; --rlight:#fef0f2; --orange:#d97706; --olight:#fff9ed;
+  --r:var(--radius-card); --sh:0 1px 3px rgba(0,0,0,.06);
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 16px 48px}
+
+/* Nav */
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--border)}
+.nav-logo{font-size:18px;font-weight:700;color:var(--primary);text-decoration:none;letter-spacing:-.3px}
+.nav-links{display:flex;gap:32px;align-items:center;list-style:none}
+.nav-links a{font-size:14px;color:var(--muted);text-decoration:none;transition:color .15s}
+.nav-links a:hover,.nav-links a.active{color:var(--primary)}
+
+/* Header */
+.hdr{text-align:center;padding:28px 0 18px}
+.badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 11px;border-radius:20px;font-size:11px;font-weight:700}
+.badge-ok{background:var(--glight);color:var(--green)}
+.badge-free{background:var(--primary-soft);color:var(--primary)}
+.badge-date{background:#fef9e7;color:#8a6d14}
+.hdr h1{font-size:36px;font-weight:800;letter-spacing:-.4px}
+.hdr .sub{color:var(--muted);margin-top:4px;font-size:14px;max-width:640px;margin-left:auto;margin-right:auto}
+
+/* KPI strip */
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:6px 0 20px}
+@media(max-width:920px){.kpi-strip{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px 12px;text-align:center;position:relative;overflow:hidden}
+.kpi .klbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.kpi .kval{font-size:27px;font-weight:800;letter-spacing:-.7px;margin-top:6px;line-height:1;font-variant-numeric:tabular-nums}
+.kpi .ksub{font-size:11px;color:var(--t3);margin-top:5px}
+.kpi.good{border-color:#b7e4cf;background:var(--glight)}
+.kpi.good .kval{color:var(--green)}
+.kpi.bad{border-color:#f3c2c8;background:var(--rlight)}
+.kpi.bad .kval{color:var(--red)}
+.kpi.info{border-color:#D0C4F0;background:var(--primary-soft)}
+.kpi.info .kval{color:var(--primary)}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh)}
+.chead{padding:13px 18px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);display:flex;align-items:center;gap:7px;justify-content:space-between}
+.chead .cret{font-size:11px;font-weight:600;text-transform:none;letter-spacing:0;color:var(--muted)}
+.cbody{padding:16px 18px}
+
+/* Layout: left inputs 38% / right charts 62% */
+.main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+.main > *{min-width:0}
+.left-col{display:block}
+.right-col{display:flex;flex-direction:column}
+@media(max-width:1020px){.main{grid-template-columns:1fr}.left-col{position:static}}
+
+/* Slider field */
+.sfield{margin-bottom:16px}
+.sfield:last-child{margin-bottom:0}
+.sfield .slbl{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.sfield .slbl .name{font-size:12px;font-weight:600;display:flex;align-items:center}
+.sfield .slbl .sv{font-size:13px;font-weight:800;color:var(--primary);font-variant-numeric:tabular-nums}
+.rng{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:3px;background:var(--primary-soft);outline:none;margin:4px 0 8px}
+.rng::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--primary);cursor:pointer;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.22)}
+.rng::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--primary);cursor:pointer;border:3px solid #fff}
+.sfield .sinp{display:flex;align-items:center;gap:8px}
+.ipre{position:relative;display:block;flex:1}
+.ipre .pref{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:700;font-size:13px;pointer-events:none;line-height:1;z-index:1}
+.ipre input{padding-left:30px!important}
+.finp{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:var(--font);background:var(--card);color:var(--text);transition:border-color .15s}
+.finp:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(110,86,207,.12)}
+.hero-slider .rng{height:7px;background:linear-gradient(90deg,var(--primary) 0%,var(--primary) 50%,var(--primary-soft) 50%,var(--primary-soft) 100%)}
+.htip{position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#e6e9ee;color:var(--muted);font-size:10px;font-weight:700;cursor:help;margin-left:6px;flex-shrink:0;line-height:1;transition:background .15s,color .15s}
+.htip:hover{background:var(--primary);color:#fff}
+.htip::after{content:attr(data-tip);position:absolute;top:calc(100% + 8px);right:-6px;background:#2b303b;color:#fff;padding:7px 10px;border-radius:6px;font-size:11px;font-weight:500;line-height:1.4;width:max-content;max-width:240px;white-space:normal;opacity:0;pointer-events:none;transition:opacity .15s;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.15);text-transform:none;letter-spacing:0}
+.htip::before{content:'';position:absolute;top:calc(100% + 2px);right:5px;border:5px solid transparent;border-bottom-color:#2b303b;opacity:0;transition:opacity .15s;z-index:100}
+.htip:hover::after,.htip:hover::before{opacity:1}
+.btn-row{display:flex;gap:8px;margin-top:14px}
+.btn{flex:1;padding:9px;border:1px solid var(--border);border-radius:7px;background:var(--card);cursor:pointer;font-size:12px;font-weight:600;color:var(--muted);transition:.15s}
+.btn:hover{background:#f5f6f8;border-color:var(--primary);color:var(--primary)}
+.opt-note{font-size:11px;color:var(--t3);margin-top:2px;font-style:italic}
+
+/* Scenario buttons */
+.scn-row{display:flex;gap:18px;flex-wrap:wrap}
+.scn-btn{flex:1;min-width:190px;display:flex;flex-direction:column;gap:8px;padding:20px 22px;border:1px solid var(--border);border-radius:12px;background:var(--card);cursor:pointer;text-align:left;transition:.15s;position:relative}
+.scn-btn:hover{border-color:var(--primary)}
+.scn-btn.on{background:var(--primary-soft);border-color:var(--primary)}
+.scn-btn .t{font-size:15px;font-weight:700;display:flex;align-items:center;gap:7px}
+.scn-btn .d{font-size:13px;color:var(--muted);line-height:1.5}
+.scn-btn .chk{margin-left:auto;width:18px;height:18px;border-radius:4px;border:1.5px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:700}
+.scn-btn.on .chk{background:var(--primary);border-color:var(--primary)}
+.scn-banner{margin-top:18px;padding:16px 20px;border-radius:12px;font-size:14px;display:none;line-height:1.6}
+.scn-banner.show{display:block}
+.scn-banner.ok{background:var(--glight);border:1px solid #b7e4cf;color:var(--green)}
+.scn-banner.warn{background:var(--rlight);border:1px solid #f3c2c8;color:var(--red)}
+.scn-banner b{font-variant-numeric:tabular-nums}
+
+/* Charts */
+.chwrap{position:relative;width:100%;max-width:100%;height:380px;overflow:hidden}
+.chwrap canvas{position:absolute;top:0;left:0;width:100%!important;height:100%!important;max-width:100%}
+
+/* Breakdown list */
+.res-list{border-radius:var(--r);border:1px solid var(--border);background:var(--card);overflow:hidden}
+.res-item{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;border-bottom:1px solid var(--border);font-size:13px}
+.res-item:last-child{border-bottom:none}
+.res-item:hover{background:var(--primary-soft)}
+.res-item .riname{color:var(--muted);font-weight:500;display:flex;align-items:center}
+.res-item .rival{font-weight:700;font-variant-numeric:tabular-nums}
+.res-item.strong{font-weight:700;background:var(--primary-soft)}
+.res-item .rival.green{color:var(--green)}.res-item .rival.red{color:var(--red)}.res-item .rival.purple{color:var(--primary)}
+.res-group{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--t3);padding:12px 16px 4px}
+
+/* How it works */
+.how{margin-top:20px}
+.how summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--primary);padding:4px 0;list-style:none}
+.how summary::-webkit-details-marker{display:none}
+.how summary::before{content:'▸ ';color:var(--muted)}
+.how[open] summary::before{content:'▾ '}
+.formula{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-top:10px;font-size:13px;line-height:1.9}
+.formula code{background:#fff;border:1px solid var(--border);border-radius:5px;padding:1px 6px;font-size:12px;color:var(--primary);font-family:ui-monospace,Menlo,Consolas,monospace}
+.formula .row{display:flex;gap:10px;margin-bottom:6px}
+.formula .row:last-child{margin-bottom:0}
+.formula .lbl{flex:0 0 130px;font-weight:700;color:var(--text)}
+
+/* Footer */
+.ft{text-align:center;padding:28px 0 0;color:var(--t3);font-size:11px}
+.ft a{color:var(--primary);text-decoration:none}
+</style>
+</head>
+<body>
+<nav class="navbar container">
+  <a href="../index.html" class="nav-logo">SharonEcom</a>
+  <ul class="nav-links">
+    <li><a href="../index.html#tools">Tools</a></li>
+    <li><a href="../index.html#playbooks">Playbooks</a></li>
+    <li><a href="../index.html#blog">Blog</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+<div class="wrap">
+
+<header class="hdr">
+  <div class="badges">
+    <span class="badge badge-ok">&#10003; Live ACOS / TACOS</span>
+    <span class="badge badge-free">100% Free &middot; No Sign-up</span>
+    <span class="badge badge-date">Built for 2026 PPC</span>
+  </div>
+  <h1>Amazon PPC Dashboard</h1>
+  <p class="sub">See your ACOS, TACOS, ROAS and break-even update live. Adjust your numbers, run a what-if scenario, and pinpoint exactly where your ads stop making money.</p>
+</header>
+
+<!-- KPI STRIP -->
+<div class="kpi-strip">
+  <div class="kpi" id="kpiAcos"><div class="klbl">ACOS</div><div class="kval">—</div><div class="ksub">break-even —</div></div>
+  <div class="kpi info" id="kpiTacos"><div class="klbl">TACOS</div><div class="kval">—</div><div class="ksub">ad share of sales</div></div>
+  <div class="kpi info" id="kpiRoas"><div class="klbl">ROAS</div><div class="kval">—</div><div class="ksub">return on ad spend</div></div>
+  <div class="kpi info" id="kpiBe"><div class="klbl">Break-even ACOS</div><div class="kval">—</div><div class="ksub">your net margin</div></div>
+  <div class="kpi" id="kpiProfit"><div class="klbl">Daily Net Profit</div><div class="kval">—</div><div class="ksub">all sales &minus; ad spend</div></div>
+</div>
+
+<div class="main">
+  <!-- LEFT: INPUTS -->
+  <div class="left-col">
+    <div class="card" id="inputCard">
+      <div class="chead">&#9881; Your Numbers <span class="cret">edit any field</span></div>
+      <div class="cbody">
+
+        <!-- Sale Price -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">Sale Price</span><span class="sv" id="priceVal">$29.99</span></div>          <div class="sinp"><div class="ipre"><span class="pref">$</span><input type="number" class="finp" id="price" value="29.99" step="0.01" min="0"></div></div>
+        </div>
+
+        <!-- Initial Profit / Unit -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">Initial Profit / Unit <span class="htip" data-tip="Per-unit profit BEFORE ad spend (price minus all Amazon costs). Copy this from the FBA calculator's Per-Unit Profit module.">?</span></span><span class="sv" id="initProfitVal">$11.49</span></div>          <div class="sinp"><div class="ipre"><span class="pref">$</span><input type="number" class="finp" id="initProfit" value="11.49" step="0.01" min="-50"></div></div>
+        </div>
+
+        <!-- Profit Margin (derived, mirrors FBA calculator) -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">Profit Margin <span class="htip" data-tip="Initial Profit ÷ Sale Price. Mirrors the FBA calculator's Profit Margin field; updates automatically when you change price or profit.">?</span></span><span class="sv" id="initMarginVal">38.3%</span></div>
+          <div class="sinp"><input type="number" class="finp" id="initMargin" value="38.3" step="0.1" min="-50" readonly style="padding-left:11px!important;background:#f5f6f8;color:var(--muted)"></div>
+          <div class="opt-note">Derived &mdash; Initial Profit ÷ Sale Price (read-only)</div>
+        </div>
+
+        <!-- Daily Ad Budget -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">Daily Ad Budget</span><span class="sv" id="budgetVal">$30</span></div>          <div class="sinp"><div class="ipre"><span class="pref">$</span><input type="number" class="finp" id="budget" value="30" step="1" min="0"></div></div>
+          <div class="opt-note">Your daily click volume is derived: Clicks = Budget ÷ CPC</div>
+        </div>
+
+        <!-- CPC (bid) — HERO slider -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">CPC (your bid) <span class="htip" data-tip="Cost per click. Drag to see how your bid moves ACOS and profit.">?</span></span><span class="sv" id="cpcVal">$0.75</span></div>          <div class="sinp"><div class="ipre"><span class="pref">$</span><input type="number" class="finp" id="cpc" value="0.75" step="0.01" min="0"></div></div>
+        </div>
+
+        <!-- Conversion Rate -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">Conversion Rate</span><span class="sv" id="cvrVal">12%</span></div>          <div class="sinp"><div class="ipre"><span class="pref">%</span><input type="number" class="finp" id="cvr" value="12" step="0.1" min="0"></div></div>
+        </div>
+
+        <!-- Daily Clicks (now derived: Budget ÷ CPC) -->
+        <!-- Daily Organic Orders -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">Daily Organic Orders <span class="htip" data-tip="Orders from non-paid traffic. Needed to calculate TACOS (total ad spend vs total sales).">?</span></span><span class="sv" id="organicVal">25</span></div>          <div class="sinp"><input type="number" class="finp" id="organic" value="25" step="1" min="0" style="padding-left:11px!important"></div>
+          <div class="opt-note">Drives TACOS &mdash; leave 0 if ads are your only traffic</div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn" id="resetBtn" type="button">Reset to sample</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: BREAKDOWN (paired left-right with inputs) -->
+  <div class="right-col">
+    <div class="card" style="position:sticky;top:16px">
+      <div class="chead">&#128202; Breakdown <span class="cret">your numbers, live</span></div>
+      <div class="cbody">
+        <div class="res-list" id="breakdown"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCENARIOS (full width, ABOVE the charts so the effect is visible right below) -->
+<div class="card" style="margin-top:20px">
+  <div class="chead">&#9889; What-If Scenarios</div>
+  <div class="cbody">
+    <div class="scn-row">
+      <button class="scn-btn" id="scCpc" type="button">
+        <span class="t">CPC +20% <span class="chk">&#10003;</span></span>
+        <span class="d">Your bid climbs 20% &mdash; clicks get more expensive.</span>
+      </button>
+      <button class="scn-btn" id="scCvr" type="button">
+        <span class="t">Conversion &minus;15% <span class="chk">&#10003;</span></span>
+        <span class="d">Your listing converts 15% worse &mdash; fewer sales per click.</span>
+      </button>
+      <button class="scn-btn" id="scStress" type="button">
+        <span class="t">Stress Test (ACOS breach) <span class="chk">&#10003;</span></span>
+        <span class="d">Both hit at once &mdash; the classic "ads went red" moment.</span>
+      </button>
+    </div>
+    <div class="scn-banner" id="scnBanner"></div>
+  </div>
+</div>
+
+<!-- ACOS CHART (full width, below inputs + breakdown + scenarios) -->
+<div class="card" style="margin-top:20px">
+  <div class="chead">&#128202; ACOS vs Bid <span class="cret" id="acosHint">adjust the CPC field &rarr;</span></div>
+  <div class="cbody">
+    <div class="chwrap"><canvas id="acosChart"></canvas></div>
+    <div class="opt-note" style="margin-top:10px">The dashed orange line is your break-even ACOS. Where the purple ACOS line is <span style="color:var(--green);font-weight:700">green</span> you make money; where it turns <span style="color:var(--red);font-weight:700">red</span> you lose money on every ad sale.</div>
+  </div>
+</div>
+
+<!-- PROFIT CHART (full width) -->
+<div class="card" style="margin-top:20px">
+  <div class="chead">&#128176; Daily Ad Profit vs Bid <span class="cret">crosses zero at break-even</span></div>
+  <div class="cbody">
+    <div class="chwrap"><canvas id="profitChart"></canvas></div>
+    <div class="opt-note" style="margin-top:10px">Net profit from ad-driven sales given your daily budget. Clicks = Budget ÷ bid, so raising your bid buys fewer clicks. The line crosses $0 exactly at your break-even CPC &mdash; bid above it and the campaign loses money.</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<details class="how">
+  <summary>How the math works</summary>
+  <div class="formula">
+    <div class="row"><span class="lbl">ACOS</span><span><code>Ad Spend &divide; Ad Sales = CPC &divide; (CVR &times; Price)</code> &mdash; with a fixed budget, Ad Spend = Budget, so ACOS depends only on bid, conversion and price &mdash; not on click volume or budget size.</span></div>
+    <div class="row"><span class="lbl">ROAS</span><span><code>Ad Sales &divide; Ad Spend = 1 &divide; ACOS</code></span></div>
+    <div class="row"><span class="lbl">TACOS</span><span><code>Total Ad Spend &divide; Total Sales</code> (ad sales + organic sales)</span></div>
+    <div class="row"><span class="lbl">Break-even ACOS</span><span><code>Initial Profit &divide; Price</code> = your Profit Margin %</span></div>
+    <div class="row"><span class="lbl">Break-even CPC</span><span><code>CVR &times; Initial Profit</code> = the highest bid you can pay and still break even</span></div>
+    <div class="row"><span class="lbl">Daily Clicks</span><span><code>Budget &divide; CPC</code> &mdash; your daily click volume is derived from budget and bid (not a separate input)</span></div>
+    <div class="row"><span class="lbl">Rule</span><span>If <code>ACOS &lt; Break-even ACOS</code> your ad-attributed sales are profitable. Above it, you lose money on every order the ads bring in.</span></div>
+  </div>
+</details>
+
+<footer class="ft">
+  SharonEcom &middot; Free tools for Amazon sellers. <a href="../index.html#tools">More tools &rarr;</a>
+</footer>
+
+<script>
+// ===================== STATE =====================
+const DEFAULTS = {price:29.99, initProfit:11.49, budget:30, cpc:0.75, cvr:12, organic:25};
+const SYM = '$';
+let acosChart=null, profitChart=null;
+let curBreakEven = 0;   // percent, for segment coloring
+let curCPCIdx = 0;      // index on sweep for vertical line
+
+// ===================== HELPERS =====================
+const $ = id => document.getElementById(id);
+function num(id){ const v = parseFloat($(id).value); return isFinite(v) && v >= 0 ? v : 0; }
+function fmtC(x){ return SYM + (x).toLocaleString('en-US',{minimumFractionDigits:2, maximumFractionDigits:2}); }
+function fmtC0(x){ return SYM + Math.round(x).toLocaleString('en-US'); }
+function fmtP(x){ return (x).toFixed(1) + '%'; }
+function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+
+// Pure calculation from a parameter set
+function calc(p){
+  const contrib   = p.initProfit;                                     // per-unit profit BEFORE ad spend
+  const clicks    = (p.budget > 0 && p.cpc > 0) ? p.budget / p.cpc : 0;  // budget-driven
+  const adSpend   = p.budget;                                         // = clicks * cpc (full daily budget)
+  const adOrders  = clicks * p.cvr;
+  const adSales   = adOrders * p.price;
+  const acos      = adSales > 0 ? adSpend / adSales : null;          // decimal
+  const roas      = adSpend > 0 ? adSales / adSpend : null;
+  const organicSales = p.organic * p.price;
+  const totalSales   = adSales + organicSales;
+  const tacos      = totalSales > 0 ? adSpend / totalSales : null;   // decimal
+  const breakEven  = p.price > 0 ? contrib / p.price : null;         // = Profit Margin
+  const netAd      = adOrders * contrib - adSpend;                   // daily, ad only
+  const totalProfit= (adOrders + p.organic) * contrib - adSpend;     // daily, all
+  const breakEvenCPC = (p.cvr > 0 && contrib > 0) ? p.cvr * contrib : null;
+  return {adSpend, adOrders, adSales, acos, roas, organicSales, totalSales, tacos, contrib, breakEven, netAd, totalProfit, breakEvenCPC, clicks};
+}
+
+// ===================== SLIDER SYNC =====================
+const SLIDERS = [
+  {f:'price',  disp:v=>SYM+v,            pct:false},
+  {f:'initProfit', disp:v=>SYM+v,        pct:false},
+  {f:'budget', disp:v=>SYM+Math.round(v),pct:false},
+  {f:'cpc',    disp:v=>SYM+v,            pct:false},
+  {f:'cvr',    disp:v=>v+'%',            pct:true},
+  {f:'organic',disp:v=>String(Math.round(v)), pct:false},
+];
+SLIDERS.forEach(s=>{
+  const rng = $(s.f+'Rng'), inp = $(s.f), disp = $(s.f+'Val');
+  const sync = (fromRng)=>{
+    const v = (fromRng && rng) ? rng.value : inp.value;
+    if(fromRng && rng) inp.value = v; else if(rng) rng.value = v;
+    disp.textContent = s.disp(parseFloat(v));
+    recalc();
+  };
+  if(rng) rng.addEventListener('input', ()=>sync(true));
+  inp.addEventListener('input', ()=>sync(false));
+});
+
+// ===================== SCENARIOS =====================
+const scState = {cpc:false, cvr:false, stress:false};
+function toggleScn(key, btn){
+  // Stress is a standalone worst-case: toggling it clears the other two, and vice-versa.
+  if(key === 'stress'){ scState.cpc = false; scState.cvr = false; }
+  else { scState.stress = false; }
+  scState[key] = !scState[key];
+  $('scCpc').classList.toggle('on', scState.cpc);
+  $('scCvr').classList.toggle('on', scState.cvr);
+  $('scStress').classList.toggle('on', scState.stress);
+  recalc();
+}
+$('scCpc').addEventListener('click', ()=>toggleScn('cpc', $('scCpc')));
+$('scCvr').addEventListener('click', ()=>toggleScn('cvr', $('scCvr')));
+$('scStress').addEventListener('click', ()=>toggleScn('stress', $('scStress')));
+
+// ===================== RESET =====================
+$('resetBtn').addEventListener('click', ()=>{
+  Object.keys(DEFAULTS).forEach(f=>{
+    $(f).value = DEFAULTS[f];
+    if($(f+'Rng')) $(f+'Rng').value = DEFAULTS[f];
+    const s = SLIDERS.find(x=>x.f===f);
+    if(s) $(f+'Val').textContent = s.disp(DEFAULTS[f]);
+  });
+  scState.cpc = scState.cvr = scState.stress = false;
+  ['scCpc','scCvr','scStress'].forEach(id=>$(id).classList.remove('on'));
+  recalc();
+});
+
+// ===================== CHART SETUP =====================
+const vlinePlugin = {
+  id:'vline',
+  afterDatasetsDraw(chart){
+    if(chart.$curIdx == null) return;
+    const x = chart.scales.x;
+    const px = x.getPixelForValue(chart.$curIdx);
+    const {top, bottom} = chart.chartArea;
+    const ctx = chart.ctx;
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(px, top); ctx.lineTo(px, bottom);
+    ctx.lineWidth = 1.5; ctx.strokeStyle = 'rgba(110,86,207,.5)';
+    ctx.setLineDash([4,4]); ctx.stroke();
+    ctx.restore();
+  }
+};
+
+function chartLabels(cMin, step, N){
+  const arr = [];
+  for(let i=0;i<N;i++) arr.push((cMin + i*step));
+  return arr;
+}
+
+function initCharts(){
+  const acosCtx = $('acosChart').getContext('2d');
+  acosChart = new Chart(acosCtx, {
+    type:'line',
+    data:{ labels:[], datasets:[
+      { label:'ACOS %', data:[], borderWidth:3, pointRadius:0, tension:.25, fill:false,
+        segment:{ borderColor: c => c.p1.parsed.y <= curBreakEven ? '#0d8a4e' : '#d92c3c' } },
+      { label:'Break-even ACOS', data:[], borderColor:'#d97706', borderDash:[6,5], borderWidth:2, pointRadius:0, fill:false, order:1 },
+      { label:'Your bid', data:[], pointRadius:7, pointBackgroundColor:'#6E56CF', pointBorderColor:'#fff', pointBorderWidth:2, showLine:false, order:0 }
+    ]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{ legend:{ display:true, labels:{ boxWidth:12, font:{size:13}, usePointStyle:true } },
+        tooltip:{ callbacks:{ title: items => 'Bid ' + SYM + parseFloat(items[0].label).toFixed(2),
+          label: c => c.dataset.label + ': ' + (typeof c.parsed.y === 'number' ? c.parsed.y.toFixed(1) + '%' : '—') } } },
+      scales:{
+        x:{ title:{ display:true, text:'Bid (CPC)', font:{size:13} }, ticks:{ font:{size:12}, maxTicksLimit:8, callback:function(v){ return SYM + Number(this.getLabelForValue(v)).toFixed(2); } } , grid:{display:false} },
+        y:{ title:{ display:true, text:'ACOS %', font:{size:13} }, ticks:{ font:{size:13}, callback:v=>v+'%' }, grid:{ color:'#f0f1f3' }, beginAtZero:true }
+      }
+    },
+    plugins:[vlinePlugin]
+  });
+
+  const profitCtx = $('profitChart').getContext('2d');
+  profitChart = new Chart(profitCtx, {
+    type:'line',
+    data:{ labels:[], datasets:[
+      { label:'Daily ad net profit', data:[], borderColor:'#6E56CF', backgroundColor:'rgba(110,86,207,.12)', borderWidth:3, pointRadius:0, tension:.25, fill:true,
+        segment:{ borderColor: c => c.p1.parsed.y >= 0 ? '#0d8a4e' : '#d92c3c' } },
+      { label:'Break-even ($0)', data:[], borderColor:'#9aa0aa', borderDash:[5,5], borderWidth:1.5, pointRadius:0, fill:false, order:1 },
+      { label:'Your bid', data:[], pointRadius:7, pointBackgroundColor:'#6E56CF', pointBorderColor:'#fff', pointBorderWidth:2, showLine:false, order:0 }
+    ]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{ legend:{ display:true, labels:{ boxWidth:12, font:{size:13}, usePointStyle:true } },
+        tooltip:{ callbacks:{ title: items => 'Bid ' + SYM + parseFloat(items[0].label).toFixed(2),
+          label: c => c.dataset.label + ': ' + (typeof c.parsed.y === 'number' ? fmtC(c.parsed.y) : '—') } } },
+      scales:{
+        x:{ title:{ display:true, text:'Bid (CPC)', font:{size:13} }, ticks:{ font:{size:12}, maxTicksLimit:8, callback:function(v){ return SYM + Number(this.getLabelForValue(v)).toFixed(2); } }, grid:{display:false} },
+        y:{ title:{ display:true, text:'Daily net profit', font:{size:13} }, ticks:{ font:{size:13}, callback:v=>SYM+v }, grid:{ color:'#f0f1f3' } }
+      }
+    },
+    plugins:[vlinePlugin]
+  });
+}
+// cache of label numeric values for tick callback (index -> value)
+let chartLabels_cache = [];
+
+// ===================== MAIN RECALC =====================
+function recalc(){
+  // base inputs
+  const base = {
+    price: num('price'), initProfit: num('initProfit'), budget: num('budget'),
+    cpc: num('cpc'), cvr: num('cvr')/100, organic: num('organic')
+  };
+  // scenario-effective inputs
+  const effCPC = base.cpc * (scState.cpc?1.2:1) * (scState.stress?1.2:1);
+  const effCVR = base.cvr * (scState.cvr?0.85:1) * (scState.stress?0.85:1);
+  const eff = Object.assign({}, base, { cpc: effCPC, cvr: effCVR });
+
+  const baseR = calc(base);
+  const r = calc(eff);
+
+  // ---- KPI strip ----
+  const bePct = (r.breakEven!=null) ? r.breakEven*100 : 0;
+  const acosPct = (r.acos!=null) ? r.acos*100 : 0;
+  const profitable = (r.acos!=null) ? r.acos <= r.breakEven : false;
+
+  setKpi('kpiAcos', r.acos!=null?fmtP(acosPct):'—',
+         'break-even ' + (r.breakEven!=null?fmtP(bePct):'—'),
+         r.acos!=null ? (profitable?'good':'bad') : '');
+  setKpi('kpiTacos', r.tacos!=null?fmtP(r.tacos*100):'—', 'ad share of total sales', 'info');
+  setKpi('kpiRoas', r.roas!=null?r.roas.toFixed(2)+'×':'—', 'return on ad spend', 'info');
+  setKpi('kpiBe', r.breakEven!=null?fmtP(bePct):'—', 'profit margin ' + fmtP(base.price>0?base.initProfit/base.price*100:0), 'info');
+  const totProfitable = r.totalProfit >= 0;
+  setKpi('kpiProfit', (r.totalProfit>=0?'':'−') + fmtC0(Math.abs(r.totalProfit)),
+         'initial profit ' + fmtC(r.contrib) + '/unit', totProfitable?'good':'bad');
+
+  // keep Profit Margin read-only field in sync with Initial Profit / Price
+  const _mp = base.price>0 ? base.initProfit/base.price*100 : 0;
+  $('initMargin').value = _mp.toFixed(1);
+  $('initMarginVal').textContent = _mp.toFixed(1) + '%';
+
+  // ---- Breakdown list ----
+  const rows = [
+    ['Ad spend / day', fmtC(r.adSpend), ''],
+    ['Ad clicks / day', Math.round(r.clicks), ''],
+    ['Ad orders / day', r.adOrders.toFixed(1), ''],
+    ['Ad sales / day', fmtC(r.adSales), ''],
+    ['Organic sales / day', fmtC(r.organicSales), ''],
+    ['Total sales / day', fmtC(r.totalSales), 'strong'],
+    ['Initial Profit / Unit', fmtC(r.contrib), r.contrib>=0?'green':'red'],
+    ['Break-even ACOS', r.breakEven!=null?fmtP(bePct):'—', 'purple'],
+    ['Break-even CPC', r.breakEvenCPC!=null?fmtC(r.breakEvenCPC):'—', 'purple'],
+    ['Net profit (ad only)', fmtC(r.netAd), r.netAd>=0?'green':'red'],
+    ['Total daily profit', fmtC(r.totalProfit), r.totalProfit>=0?'green':'red'],
+  ];
+  let html='';
+  rows.forEach(([name,val,cls])=>{
+    const strong = cls==='strong' ? ' strong' : '';
+    const vcls = (cls==='green'||cls==='red'||cls==='purple') ? ' '+cls : '';
+    html += `<div class="res-item${strong}"><span class="riname">${name}</span><span class="rival${vcls}">${val}</span></div>`;
+  });
+  $('breakdown').innerHTML = html;
+
+  // derived daily clicks from budget ÷ bid (budget-driven model)
+  $('acosHint').textContent = '≈ ' + Math.round(r.clicks) + ' clicks/day at this bid';
+  $('acosHint').style.color = 'var(--muted)';
+
+  // ---- Charts ----
+  updateCharts(base, eff, r);
+
+  // ---- Scenario banner ----
+  updateBanner(baseR, r);
+}
+
+function setKpi(id, val, sub, cls){
+  const el = $(id);
+  el.className = 'kpi' + (cls?(' '+cls):'');
+  el.querySelector('.kval').textContent = val;
+  el.querySelector('.ksub').textContent = sub;
+}
+
+function updateCharts(base, eff, r){
+  const N = 60;
+  const beCPC = (eff.cvr>0 && r.contrib>0) ? eff.cvr * r.contrib : 0;
+  const cMin = beCPC>0 ? Math.max(0.1, beCPC*0.2) : 0.1;   // focus the curve around break-even
+  const cMax = Math.max(eff.cpc*2.5, beCPC*2.2, 4);
+  const step = (cMax - cMin) / (N - 1);
+  const labels = chartLabels(cMin, step, N);
+  chartLabels_cache = labels;
+
+  curBreakEven = (r.breakEven!=null) ? r.breakEven*100 : 0;
+  const bePct = curBreakEven;
+  const B = base.budget;   // daily budget is the spend ceiling
+
+  const acosArr = [], profitArr = [], breakArr = [], zeroArr = [];
+  for(let i=0;i<N;i++){
+    const c = labels[i];
+    const acos_c = (eff.cvr>0 && eff.price>0) ? (c / (eff.cvr * eff.price)) : 0;
+    acosArr.push(acos_c * 100);
+    // budget-driven: clicks = B/c, so profit(c) = (B/c)*cvr*contrib - B
+    const profit_c = c>0 ? (B/c) * eff.cvr * r.contrib - B : -B;
+    profitArr.push(profit_c);
+    breakArr.push(bePct);
+    zeroArr.push(0);
+  }
+
+  curCPCIdx = clamp(Math.round((eff.cpc - cMin) / step), 0, N-1);
+  const markerAcos = new Array(N).fill(null);  markerAcos[curCPCIdx] = acosArr[curCPCIdx];
+  const markerProfit = new Array(N).fill(null); markerProfit[curCPCIdx] = profitArr[curCPCIdx];
+
+  // ACOS chart
+  acosChart.data.labels = labels;
+  acosChart.data.datasets[0].data = acosArr;
+  acosChart.data.datasets[1].data = breakArr;
+  acosChart.data.datasets[2].data = markerAcos;
+  acosChart.$curIdx = curCPCIdx;
+  acosChart.update('none');
+
+  // Profit chart
+  profitChart.data.labels = labels;
+  profitChart.data.datasets[0].data = profitArr;
+  profitChart.data.datasets[1].data = zeroArr;
+  profitChart.data.datasets[2].data = markerProfit;
+  profitChart.$curIdx = curCPCIdx;
+  profitChart.update('none');
+}
+
+function updateBanner(baseR, r){
+  const banner = $('scnBanner');
+  const active = scState.cpc || scState.cvr || scState.stress;
+  if(!active){ banner.className='scn-banner'; banner.innerHTML=''; return; }
+
+  const dAcos = (r.acos!=null && baseR.acos!=null) ? (r.acos - baseR.acos)*100 : 0;
+  const dProfit = r.totalProfit - baseR.totalProfit;
+  const nowProfitable = (r.acos!=null) ? r.acos <= r.breakEven : false;
+
+  let verdict, cls;
+  if(nowProfitable){
+    verdict = 'Still profitable &mdash; but your margin is thinner.';
+    cls = 'ok';
+  } else {
+    verdict = 'ACOS is now above break-even. These ads are losing money on every order.';
+    cls = 'warn';
+  }
+  banner.className = 'scn-banner show ' + cls;
+  banner.innerHTML = `<b>Scenario active.</b> ACOS moved ${dAcos>=0?'+':''}${dAcos.toFixed(1)} pts to <b>${r.acos!=null?fmtP(r.acos*100):'—'}</b> `
+    + `(break-even ${r.breakEven!=null?fmtP(r.breakEven*100):'—'}). `
+    + `Daily net profit changed ${dProfit>=0?'+':''}${fmtC(dProfit)} to <b>${fmtC(r.totalProfit)}</b>. ${verdict}`;
+}
+
+// ===================== INIT =====================
+initCharts();
+recalc();
+</script>
+</body>
+</html>
