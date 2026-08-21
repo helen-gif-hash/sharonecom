@@ -294,31 +294,45 @@
     }
     .kit-hero:hover { border-color: var(--primary); }
     .kit-hero-left {
-      flex: 0 0 340px;
-      background: var(--surface);
-      padding: 32px;
+      flex: 0 0 42%;
+      background: var(--bg);
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+      border-right: 1px solid var(--border);
     }
     .kit-hero-left img {
       width: 100%;
-      height: auto;
-      max-height: 200px;
+      height: 100%;
       object-fit: cover;
-      border-radius: var(--radius);
+      display: block;
     }
     .kit-hero-right {
       flex: 1;
-      padding: 32px 36px;
+      padding: 36px 36px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      gap: 20px;
+    }
+    .kit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 5px 12px;
+      border-radius: 6px;
+      align-self: flex-start;
+      margin-bottom: 14px;
     }
     .kit-features {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 20px;
       list-style: none;
     }
     .kit-features li {
@@ -636,7 +650,9 @@
       .tools-grid { grid-template-columns: 1fr; }
       .kit-hero { flex-direction: column; }
       .kit-hero-left { flex: 0 0 auto; }
+      .kit-hero-left img { max-height: 240px; }
       .kit-hero-right { padding: 28px; }
+      .kit-features { grid-template-columns: 1fr; }
       .kit-grid { grid-template-columns: 1fr; }
       .featured-article { flex-direction: column; }
       .featured-img { flex: 0 0 auto; width: 100%; height: 200px; border-right: 0; border-bottom: 1px solid var(--border); }
@@ -722,9 +738,10 @@
 
   <div class="kit-hero">
     <div class="kit-hero-left">
-      <img src="assets/images/playbooks-kit-cover.jpg" alt="New Product Launch Kit cover" />
+      <img src="assets/images/playbooks-kit-cover.png" alt="New Product Launch Kit dashboard mockup" />
     </div>
     <div class="kit-hero-right">
+      <div class="kit-badge">6 ready-to-use templates</div>
       <ul class="kit-features">
         <li>Multi-marketplace profit sheet</li>
         <li>Listing compliance checklist</li>
