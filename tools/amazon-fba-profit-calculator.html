@@ -13,6 +13,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Amazon FBA Profit Calculator 2026 — 12 Markets, Stress Test &amp; Price Ladder | SharonEcom</title>
 <meta name="description" content="Free Amazon FBA profit calculator with 2026 rates across 12 markets. Auto-calculates referral fees, FBA fulfillment, VAT, fuel surcharge. Includes price ladder, monthly profit projection, and stress-test scenarios.">
+<link rel="canonical" href="https://sharonecom.com/tools/amazon-fba-profit-calculator.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Amazon FBA Profit Calculator 2026 — 12 Markets & Stress Test">
+<meta property="og:description" content="Free Amazon FBA profit calculator with 2026 rates across 12 markets. Auto-calculates referral fees, FBA fulfillment, VAT, fuel surcharge. Includes price ladder, monthly profit projection, and stress-test scenarios.">
+<meta property="og:url" content="https://sharonecom.com/tools/amazon-fba-profit-calculator.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://sharonecom.com/assets/images/blog-profit-margin.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -39,6 +47,7 @@
 }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="../assets/css/base.css">
 <style>
 :root {
   --primary:       #6E56CF;
@@ -222,16 +231,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 <body>
 <nav class="navbar container">
   <a href="../index.html" class="nav-logo">SharonEcom</a>
+  <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
   <ul class="nav-links">
-    <li><a href="../index.html#tools">Tools</a></li>
+    <li><a href="../tools/">Tools</a></li>
     <li><a href="../index.html#playbooks">Playbooks</a></li>
-    <li><a href="../index.html#blog">Blog</a></li>
-    <li><a href="../index.html#contact">Contact</a></li>
+    <li><a href="../blog/">Blog</a></li>
+    <li><a href="../contact/">Contact</a></li>
   </ul>
 </nav>
-<div class="wrap">
+<div class="wrap fade-in">
 
-<header class="hdr">
+<header class="hdr fade-in">
   <div class="badges">
     <span class="badge badge-ok">&#10003; 2026 Fee Rates — 12 Markets</span>
     <span class="badge badge-free">100% Free · No Sign-up</span>
@@ -241,7 +251,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
   <p class="sub">Calculate real profit across 12 Amazon markets. Auto-computes referral fees, FBA from dimensions, VAT & digital services fee.</p>
 </header>
 
-<div class="main">
+<div class="main fade-in">
 
 <!-- ===== LEFT: INPUTS ===== -->
 <div class="card" id="inputCard">
@@ -457,12 +467,21 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
   <div class="scard-note">Every row reruns the full calculation at a different selling price &mdash; same costs, same fee rules, same monthly volume. Scan the Margin column to find your sweet spot: the lowest price that still clears your target. The highlighted row is your current price; it updates live as you edit the form.</div>
 </div></div>
 
-<footer class="ft">
+<div class="ft">
   <p>Fee data: Amazon Seller Central published rates, July 2026. Fuel surcharge 3.5% (US/CA) or 1.5% (EU) or 0% (JP). Digital services fee as published.</p>
   <p>All calculations run in your browser. No data collected, stored, or transmitted.</p>
   <p>Built for embedding on Cloudflare Pages &mdash; 100% client-side, zero backend.</p>
-</footer>
 </div>
+</div>
+
+<footer class="footer container">
+  <span>&copy; 2026 SharonEcom</span>
+  <div class="footer-links">
+    <a href="../affiliate-disclosure.html">Affiliate Disclosure</a>
+    <a href="../privacy-policy.html">Privacy Policy</a>
+    <a href="../contact/">Contact</a>
+  </div>
+</footer>
 
 <!-- ===== JAVASCRIPT ===== -->
 <script>
@@ -1600,5 +1619,7 @@ if(qp.has('price')){
   recalc();
 }
 </script>
+<script src="../assets/js/scroll-animation.js"></script>
+<script src="../assets/js/nav.js"></script>
 </body>
 </html>

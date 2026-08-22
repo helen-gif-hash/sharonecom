@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -12,6 +12,14 @@
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Free Amazon seller tools built by an operator. FBA profit calculator across 12 markets, listing quality grader, and operational guides. 2026 rates. No sign-up required.">
+  <link rel="canonical" href="https://sharonecom.com/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="Free Amazon Seller Tools 2026 — FBA Profit Calculator, Listing Grader & More">
+  <meta property="og:description" content="Free Amazon seller tools built by an operator. FBA profit calculator across 12 markets, listing quality grader, and operational guides. 2026 rates. No sign-up required.">
+  <meta property="og:url" content="https://sharonecom.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://sharonecom.com/assets/images/blog-listing-optimization-2026.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <title>Free Amazon Seller Tools 2026 — FBA Profit Calculator, Listing Grader &amp; More | SharonEcom</title>
   <script type="application/ld+json">
   {
@@ -25,63 +33,22 @@
     ]
   }
   </script>
+  <link rel="stylesheet" href="assets/css/base.css">
   <style>
-    :root {
-      --primary: #6E56CF;
-      --primary-hover: #5A44C0;
-      --primary-soft: #F0EBFA;
-      --accent: #FFCD4D;
-      --bg: #FFFFFF;
-      --surface: #F7F8FA;
-      --text: #1B1B1F;
-      --muted: #5B5B66;
-      --border: #E6E6EA;
-      --radius: 8px;
-      --radius-card: 12px;
-      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font);
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── Container ── */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-
-    /* ── Nav ── */
-    .navbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--primary);
-      text-decoration: none;
-      letter-spacing: -0.3px;
-    }
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 14px;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .nav-links a:hover { color: var(--text); }
-
+:root {
+  --primary: #6E56CF;
+  --primary-hover: #5A44C0;
+  --primary-soft: #F0EBFA;
+  --accent: #FFCD4D;
+  --bg: #FFFFFF;
+  --surface: #F7F8FA;
+  --text: #1B1B1F;
+  --muted: #5B5B66;
+  --border: #E6E6EA;
+  --radius: 8px;
+  --radius-card: 12px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
     /* ── Hero ── */
     .hero {
       text-align: center;
@@ -294,31 +261,45 @@
     }
     .kit-hero:hover { border-color: var(--primary); }
     .kit-hero-left {
-      flex: 0 0 340px;
-      background: var(--surface);
-      padding: 32px;
+      flex: 0 0 42%;
+      background: var(--bg);
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+      border-right: 1px solid var(--border);
     }
     .kit-hero-left img {
       width: 100%;
-      height: auto;
-      max-height: 200px;
+      height: 100%;
       object-fit: cover;
-      border-radius: var(--radius);
+      display: block;
     }
     .kit-hero-right {
       flex: 1;
-      padding: 32px 36px;
+      padding: 36px 36px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      gap: 20px;
+    }
+    .kit-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 5px 12px;
+      border-radius: 6px;
+      align-self: flex-start;
+      margin-bottom: 14px;
     }
     .kit-features {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 20px;
       list-style: none;
     }
     .kit-features li {
@@ -550,7 +531,7 @@
       background: var(--primary-soft);
       padding: 28px 28px;
     }
-    .contact-form-wrap h4 {
+    .contact-form-wrap h3 {
       font-size: 15px;
       font-weight: 700;
       color: var(--primary);
@@ -567,6 +548,7 @@
       flex-direction: column;
       gap: 8px;
     }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
     .contact-form input,
     .contact-form textarea {
       font-size: 13px;
@@ -608,35 +590,27 @@
       padding: 14px 18px;
       margin-top: 12px;
     }
-
-    /* ── Footer ── */
-    .footer {
-      border-top: 1px solid var(--border);
-      padding: 28px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      color: var(--muted);
+    .form-error {
+      display: none;
+      font-size: 14px;
+      color: #DC2626;
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-top: 12px;
     }
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a {
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--text); }
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
-      .nav-links { gap: 18px; }
-      .nav-links a { font-size: 12px; }
       .hero h1 { font-size: 28px; }
       .hero .sub { font-size: 14px; }
       .tools-grid { grid-template-columns: 1fr; }
       .kit-hero { flex-direction: column; }
       .kit-hero-left { flex: 0 0 auto; }
+      .kit-hero-left img { max-height: 240px; }
       .kit-hero-right { padding: 28px; }
+      .kit-features { grid-template-columns: 1fr; }
       .kit-grid { grid-template-columns: 1fr; }
       .featured-article { flex-direction: column; }
       .featured-img { flex: 0 0 auto; width: 100%; height: 200px; border-right: 0; border-bottom: 1px solid var(--border); }
@@ -646,9 +620,13 @@
       .contact-box { flex-direction: column; }
       .contact-form-wrap { flex: 0 0 auto; }
       .section-desc { white-space: normal; }
-      .footer { flex-direction: column; gap: 12px; text-align: center; }
-      .footer-links { gap: 16px; }
     }
+  /* ── Footer ── */
+    .footer{border-top:1px solid var(--border);padding:28px 0;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
+    .footer-links{display:flex;gap:24px}
+    .footer-links a{color:var(--muted);text-decoration:none;transition:color 0.15s}
+    .footer-links a:hover{color:var(--text)}
+    @media (max-width:768px){.footer{flex-direction:column;gap:12px;text-align:center}.footer-links{gap:16px}}
   </style>
 </head>
 <body>
@@ -656,26 +634,27 @@
 <!-- ════════════════ NAVIGATION ════════════════ -->
 <nav class="navbar container">
   <a href="#" class="nav-logo">SharonEcom</a>
+  <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
   <ul class="nav-links">
-    <li><a href="/tools/">Tools</a></li>
+    <li><a href="tools/">Tools</a></li>
     <li><a href="#playbooks">Playbooks</a></li>
-    <li><a href="/blog/">Blog</a></li>
-    <li><a href="/contact/">Contact</a></li>
+    <li><a href="blog/">Blog</a></li>
+    <li><a href="contact/">Contact</a></li>
   </ul>
 </nav>
 
 <!-- ════════════════ HERO ════════════════ -->
-<section class="hero container">
+<section class="hero container fade-in">
   <h1>Amazon growth tools, <span>from the operator's desk.</span></h1>
   <p class="sub">Free calculators, templates, and kits for lean sellers — built from real account work, for sellers ready to move faster.</p>
   <div class="hero-btns">
-    <a href="/tools/" class="btn-primary">Explore tools →</a>
+    <a href="tools/" class="btn-primary">Explore tools →</a>
     <a href="#playbooks" class="btn-outline">Get the launch kit →</a>
   </div>
 </section>
 
 <!-- ════════════════ PRACTICAL KIT (FREE TOOLS) ════════════════ -->
-<section class="section container" id="tools">
+<section class="section container fade-in" id="tools">
   <div class="section-label">Free Tools</div>
   <h2 class="section-title">Tools that turn spreadsheets into clarity.</h2>
   <p class="section-desc">Free calculators and hands-on templates built from years of Amazon operations. No signup required for most.</p>
@@ -715,16 +694,17 @@
 </section>
 
 <!-- ════════════════ PLAYBOOKS ════════════════ -->
-<section class="section container" id="playbooks">
+<section class="section container fade-in" id="playbooks">
   <div class="section-label">Playbooks</div>
   <h2 class="section-title">New Product Launch Kit for Amazon Sellers</h2>
   <p class="section-desc">A practical starter toolkit designed for operators who don't have a full team or whose products have not yet been launched.</p>
 
   <div class="kit-hero">
     <div class="kit-hero-left">
-      <img src="assets/images/playbooks-kit-cover.jpg" alt="New Product Launch Kit cover" />
+      <img src="assets/images/playbooks-kit-cover.png" alt="New Product Launch Kit dashboard mockup" loading="lazy" />
     </div>
     <div class="kit-hero-right">
+      <div class="kit-badge">6 ready-to-use templates</div>
       <ul class="kit-features">
         <li>Multi-marketplace profit sheet</li>
         <li>Listing compliance checklist</li>
@@ -745,26 +725,26 @@
 </section>
 
 <!-- ════════════════ BLOG ════════════════ -->
-<section class="section container" id="blog">
+<section class="section container fade-in" id="blog">
   <div class="section-label">Blog</div>
   <h2 class="section-title">Guides built around real seller questions.</h2>
   <p class="section-desc">Each article targets a search term real Amazon sellers type into Google — not generic "top 10 tips" content.</p>
 
   <div class="featured-article">
     <div class="featured-img">
-      <img src="assets/images/blog-star-rating.jpg" alt="Amazon star rating illustration" />
+      <img src="assets/images/blog-star-rating.jpg" alt="Amazon star rating illustration" loading="lazy" />
     </div>
     <div class="featured-text">
       <div class="featured-cat">Reviews</div>
       <h3>Amazon Shows You a Rounded Star Rating. Here's How to Find the REAL Number Behind Your Rankings.</h3>
       <p>Amazon displays a rounded star rating on your listing page — but the actual score driving your rank is different. This guide walks through how to calculate the real number, why the gap matters, and how many 5-star reviews you need to hit the next threshold.</p>
-      <a href="/blog/amazon-real-star-rating.html" class="featured-link">Read more →</a>
+      <a href="blog/amazon-real-star-rating.html" class="featured-link">Read more →</a>
     </div>
   </div>
 </section>
 
 <!-- ════════════════ CONTACT ════════════════ -->
-<section class="section container" id="contact">
+<section class="section container fade-in" id="contact">
   <div class="section-label">Contact</div>
   <h2 class="section-title">Work with an operator who's been inside the account.</h2>
   <p class="section-desc">For brands ready to move beyond the listing — Amazon and DTC joint operations, external traffic strategy, and operational audits.</p>
@@ -780,48 +760,60 @@
       </ul>
     </div>
     <div class="contact-form-wrap">
-      <h4>Get in touch</h4>
+      <h3>Get in touch</h3>
       <p class="form-hint">Leave your message and I'll reply with available slots and what to prep.</p>
       <form class="contact-form" id="contactForm">
-        <input type="text" name="name" placeholder="Your name" required />
-        <input type="email" name="email" placeholder="Your email" required />
-        <input type="text" name="subject" placeholder="Subject" />
-        <textarea name="message" placeholder="Tell me about your project or question..." required></textarea>
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+        <label for="hf-name" class="sr-only">Your name</label>
+        <input type="text" id="hf-name" name="name" placeholder="Your name" required />
+        <label for="hf-email" class="sr-only">Your email</label>
+        <input type="email" id="hf-email" name="email" placeholder="Your email" required />
+        <label for="hf-subject" class="sr-only">Subject</label>
+        <input type="text" id="hf-subject" name="subject" placeholder="Subject" />
+        <label for="hf-message" class="sr-only">Message</label>
+        <textarea id="hf-message" name="message" placeholder="Tell me about your project or question..." required></textarea>
         <button type="submit">Send</button>
       </form>
       <div class="form-success" id="formSuccess">Thanks for reaching out — I'll get back to you within 24 hours.</div>
+      <div class="form-error" id="formError"></div>
     </div>
   </div>
 </section>
 
 <!-- ════════════════ FOOTER ════════════════ -->
 <footer class="footer container">
-  <span>© 2026 SharonEcom</span>
+  <span>&copy; 2026 SharonEcom</span>
   <div class="footer-links">
-    <a href="#">Affiliate Disclosure</a>
-    <a href="#">Privacy Policy</a>
-    <a href="#">About</a>
-    <a href="#">Contact</a>
+    <a href="affiliate-disclosure.html">Affiliate Disclosure</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="contact/">Contact</a>
   </div>
 </footer>
 
 <script>
-  // Contact form → Web3Forms (https://web3forms.com)
-  // Free 250 submissions/month. Get your access key at web3forms.com (submit your email),
-  // then paste it below. The key is safe to expose in frontend HTML.
-  const WEB3FORMS_ACCESS_KEY = "b16eb5e6-f5b3-4737-9fa6-dce5f8bd3e25";
+  var WEB3FORMS_ACCESS_KEY = "b16eb5e6-f5b3-4737-9fa6-dce5f8bd3e25";
+  var form = document.getElementById('contactForm');
+  var success = document.getElementById('formSuccess');
+  var errorEl = document.getElementById('formError');
+  var button = form.querySelector('button[type="submit"]');
 
-  const form = document.getElementById('contactForm');
-  const success = document.getElementById('formSuccess');
-  const button = form.querySelector('button[type="submit"]');
+  function showError(msg) {
+    errorEl.textContent = msg;
+    errorEl.style.display = 'block';
+    button.disabled = false;
+    button.textContent = 'Send';
+  }
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    errorEl.style.display = 'none';
 
-    const formData = new FormData(form);
-    const payload = {
+    var formData = new FormData(form);
+    if (formData.get('_honey')) { return; }
+
+    var payload = {
       access_key: WEB3FORMS_ACCESS_KEY,
-      from_name: "SharonEcom Contact",
+      from_name: 'SharonEcom Contact',
       name: formData.get('name'),
       email: formData.get('email'),
       subject: formData.get('subject') || 'New message from SharonEcom contact form',
@@ -846,19 +838,17 @@
         form.style.display = 'none';
         success.style.display = 'block';
       } else {
-        alert('Something went wrong. Please try again or email me directly.');
-        button.disabled = false;
-        button.textContent = 'Send';
+        showError('Something went wrong. Please try again or email contact@sharonecom.com');
       }
     })
     .catch(function() {
-      alert('Network error. Please try again or email me directly.');
-      button.disabled = false;
-      button.textContent = 'Send';
+      showError('Network error. Please try again or email contact@sharonecom.com');
     });
   });
 </script>
 
+<script src="assets/js/scroll-animation.js"></script>
+<script src="assets/js/nav.js"></script>
 </body>
 </html>
 

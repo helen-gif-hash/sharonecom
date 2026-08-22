@@ -13,6 +13,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Amazon PPC Dashboard 2026 — ACOS, TACOS, ROAS &amp; Break-Even Visualizer | SharonEcom</title>
 <meta name="description" content="Free Amazon PPC dashboard. Visualize ACOS, TACOS, ROAS and your break-even ACOS in real time. Adjust your numbers, run what-if scenarios (CPC +20%, conversion -15%), and see exactly where your ads stop making money.">
+<link rel="canonical" href="https://sharonecom.com/tools/amazon-ppc-dashboard.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Amazon PPC Dashboard 2026 — ACOS, TACOS, ROAS & Break-Even">
+<meta property="og:description" content="Free Amazon PPC dashboard. Visualize ACOS, TACOS, ROAS and your break-even ACOS in real time. Adjust your numbers, run what-if scenarios (CPC +20%, conversion -15%), and see exactly where your ads stop making money.">
+<meta property="og:url" content="https://sharonecom.com/tools/amazon-ppc-dashboard.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://sharonecom.com/assets/images/blog-acos-vs-tacos.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -33,6 +41,7 @@
 }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="../assets/css/base.css">
 <style>
 :root {
   --primary:       #6E56CF;
@@ -107,16 +116,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 .sfield .slbl{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
 .sfield .slbl .name{font-size:12px;font-weight:600;display:flex;align-items:center}
 .sfield .slbl .sv{font-size:13px;font-weight:800;color:var(--primary);font-variant-numeric:tabular-nums}
-.rng{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:3px;background:var(--primary-soft);outline:none;margin:4px 0 8px}
-.rng::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--primary);cursor:pointer;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.22)}
-.rng::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--primary);cursor:pointer;border:3px solid #fff}
 .sfield .sinp{display:flex;align-items:center;gap:8px}
 .ipre{position:relative;display:block;flex:1}
 .ipre .pref{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:700;font-size:13px;pointer-events:none;line-height:1;z-index:1}
 .ipre input{padding-left:30px!important}
 .finp{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:var(--font);background:var(--card);color:var(--text);transition:border-color .15s}
 .finp:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(110,86,207,.12)}
-.hero-slider .rng{height:7px;background:linear-gradient(90deg,var(--primary) 0%,var(--primary) 50%,var(--primary-soft) 50%,var(--primary-soft) 100%)}
 .htip{position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#e6e9ee;color:var(--muted);font-size:10px;font-weight:700;cursor:help;margin-left:6px;flex-shrink:0;line-height:1;transition:background .15s,color .15s}
 .htip:hover{background:var(--primary);color:#fff}
 .htip::after{content:attr(data-tip);position:absolute;top:calc(100% + 8px);right:-6px;background:#2b303b;color:#fff;padding:7px 10px;border-radius:6px;font-size:11px;font-weight:500;line-height:1.4;width:max-content;max-width:240px;white-space:normal;opacity:0;pointer-events:none;transition:opacity .15s;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.15);text-transform:none;letter-spacing:0}
@@ -134,8 +139,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 .scn-btn.on{background:var(--primary-soft);border-color:var(--primary)}
 .scn-btn .t{font-size:15px;font-weight:700;display:flex;align-items:center;gap:7px}
 .scn-btn .d{font-size:13px;color:var(--muted);line-height:1.5}
-.scn-btn .chk{margin-left:auto;width:18px;height:18px;border-radius:4px;border:1.5px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:700}
-.scn-btn.on .chk{background:var(--primary);border-color:var(--primary)}
+.scn-btn .chk{margin-left:auto;width:18px;height:18px;border-radius:4px;border:1.5px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:700;opacity:0}
+.scn-btn.on .chk{background:var(--primary);border-color:var(--primary);opacity:1}
 .scn-banner{margin-top:18px;padding:16px 20px;border-radius:12px;font-size:14px;display:none;line-height:1.6}
 .scn-banner.show{display:block}
 .scn-banner.ok{background:var(--glight);border:1px solid #b7e4cf;color:var(--green)}
@@ -177,16 +182,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 <body>
 <nav class="navbar container">
   <a href="../index.html" class="nav-logo">SharonEcom</a>
+  <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
   <ul class="nav-links">
-    <li><a href="../index.html#tools">Tools</a></li>
+    <li><a href="../tools/">Tools</a></li>
     <li><a href="../index.html#playbooks">Playbooks</a></li>
-    <li><a href="../index.html#blog">Blog</a></li>
-    <li><a href="../index.html#contact">Contact</a></li>
+    <li><a href="../blog/">Blog</a></li>
+    <li><a href="../contact/">Contact</a></li>
   </ul>
 </nav>
-<div class="wrap">
+<div class="wrap fade-in">
 
-<header class="hdr">
+<header class="hdr fade-in">
   <div class="badges">
     <span class="badge badge-ok">&#10003; Live ACOS / TACOS</span>
     <span class="badge badge-free">100% Free &middot; No Sign-up</span>
@@ -205,7 +211,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
   <div class="kpi" id="kpiProfit"><div class="klbl">Daily Net Profit</div><div class="kval">—</div><div class="ksub">all sales &minus; ad spend</div></div>
 </div>
 
-<div class="main">
+<div class="main fade-in">
   <!-- LEFT: INPUTS -->
   <div class="left-col">
     <div class="card" id="inputCard">
@@ -324,8 +330,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
   </div>
 </details>
 
-<footer class="ft">
-  SharonEcom &middot; Free tools for Amazon sellers. <a href="../index.html#tools">More tools &rarr;</a>
+<footer class="footer container">
+  <span>&copy; 2026 SharonEcom</span>
+  <div class="footer-links">
+    <a href="../affiliate-disclosure.html">Affiliate Disclosure</a>
+    <a href="../privacy-policy.html">Privacy Policy</a>
+    <a href="../contact/">Contact</a>
+  </div>
 </footer>
 
 <script>
@@ -635,5 +646,7 @@ function updateBanner(baseR, r){
 initCharts();
 recalc();
 </script>
+<script src="../assets/js/scroll-animation.js"></script>
+<script src="../assets/js/nav.js"></script>
 </body>
 </html>

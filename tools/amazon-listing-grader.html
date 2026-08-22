@@ -13,7 +13,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Amazon Listing Grader 2026 — Official Scoring Table, Title Rules &amp; Compliance Check | SharonEcom</title>
 <meta name="description" content="Score your Amazon listing against the official scoring table. 13-dimension A-F audit covering title, bullets, description, keywords, and 2026.7.27 title compliance rules. Free, no sign-up.">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<link rel="canonical" href="https://sharonecom.com/tools/amazon-listing-grader.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Amazon Listing Grader 2026 — Official Scoring Table & Compliance Check">
+<meta property="og:description" content="Score your Amazon listing against the official scoring table. 13-dimension A-F audit covering title, bullets, description, keywords, and 2026.7.27 title compliance rules. Free, no sign-up.">
+<meta property="og:url" content="https://sharonecom.com/tools/amazon-listing-grader.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://sharonecom.com/assets/images/blog-listing-optimization-2026.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="../assets/css/base.css">
 <style>
 :root {
   --primary:#6E56CF;--primary-hover:#5A44C0;--primary-soft:#F0EBFA;
@@ -139,17 +147,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 </head>
 <body>
 <nav class="navbar container">
-  <a href="https://sharonecom.com" class="nav-logo">SharonEcom</a>
+  <a href="../index.html" class="nav-logo">SharonEcom</a>
+  <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
   <ul class="nav-links">
-    <li><a href="https://sharonecom.com/#tools">Tools</a></li>
-    <li><a href="https://sharonecom.com/#playbooks">Playbooks</a></li>
-    <li><a href="https://sharonecom.com/blog/">Blog</a></li>
-    <li><a href="https://sharonecom.com/#contact">Contact</a></li>
+    <li><a href="../tools/">Tools</a></li>
+    <li><a href="../index.html#playbooks">Playbooks</a></li>
+    <li><a href="../blog/">Blog</a></li>
+    <li><a href="../contact/">Contact</a></li>
   </ul>
 </nav>
-<div class="wrap">
+<div class="wrap fade-in">
 
-<header class="hdr">
+<header class="hdr fade-in">
   <div class="badges">
     <span class="badge badge-ok">&#10003; Amazon 2024 Official Scoring</span>
     <span class="badge badge-free">Free &middot; No Sign-up</span>
@@ -159,7 +168,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
   <p class="sub">Paste a product URL to auto-fill, or enter content manually. Scoring follows Amazon's official 2024 Listing completeness table (13 dimensions, A-F grade). Sensitive word violations trigger Amazon's F-grade compliance flag.</p>
 </header>
 
-<div class="main">
+<div class="main fade-in">
 
 <!-- ============================ LEFT: INPUTS ============================ -->
 <div>
@@ -357,35 +366,35 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 
 </div><!-- /main -->
 
-<a href="https://sharonecom.com/#tools" class="quick-link" style="display:block;text-align:center">&larr; Back to Tools</a>
+<a href="../tools/" class="quick-link" style="display:block;text-align:center">&larr; Back to Tools</a>
 <div class="ft">&copy; 2026 SharonEcom. Scoring based on Amazon's official 2024 Listing completeness scoring table.</div>
 
 </div><!-- /wrap -->
 
+<footer class="footer container">
+  <span>&copy; 2026 SharonEcom</span>
+  <div class="footer-links">
+    <a href="../affiliate-disclosure.html">Affiliate Disclosure</a>
+    <a href="../privacy-policy.html">Privacy Policy</a>
+    <a href="../contact/">Contact</a>
+  </div>
+</footer>
+
 <script>
-let mainImages=[],aplusImages=[],bulletCount=5;
+let bulletCount=5;
 function $(id){return document.getElementById(id);}
 function getBullets(){const b=[];for(let i=1;i<=bulletCount;i++){const el=document.getElementById('bullet'+i);if(el&&el.value.trim())b.push(el.value.trim());}return b;}
 
 // Bullets
 function addBullet(){bulletCount++;renderBullets();document.getElementById('bullet'+bulletCount).focus();}
-function removeBullet(idx){if(bulletCount<=1)return;bulletCount--;renderBullets();}
-function renderBullets(){let h='';for(let i=1;i<=bulletCount;i++){h+='<div class="bullet-row"><span class="bullet-num">'+i+'</span><textarea class="ftarea" id="bullet'+i+'" rows="2" placeholder="Bullet '+i+'..." oninput="onInput()"></textarea><span class="bullet-char" id="bLen'+i+'">0</span>'+(bulletCount>1?'<button class="bullet-del" onclick="removeBullet('+i+')">&times;</button>':'')+'</div>';}$('bulletsContainer').innerHTML=h;updateCharCounts();}
-
-// Images
-function readImg(f,arr,fn){const r=new FileReader();r.onload=function(e){const img=new Image();img.onload=function(){arr.push({name:f.name,dataUrl:e.target.result,width:img.width,height:img.height,type:f.type,size:f.size,isSquare:Math.abs(img.width-img.height)<10,isLarge:img.width>=2000});fn();};img.src=e.target.result;};r.readAsDataURL(f);}
-function uploadMainImg(e){for(const f of e.target.files)readImg(f,mainImages,renderMainImgs);e.target.value='';}
-function uploadAplusImg(e){for(const f of e.target.files)readImg(f,aplusImages,renderAplusImgs);e.target.value='';}
-function removeMainImg(i){mainImages.splice(i,1);renderMainImgs();}
-function removeAplusImg(i){aplusImages.splice(i,1);renderAplusImgs();}
-function renderMainImgs(){let h=mainImages.map((img,i)=>'<div class="img-thumb" style="position:relative"><img src="'+img.dataUrl+'" alt="Amazon product listing image"><div class="del-img" style="display:flex" onclick="event.stopPropagation();removeMainImg('+i+')">&times;</div></div>').join('');h+='<label class="img-thumb" style="cursor:pointer"><div class="placeholder">+</div><input type="file" accept="image/*" style="display:none" onchange="uploadMainImg(event)" multiple></label>';$('mainImgArea').innerHTML=h;if(mainImages.length){const sq=mainImages.filter(i=>i.isSquare).length,lg=mainImages.filter(i=>i.isLarge).length;$('imgStats').innerHTML='<span class="'+(mainImages.length>=6?'ok':'warn')+'">&#128247; '+mainImages.length+' image'+(mainImages.length>1?'s':'')+'</span>'+(sq<mainImages.length?'<span class="warn">&#9633; '+(mainImages.length-sq)+' not square</span>':'')+(lg<mainImages.length?'<span class="warn">&#8593; '+(mainImages.length-lg)+' under 2000px</span>':'')+(sq===mainImages.length&&lg===mainImages.length?'<span class="ok">&#10003; All pass</span>':'');}else $('imgStats').innerHTML='';}
-function renderAplusImgs(){let h=aplusImages.map((img,i)=>'<div class="img-thumb" style="position:relative"><img src="'+img.dataUrl+'" alt="Amazon product listing image"><div class="del-img" style="display:flex" onclick="event.stopPropagation();removeAplusImg('+i+')">&times;</div></div>').join('');h+='<label class="img-thumb" style="cursor:pointer"><div class="placeholder">+</div><input type="file" accept="image/*" style="display:none" onchange="uploadAplusImg(event)" multiple></label>';$('aplusImgArea').innerHTML=h;$('aplusImgStats').innerHTML=aplusImages.length?'<span class="ok">&#128444; '+aplusImages.length+' A+ image'+(aplusImages.length>1?'s':'')+'</span>':'';}
+function removeBullet(idx){if(bulletCount<=1)return;const vals=getBulletsRaw();vals.splice(idx-1,1);bulletCount--;renderBullets();for(let i=0;i<vals.length;i++)document.getElementById('bullet'+(i+1)).value=vals[i];}
+function renderBullets(){const existing=getBulletsRaw();let h='';for(let i=1;i<=bulletCount;i++){h+='<div class="bullet-row"><span class="bullet-num">'+i+'</span><textarea class="ftarea" id="bullet'+i+'" rows="2" placeholder="Bullet '+i+'..." oninput="onInput()"></textarea><span class="bullet-char" id="bLen'+i+'">0</span>'+(bulletCount>1?'<button class="bullet-del" onclick="removeBullet('+i+')">&times;</button>':'')+'</div>';}$('bulletsContainer').innerHTML=h;for(let i=0;i<existing.length&&i<bulletCount;i++)document.getElementById('bullet'+(i+1)).value=existing[i];updateCharCounts();}
+function getBulletsRaw(){const b=[];for(let i=1;i<=bulletCount;i++){const el=document.getElementById('bullet'+i);b.push(el?el.value:'');}return b;}
 
 // Char counts
-function updateCharCounts(){const t=$('title').value;$('titleHint').textContent=t.length+' / 75 chars';$('titleHint').style.color=t.length>75?'var(--red)':'var(--t3)';const hl=$('highlight').value;$('hlHint').textContent=hl.length+' / 125 chars';$('hlHint').style.color=hl.length>125?'var(--red)':'var(--t3)';const st=$('st').value;const stB=new TextEncoder().encode(st).length;$('stHint').textContent=stB+' / 249 bytes';$('stHint').style.color=stB>=250?'var(--red)':'var(--t3)';for(let i=1;i<=bulletCount;i++){const el=$('bLen'+i);if(!el)continue;const bp=document.getElementById('bullet'+i);if(!bp)continue;const bytes=new TextEncoder().encode(bp.value).length;el.textContent=bytes;el.className='bullet-char'+(bytes>500?' over':'');}$('descHint').textContent=$('description').value.length+' chars';}
+function updateCharCounts(){const t=$('title').value;$('titleHint').textContent=t.length+' / 75 chars';$('titleHint').style.color=t.length>75?'var(--red)':'var(--t3)';const hl=$('highlight').value;$('hlHint').textContent=hl.length+' / 125 chars';$('hlHint').style.color=hl.length>125?'var(--red)':'var(--t3)';const st=$('st').value;const stB=new TextEncoder().encode(st).length;$('stHint').textContent=stB+' / 249 bytes';$('stHint').style.color=stB>=250?'var(--red)':'var(--t3)';for(let i=1;i<=bulletCount;i++){const el=$('bLen'+i);if(!el)continue;const bp=document.getElementById('bullet'+i);if(!bp)continue;const bytes=new TextEncoder().encode(bp.value).length;el.textContent=bytes;el.className='bullet-char'+(bytes>500?' over':'');}const dh=$('descHint');if(dh)dh.textContent=$('description').value.length+' chars';}
 function onInput(){updateCharCounts();}
 function onUrlInput(){const url=$('productUrl').value.trim();$('fetchBtn').disabled=!url;if(url){$('keywordSearchCheck').style.display='block';$('asinCheck').style.display='block';}else{$('keywordSearchCheck').style.display='none';$('asinCheck').style.display='none';}}
-function onAplusChange(){/* A+ card removed */}
 
 // URL fetch — calls Cloudflare Pages Function
 function fetchFromUrl(){
@@ -643,7 +652,7 @@ function loadSample(){
   for(let i=0;i<sb.length;i++)document.getElementById('bullet'+(i+1)).value=sb[i];
   $('description').value='Stay hydrated with our premium 32oz stainless steel water bottle. Double-wall vacuum insulation keeps drinks cold 24h or hot 12h. Crafted from 18/8 steel, 100% BPA-free. Available in 8 colors.';
   $('st').value='insulated water jug sports bottle metal canteen hiking camping gym reusable';
-  $('aplus').value='yes';onAplusChange();
+  $('aplus').value='yes';
   $('imageCount').value='6';
   $('keyAttrs').value='yes';
   ['imgProduct','imgAngle','imgScene','imgDetail','imgComply','imgZoom'].forEach(id=>{if($(id))$(id).checked=true;});
@@ -660,7 +669,6 @@ function clearAll(){
   for(let i=1;i<=5;i++)document.getElementById('bullet'+i).value='';
   $('aplus').value='';$('imageCount').value='0';$('kwSearchResult').value='';$('asinResult').value='';$('keyAttrs').value='';
   ['imgProduct','imgAngle','imgScene','imgDetail','imgComply','imgZoom'].forEach(id=>{if($(id))$(id).checked=false;});
-  mainImages=[];aplusImages=[];renderMainImgs();renderAplusImgs();
   $('keywordSearchCheck').style.display='none';$('asinCheck').style.display='none';
   $('scoreCard').innerHTML='<div class="empty-state"><div class="empty-icon">&#128269;</div><p>Fill in your listing and click <strong>"Grade My Listing"</strong>.</p></div>';
   $('suggestionsBody').innerHTML='<div class="empty-state" style="padding:20px"><p style="font-size:12px">Suggestions appear here after grading.</p></div>';
@@ -670,5 +678,7 @@ function clearAll(){
 
 renderBullets();updateCharCounts();
 </script>
+<script src="../assets/js/scroll-animation.js"></script>
+<script src="../assets/js/nav.js"></script>
 </body>
 </html>

@@ -1,0 +1,10 @@
+# Force LF line endings everywhere for cross-platform consistency
+* text=auto eol=lf
+
+# Explicitly mark binary assets so Git never attempts text conversion
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary

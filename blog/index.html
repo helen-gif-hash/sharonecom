@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -12,63 +12,31 @@
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Amazon operations guides built around real seller questions. FBA fee breakdowns, profit margin tips, listing optimization strategies — not generic top-10 content.">
+  <link rel="canonical" href="https://sharonecom.com/blog/">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="Amazon Seller Blog — Operations Guides, FBA Tips & Tools">
+  <meta property="og:description" content="Amazon operations guides built around real seller questions. FBA fee breakdowns, profit margin tips, listing optimization strategies — not generic top-10 content.">
+  <meta property="og:url" content="https://sharonecom.com/blog/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://sharonecom.com/assets/images/blog-fba-fees-2026.jpg">
+  <meta name="twitter:card" content="summary_large_image">
   <title>Amazon Seller Blog — Operations Guides, FBA Tips &amp; Tools | SharonEcom</title>
+  <link rel="stylesheet" href="../assets/css/base.css">
   <style>
-    :root {
-      --primary: #6E56CF;
-      --primary-hover: #5A44C0;
-      --primary-soft: #F0EBFA;
-      --accent: #FFCD4D;
-      --bg: #FFFFFF;
-      --surface: #F7F8FA;
-      --text: #1B1B1F;
-      --muted: #5B5B66;
-      --border: #E6E6EA;
-      --radius: 8px;
-      --radius-card: 12px;
-      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font);
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-
-    /* ── Nav ── */
-    .navbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--primary);
-      text-decoration: none;
-      letter-spacing: -0.3px;
-    }
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 14px;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-links a.active { color: var(--text); font-weight: 600; }
-
+:root {
+  --primary: #6E56CF;
+  --primary-hover: #5A44C0;
+  --primary-soft: #F0EBFA;
+  --accent: #FFCD4D;
+  --bg: #FFFFFF;
+  --surface: #F7F8FA;
+  --text: #1B1B1F;
+  --muted: #5B5B66;
+  --border: #E6E6EA;
+  --radius: 8px;
+  --radius-card: 12px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
     /* ── Blog Hero ── */
     .blog-hero {
       text-align: center;
@@ -223,7 +191,7 @@
     .article-card:hover { border-color: var(--primary); }
     .article-card-img {
       width: 100%;
-      height: 180px;
+      height: 225px;
       background: var(--surface);
       overflow: hidden;
       display: flex;
@@ -300,28 +268,8 @@
       font-size: 14px;
     }
 
-    /* ── Footer ── */
-    .footer {
-      border-top: 1px solid var(--border);
-      padding: 28px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a {
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--text); }
-
     /* ── Responsive ── */
     @media (max-width: 768px) {
-      .nav-links { gap: 18px; }
-      .nav-links a { font-size: 12px; }
       .blog-hero h1 { font-size: 28px; }
       .featured-post { flex-direction: column-reverse; }
       .featured-post-img { flex: 0 0 200px; width: 100%; }
@@ -329,26 +277,31 @@
       .featured-post-body h3 { font-size: 18px; }
       .article-grid { grid-template-columns: 1fr; }
       .section-title-row { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .footer { flex-direction: column; gap: 12px; text-align: center; }
-      .footer-links { gap: 16px; }
     }
+  /* ── Footer ── */
+    .footer{border-top:1px solid var(--border);padding:28px 0;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
+    .footer-links{display:flex;gap:24px}
+    .footer-links a{color:var(--muted);text-decoration:none;transition:color 0.15s}
+    .footer-links a:hover{color:var(--text)}
+    @media (max-width:768px){.footer{flex-direction:column;gap:12px;text-align:center}.footer-links{gap:16px}}
   </style>
 </head>
 <body>
 
 <!-- ════════════════ NAVIGATION ════════════════ -->
 <nav class="navbar container">
-  <a href="/" class="nav-logo">SharonEcom</a>
+  <a href="../index.html" class="nav-logo">SharonEcom</a>
+  <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
   <ul class="nav-links">
-    <li><a href="/tools/">Tools</a></li>
-    <li><a href="/#playbooks">Playbooks</a></li>
-    <li><a href="/blog/" class="active">Blog</a></li>
-    <li><a href="/contact/">Contact</a></li>
+    <li><a href="../tools/">Tools</a></li>
+    <li><a href="../index.html#playbooks">Playbooks</a></li>
+    <li><a href="../blog/" class="active">Blog</a></li>
+    <li><a href="../contact/">Contact</a></li>
   </ul>
 </nav>
 
 <!-- ════════════════ BLOG HERO ════════════════ -->
-<section class="blog-hero container">
+<section class="blog-hero container fade-in">
   <h1>Guides built around real seller questions.</h1>
   <p class="hero-desc">Each article targets a search term real Amazon sellers type into Google — not generic "top 10 tips" content. Practical, actionable, from the operator desk.</p>
 </section>
@@ -359,7 +312,7 @@
     <h2>Featured articles</h2>
   </div>
 
-  <div class="featured-post">
+  <div class="featured-post fade-in">
     <div class="featured-post-body">
       <div class="post-meta"><span class="post-cat">LIST</span><span class="post-date">Jul 30, 2026</span></div>
       <h3>Amazon Shows You a Rounded Star Rating. Here is How to Find the REAL Number Behind Your Rankings.</h3>
@@ -367,7 +320,7 @@
       <a href="amazon-real-star-rating.html" class="read-more">Read more →</a>
     </div>
     <div class="featured-post-img">
-      <img src="/assets/images/blog-star-rating.jpg" alt="Amazon star rating illustration" />
+      <img src="../assets/images/blog-star-rating.jpg" alt="Amazon star rating illustration" />
     </div>
   </div>
 </div>
@@ -377,27 +330,19 @@
   <div class="section-title-row">
     <h2>All articles</h2>
     <div class="filter-tabs">
-      <button class="filter-tab active">All</button>
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="fba">FBA</button>
+      <button class="filter-tab" data-filter="profit">Profit</button>
+      <button class="filter-tab" data-filter="ppc">PPC</button>
+      <button class="filter-tab" data-filter="listing">Listing</button>
     </div>
   </div>
 
   <div class="article-grid">
 
-    <div class="article-card">
+    <div class="article-card fade-in" data-category="fba">
       <div class="article-card-img">
-        <img src="/assets/images/blog-star-rating.jpg" alt="Amazon star rating illustration" />
-      </div>
-      <div class="article-card-body">
-        <div class="post-meta"><span class="post-cat">LIST</span><span class="post-date">Jul 30, 2026</span></div>
-        <h3>Amazon Shows You a Rounded Star Rating. Here is How to Find the REAL Number Behind Your Rankings.</h3>
-        <p>Amazon hides your true review score. Find it in 2 minutes and use it to protect your rankings.</p>
-        <a href="amazon-real-star-rating.html" class="read-more">Read more →</a>
-      </div>
-    </div>
-
-    <div class="article-card">
-      <div class="article-card-img">
-        <img src="/assets/images/blog-fba-fees-2026.jpg" alt="Amazon FBA fees breakdown illustration" />
+        <img src="../assets/images/blog-fba-fees-2026.jpg" alt="Amazon FBA fees breakdown illustration" loading="lazy" />
       </div>
       <div class="article-card-body">
         <div class="post-meta"><span class="post-cat">FBA</span><span class="post-date">Aug 5, 2026</span></div>
@@ -407,9 +352,9 @@
       </div>
     </div>
 
-    <div class="article-card">
+    <div class="article-card fade-in" data-category="profit">
       <div class="article-card-img">
-        <img src="/assets/images/blog-profit-margin.jpg" alt="Amazon profit margin calculator illustration" />
+        <img src="../assets/images/blog-profit-margin.jpg" alt="Amazon profit margin calculator illustration" loading="lazy" />
       </div>
       <div class="article-card-body">
         <div class="post-meta"><span class="post-cat">PROFIT</span><span class="post-date">Aug 5, 2026</span></div>
@@ -419,9 +364,9 @@
       </div>
     </div>
 
-    <div class="article-card">
+    <div class="article-card fade-in" data-category="listing">
       <div class="article-card-img">
-        <img src="/assets/images/blog-listing-optimization-2026.jpg" alt="Amazon listing optimization checklist illustration" />
+        <img src="../assets/images/blog-listing-optimization-2026.jpg" alt="Amazon listing optimization checklist illustration" loading="lazy" />
       </div>
       <div class="article-card-body">
         <div class="post-meta"><span class="post-cat">LIST</span><span class="post-date">Aug 20, 2026</span></div>
@@ -431,9 +376,9 @@
       </div>
     </div>
 
-    <div class="article-card">
+    <div class="article-card fade-in" data-category="ppc">
       <div class="article-card-img">
-        <img src="/assets/images/blog-acos-vs-tacos.jpg" alt="Amazon ACOS vs TACOS dashboard illustration" />
+        <img src="../assets/images/blog-acos-vs-tacos.jpg" alt="Amazon ACOS vs TACOS dashboard illustration" loading="lazy" />
       </div>
       <div class="article-card-body">
         <div class="post-meta"><span class="post-cat">PPC</span><span class="post-date">Aug 20, 2026</span></div>
@@ -446,19 +391,41 @@
     <!-- Future articles will be added here -->
 
   </div>
+
+  <div class="empty-state" id="emptyState" style="display:none;">No articles in this category yet.</div>
 </div>
 
 <!-- ════════════════ FOOTER ════════════════ -->
 <footer class="footer container">
-  <span>© 2026 SharonEcom</span>
+  <span>&copy; 2026 SharonEcom</span>
   <div class="footer-links">
-    <a href="#">Affiliate Disclosure</a>
-    <a href="#">Privacy Policy</a>
-    <a href="#">About</a>
-    <a href="#">Contact</a>
+    <a href="../affiliate-disclosure.html">Affiliate Disclosure</a>
+    <a href="../privacy-policy.html">Privacy Policy</a>
+    <a href="../contact/">Contact</a>
   </div>
 </footer>
 
+<script>
+  document.querySelectorAll('.filter-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.filter-tab').forEach(function(t) { t.classList.remove('active'); });
+      this.classList.add('active');
+      var filter = this.dataset.filter;
+      var visibleCount = 0;
+      document.querySelectorAll('.article-card').forEach(function(card) {
+        if (filter === 'all' || card.dataset.category === filter) {
+          card.style.display = '';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      document.getElementById('emptyState').style.display = visibleCount === 0 ? 'block' : 'none';
+    });
+  });
+</script>
+<script src="../assets/js/scroll-animation.js"></script>
+<script src="../assets/js/nav.js"></script>
 </body>
 </html>
 

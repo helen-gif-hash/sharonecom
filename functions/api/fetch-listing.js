@@ -3,9 +3,29 @@
 // Deploy: put this file in your project's functions/api/ directory
 // Cloudflare Pages auto-deploys it as: POST https://sharonecom.com/api/fetch-listing
 
+const ALLOWED_ORIGINS = ['https://sharonecom.com', 'https://www.sharonecom.com'];
+
+const ALLOWED_AMAZON_DOMAINS = [
+  'amazon.com', 'amazon.co.uk', 'amazon.de', 'amazon.fr',
+  'amazon.it', 'amazon.es', 'amazon.co.jp', 'amazon.ca', 'amazon.com.au',
+  'amazon.com.mx', 'amazon.com.br', 'amazon.in',
+];
+
+function isAllowedAmazonUrl(rawUrl) {
+  try {
+    const parsed = new URL(rawUrl);
+    if (parsed.protocol !== 'https:') return false;
+    return ALLOWED_AMAZON_DOMAINS.some(d => parsed.hostname === d || parsed.hostname === 'www.' + d);
+  } catch {
+    return false;
+  }
+}
+
 export async function onRequestPost({ request }) {
+  const origin = request.headers.get('Origin') || '';
+  const corsOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
   const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': corsOrigin,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };
@@ -16,11 +36,10 @@ export async function onRequestPost({ request }) {
 
   try {
     const { url } = await request.json();
-    if (!url || !url.includes('amazon.')) {
+    if (!url || !isAllowedAmazonUrl(url)) {
       return jsonResponse({ error: 'Invalid Amazon URL' }, 400, corsHeaders);
     }
 
-    // Fetch the Amazon product page
     const resp = await fetch(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',

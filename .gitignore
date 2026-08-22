@@ -1,0 +1,16 @@
+# ===== Local backups — never commit to repo =====
+_backups/
+
+# ===== OS / editor junk =====
+.DS_Store
+Thumbs.db
+*.swp
+
+# ===== Env / secrets (Cloudflare Pages) =====
+.env
+.env.*
+!.env.example
+.dev.vars
+
+# ===== Wrangler local state =====
+.wrangler/
