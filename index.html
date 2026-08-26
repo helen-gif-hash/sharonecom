@@ -185,56 +185,63 @@
       color: #fff;
     }
 
-    /* ── Featured Tool Card ── */
+    /* ── Web Tools Grid ── */
+    .web-tools-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: stretch;
+      margin-top: 24px;
+    }
     .featured-tool {
+      grid-column: 1 / -1;
       display: flex;
-      gap: 40px;
       align-items: center;
+      gap: 28px;
+      padding: 48px 36px;
+      min-height: 200px;
       background: linear-gradient(135deg, var(--primary-soft) 0%, #F8F6FC 100%);
       border: 2px solid var(--primary);
       border-radius: var(--radius-card);
-      padding: 52px 56px;
-      margin-top: 36px;
       transition: box-shadow 0.2s, border-color 0.2s;
     }
     .featured-tool:hover {
       border-color: var(--primary-hover);
-      box-shadow: 0 6px 40px rgba(110, 86, 207, 0.22);
+      box-shadow: 0 6px 40px rgba(110, 86, 207, 0.18);
     }
     .featured-tool-icon {
-      flex: 0 0 80px;
-      height: 80px;
-      border-radius: 18px;
+      flex: 0 0 64px;
+      height: 64px;
+      border-radius: 16px;
       background: #fff;
-      color: var(--primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 38px;
+      font-size: 32px;
       box-shadow: 0 4px 16px rgba(110, 86, 207, 0.12);
     }
     .featured-tool-info { flex: 1; }
     .featured-tool-info h3 {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 700;
       line-height: 1.25;
       letter-spacing: -0.4px;
     }
     .featured-tool-info p {
-      font-size: 15px;
+      font-size: 13px;
       color: var(--muted);
       margin-top: 10px;
-      line-height: 1.65;
-      max-width: 640px;
+      line-height: 1.7;
+      max-width: 600px;
     }
     .featured-tool-cta { flex: 0 0 auto; }
     .featured-tool-cta-link {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 600;
       color: #fff;
       background: var(--primary);
       border-radius: 999px;
-      padding: 16px 32px;
+      padding: 14px 28px;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
@@ -246,6 +253,79 @@
     .featured-tool-cta-link:hover {
       background: var(--primary-hover);
       transform: translateX(4px);
+    }
+
+    /* ── Tool Card (secondary, in web-tools-grid) ── */
+    .tool-card-web {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 24px 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .tool-card-web:hover {
+      border-color: var(--primary);
+      box-shadow: 0 4px 20px rgba(110, 86, 207, 0.10);
+    }
+    .tool-card-web-icon {
+      flex: 0 0 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--primary-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    .tool-card-web-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .tool-card-web-body h3 {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.3px;
+    }
+    .tool-card-web-body p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.55;
+    }
+    .tool-card-web-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      margin-top: auto;
+      padding-top: 14px;
+      transition: gap 0.15s;
+    }
+    .tool-card-web-link:hover { gap: 10px; }
+
+    /* ── Sheets Grid ── */
+    .sheets-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 20px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
     }
 
     /* ── Playbooks Kit Hero ── */
@@ -615,8 +695,10 @@
       .featured-article { flex-direction: column; }
       .featured-img { flex: 0 0 auto; width: 100%; height: 200px; border-right: 0; border-bottom: 1px solid var(--border); }
       .featured-text { padding: 20px; }
-      .featured-tool { flex-direction: column; text-align: center; }
+      .featured-tool { flex-direction: column; text-align: center; min-height: auto; }
       .featured-tool-info p { max-width: 100%; }
+      .web-tools-grid { grid-template-columns: 1fr; }
+      .tools-grid { grid-template-columns: 1fr; }
       .contact-box { flex-direction: column; }
       .contact-form-wrap { flex: 0 0 auto; }
       .section-desc { white-space: normal; }
@@ -659,33 +741,57 @@
   <h2 class="section-title">Tools that turn spreadsheets into clarity.</h2>
   <p class="section-desc">Free calculators and hands-on templates built from years of Amazon operations. No signup required for most.</p>
 
-  <!-- Featured Tool -->
-  <div class="featured-tool">
-    <div class="featured-tool-icon">📦</div>
-    <div class="featured-tool-info">
-      <h3>Amazon FBA Profit Calculator</h3>
-      <p>Auto-calculates referral fees, FBA fulfillment from dimensions, VAT, and the digital services fee across 12 Amazon marketplaces. The most complete profit calculator on the site — open it and run your numbers in seconds.</p>
+  <!-- Web Tools Grid -->
+  <div class="web-tools-grid">
+
+    <!-- Hero: FBA Profit Calculator -->
+    <div class="featured-tool">
+      <div class="featured-tool-icon">📦</div>
+      <div class="featured-tool-info">
+        <h3>Amazon FBA Profit Calculator</h3>
+        <p>Auto-calculates referral fees, FBA fulfillment from dimensions, VAT, and the digital services fee across 12 Amazon marketplaces. The most complete profit calculator on the site — open it and run your numbers in seconds.</p>
+      </div>
+      <div class="featured-tool-cta">
+        <a href="tools/amazon-fba-profit-calculator.html" class="featured-tool-cta-link">Open calculator →</a>
+      </div>
     </div>
-    <div class="featured-tool-cta">
-      <a href="tools/amazon-fba-profit-calculator.html" class="featured-tool-cta-link">Open calculator →</a>
+
+    <!-- Listing Grader -->
+    <div class="tool-card-web">
+      <div class="tool-card-web-icon">🔍</div>
+      <div class="tool-card-web-body">
+        <h3>Amazon Listing Grader</h3>
+        <p>Paste your listing content and get an instant A-F grade across 13 dimensions based on Amazon's official 2024 scoring table.</p>
+        <a href="tools/amazon-listing-grader.html" class="tool-card-web-link">Grade your listing →</a>
+      </div>
     </div>
+
+    <!-- PPC Dashboard -->
+    <div class="tool-card-web">
+      <div class="tool-card-web-icon">📊</div>
+      <div class="tool-card-web-body">
+        <h3>Amazon PPC Dashboard</h3>
+        <p>Visualize ACOS, TACOS, ROAS and your break-even line. Run what-if scenarios to find where your ads stop making money.</p>
+        <a href="tools/amazon-ppc-dashboard.html" class="tool-card-web-link">Open dashboard →</a>
+      </div>
+    </div>
+
   </div>
 
+  <!-- Google Sheets Templates -->
+  <div class="sheets-label">Google Sheets Templates</div>
   <div class="tools-grid">
     <div class="tool-card">
-      <div class="tool-icon">⭐</div>
       <h3>Amazon Review Score Calculator</h3>
       <p>Based on the percentage of stars displayed on the page, easily calculates how many additional 5‑star reviews are needed to raise the overall star rating.</p>
       <a class="tool-badge" href="https://docs.google.com/spreadsheets/d/1yJzs8KC6B-7e4Zz2e6Hd7qvVwr626z_Wv4qUMzZ5HYs/edit?usp=sharing" target="_blank" rel="noopener">Open in Google Sheets</a>
     </div>
     <div class="tool-card">
-      <div class="tool-icon">⚡</div>
       <h3>Deal Profitability Checker</h3>
       <p>Calculates whether a deal truly makes a profit after deducting discounts, transaction fees, and additional PPC advertising costs.</p>
       <a class="tool-badge" href="https://docs.google.com/spreadsheets/d/1ccLxJf8DTwsx880Rf-aYWzvfwkZgHt4j/edit?usp=sharing&ouid=116055778919861627742&rtpof=true&sd=true" target="_blank" rel="noopener">Open in Google Sheets</a>
     </div>
     <div class="tool-card">
-      <div class="tool-icon">📊</div>
       <h3>Reference Price Monitoring Table</h3>
       <p>Uses backend price data to confirm whether the current promotional price is below the maximum price and adjusts your promotional pricing as needed.</p>
       <a class="tool-badge" href="https://docs.google.com/spreadsheets/d/1hLN0xot0gXQ42E0yVwLw1ju8cNHkEXW1ouqvqKnL5CA/edit?usp=sharing" target="_blank" rel="noopener">Open in Google Sheets</a>
@@ -701,7 +807,7 @@
 
   <div class="kit-hero">
     <div class="kit-hero-left">
-      <img src="assets/images/playbooks-kit-cover.png" alt="New Product Launch Kit dashboard mockup" loading="lazy" />
+      <img src="assets/images/playbooks-kit-cover.webp" alt="New Product Launch Kit dashboard mockup" loading="lazy" />
     </div>
     <div class="kit-hero-right">
       <div class="kit-badge">6 ready-to-use templates</div>
