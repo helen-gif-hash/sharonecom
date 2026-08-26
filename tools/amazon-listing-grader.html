@@ -168,6 +168,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 .auto-filled{background:var(--glight)!important;border-color:var(--green)!important}
 .auto-badge{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;background:var(--glight);color:var(--green);font-weight:700;margin-left:4px}
 @media(max-width:600px){.hdr h1{font-size:24px}.score-circle{width:100px;height:100px}.score-circle .big{font-size:28px}.frow{grid-template-columns:1fr}}
+
+/* Footer */
+.footer{border-top:1px solid var(--border);padding:28px 0;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:var(--muted);text-decoration:none;transition:color 0.15s}
+.footer-links a:hover{color:var(--text)}
+@media(max-width:768px){.footer{flex-direction:column;gap:12px;text-align:center}.footer-links{gap:16px}}
 </style>
 </head>
 <body>
@@ -404,26 +411,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
     <a href="../contact/">Contact</a>
   </div>
 </footer>
-
-<section class="related-tools container" style="padding:40px 24px 0;max-width:1200px;margin:0 auto;">
-  <h2 style="font-size:18px;font-weight:700;margin-bottom:16px;color:var(--text);">Related Tools</h2>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-    <a href="amazon-fba-profit-calculator.html" style="display:flex;align-items:center;gap:14px;padding:18px 20px;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:border-color 0.15s;">
-      <span style="flex:0 0 40px;height:40px;border-radius:10px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:20px;">📦</span>
-      <span>
-        <strong style="display:block;font-size:14px;color:var(--text);">Amazon FBA Profit Calculator</strong>
-        <span style="font-size:12px;color:var(--muted);">12-market FBA fee calculation</span>
-      </span>
-    </a>
-    <a href="amazon-ppc-dashboard.html" style="display:flex;align-items:center;gap:14px;padding:18px 20px;border:1px solid var(--border);border-radius:12px;text-decoration:none;transition:border-color 0.15s;">
-      <span style="flex:0 0 40px;height:40px;border-radius:10px;background:var(--primary-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:20px;">📊</span>
-      <span>
-        <strong style="display:block;font-size:14px;color:var(--text);">Amazon PPC Dashboard</strong>
-        <span style="font-size:12px;color:var(--muted);">Visualize ACOS, TACOS & break-even</span>
-      </span>
-    </a>
-  </div>
-</section>
 
 <script>
 let bulletCount=5;
