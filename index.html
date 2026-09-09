@@ -312,6 +312,25 @@
     }
     .tool-card-web-link:hover { gap: 10px; }
 
+    /* ── Tool card badges ── */
+    .tool-card-web .badge-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tool-card-web .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; }
+    .badge-purple { background: var(--primary-soft); color: var(--primary); }
+    .badge-green { background: #e7f7ef; color: #0d8a4e; }
+    .badge-new { background: #fef9e7; color: #8a6d14; }
+
+    /* ── "Browse all tools" nav card ── */
+    .tool-card-more {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; gap: 6px; padding: 24px 28px;
+      background: var(--primary-soft); border: 1.5px dashed #C4B5FD; border-radius: var(--radius-card);
+      text-decoration: none; transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .tool-card-more:hover { border-color: var(--primary); box-shadow: 0 4px 20px rgba(110, 86, 207, 0.10); }
+    .tool-card-more .t { font-size: 18px; font-weight: 700; color: var(--primary); letter-spacing: -0.3px; }
+    .tool-card-more .d { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .tool-card-more .go { font-size: 14px; font-weight: 600; color: var(--primary); margin-top: 10px; }
+
     /* ── Sheets Grid ── */
     .sheets-label {
       font-size: 13px;
@@ -746,7 +765,7 @@
 
     <!-- Hero: FBA Profit Calculator -->
     <div class="featured-tool">
-      <div class="featured-tool-icon">📦</div>
+      <div class="featured-tool-icon">💰</div>
       <div class="featured-tool-info">
         <h3>Amazon FBA Profit Calculator</h3>
         <p>Auto-calculates referral fees, FBA fulfillment from dimensions, VAT, and the digital services fee across 12 Amazon marketplaces. The most complete profit calculator on the site — open it and run your numbers in seconds.</p>
@@ -760,6 +779,7 @@
     <div class="tool-card-web">
       <div class="tool-card-web-icon">🔍</div>
       <div class="tool-card-web-body">
+        <div class="badge-row"><span class="badge badge-green">Official Scoring</span><span class="badge badge-purple">13 Dimensions</span></div>
         <h3>Amazon Listing Grader</h3>
         <p>Paste your listing content and get an instant A-F grade across 13 dimensions based on Amazon's official 2024 scoring table.</p>
         <a href="tools/amazon-listing-grader.html" class="tool-card-web-link">Grade your listing →</a>
@@ -770,11 +790,30 @@
     <div class="tool-card-web">
       <div class="tool-card-web-icon">📊</div>
       <div class="tool-card-web-body">
+        <div class="badge-row"><span class="badge badge-green">Live Charts</span><span class="badge badge-purple">ACOS · TACOS</span></div>
         <h3>Amazon PPC Dashboard</h3>
         <p>Visualize ACOS, TACOS, ROAS and your break-even line. Run what-if scenarios to find where your ads stop making money.</p>
         <a href="tools/amazon-ppc-dashboard.html" class="tool-card-web-link">Open dashboard →</a>
       </div>
     </div>
+
+    <!-- Inventory Simulator -->
+    <div class="tool-card-web">
+      <div class="tool-card-web-icon">📥</div>
+      <div class="tool-card-web-body">
+        <div class="badge-row"><span class="badge badge-new">New</span><span class="badge badge-purple">12 Marketplaces</span></div>
+        <h3>Amazon Inventory Health Simulator</h3>
+        <p>Watch storage and aged inventory surcharges pile up day by day across 12 marketplaces, get restock timing and quantity, and stress-test a sales drop.</p>
+        <a href="tools/amazon-inventory-simulator.html" class="tool-card-web-link">Open simulator →</a>
+      </div>
+    </div>
+
+    <!-- Browse all tools -->
+    <a href="tools/" class="tool-card-more">
+      <span class="t">Browse All Free Tools</span>
+      <span class="d">6 free tools — calculators, graders and simulators for Amazon sellers. No signup.</span>
+      <span class="go">Open the tool hub →</span>
+    </a>
 
   </div>
 

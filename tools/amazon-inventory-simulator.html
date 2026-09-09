@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FVRCJN284X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FVRCJN284X');
+  </script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Inventory Fee Simulator 2026 — 12 Marketplaces, Aged Fees | SharonEcom</title>
+<meta name="description" content="Free Amazon FBA inventory simulator across 12 marketplaces. Watch storage and aged surcharges pile up day by day, get restock timing and quantity, and stress-test a sales drop.">
+<link rel="canonical" href="https://sharonecom.com/tools/amazon-inventory-simulator.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Amazon Inventory Fee Simulator 2026 — 12 Marketplaces, Aged Fees">
+<meta property="og:description" content="Free Amazon FBA inventory simulator across 12 marketplaces. Watch storage and aged surcharges pile up day by day, get restock timing and quantity, and stress-test a sales drop.">
+<meta property="og:url" content="https://sharonecom.com/tools/amazon-inventory-simulator.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://sharonecom.com/assets/images/blog-fba-fees-2026.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Amazon Inventory Health Simulator",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "Free Amazon FBA inventory simulator covering 12 marketplaces that projects monthly storage and aged inventory surcharges day by day, recommends restock quantity and reorder timing, and stress-tests a sales drop.",
+  "url": "https://sharonecom.com/tools/amazon-inventory-simulator.html",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "12 Amazon marketplaces: US, CA, UK, DE, FR, IT, ES, NL, BE, PL, SE, JP",
+    "Storage fee timeline with aged surcharge markers (181 / 241 / 271 / 365 days, per marketplace)",
+    "2026 monthly storage rates for Standard and Oversize tiers, incl. Q4 peak",
+    "Restock quantity and reorder window recommendation",
+    "Sales -50% stress test with fee impact"
+  ]
+}
+</script>
+<link rel="stylesheet" href="../assets/css/base.css">
+<style>
+:root {
+  --primary:       #6E56CF;
+  --primary-hover: #5A44C0;
+  --primary-soft:  #F0EBFA;
+  --accent:        #FFCD4D;
+  --bg:            #FFFFFF;
+  --surface:       #F7F8FA;
+  --text:          #1B1B1F;
+  --muted:         #5B5B66;
+  --border:        #E6E6EA;
+  --radius:        8px;
+  --radius-card:   12px;
+  --card:#fff; --t3:#8F99A8;
+  --green:#0d8a4e; --glight:#e7f7ef;
+  --red:#d92c3c; --rlight:#fef0f2; --orange:#d97706; --olight:#fff9ed;
+  --r:var(--radius-card); --sh:0 1px 3px rgba(0,0,0,.06);
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 16px 48px}
+
+/* Nav */
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--border)}
+.nav-logo{font-size:18px;font-weight:700;color:var(--primary);text-decoration:none;letter-spacing:-.3px}
+.nav-links{display:flex;gap:32px;align-items:center;list-style:none}
+.nav-links a{font-size:14px;color:var(--muted);text-decoration:none;transition:color .15s}
+.nav-links a:hover,.nav-links a.active{color:var(--primary)}
+
+/* Header */
+.hdr{text-align:center;padding:28px 0 18px}
+.badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 11px;border-radius:20px;font-size:11px;font-weight:700}
+.badge-ok{background:var(--glight);color:var(--green)}
+.badge-free{background:var(--primary-soft);color:var(--primary)}
+.badge-date{background:#fef9e7;color:#8a6d14}
+.hdr h1{font-size:36px;font-weight:800;letter-spacing:-.4px}
+.hdr .sub{color:var(--muted);margin-top:4px;font-size:14px;max-width:640px;margin-left:auto;margin-right:auto}
+
+/* KPI strip */
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:6px 0 20px}
+@media(max-width:920px){.kpi-strip{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px 12px;text-align:center;position:relative;overflow:hidden}
+.kpi .klbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.kpi .kval{font-size:27px;font-weight:800;letter-spacing:-.7px;margin-top:6px;line-height:1;font-variant-numeric:tabular-nums}
+.kpi .ksub{font-size:11px;color:var(--t3);margin-top:5px}
+.kpi.good{border-color:#b7e4cf;background:var(--glight)}
+.kpi.good .kval{color:var(--green)}
+.kpi.bad{border-color:#f3c2c8;background:var(--rlight)}
+.kpi.bad .kval{color:var(--red)}
+.kpi.info{border-color:#D0C4F0;background:var(--primary-soft)}
+.kpi.info .kval{color:var(--primary)}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh)}
+.chead{padding:13px 18px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);display:flex;align-items:center;gap:7px;justify-content:space-between}
+.chead .cret{font-size:11px;font-weight:600;text-transform:none;letter-spacing:0;color:var(--muted)}
+.cbody{padding:16px 18px}
+
+/* Layout: left inputs / right breakdown; both columns stretch so the
+   sticky breakdown card can travel while the input column scrolls */
+.main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+.main > *{min-width:0}
+.left-col{display:block}
+.right-col{display:flex;flex-direction:column}
+@media(max-width:1020px){.main{grid-template-columns:1fr}.right-col .card{position:static!important;max-height:none!important}}
+
+/* Input field */
+.sfield{margin-bottom:16px}
+.sfield:last-child{margin-bottom:0}
+.sfield .slbl{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.sfield .slbl .name{font-size:12px;font-weight:600;display:flex;align-items:center}
+.sfield .slbl .sv{font-size:13px;font-weight:800;color:var(--primary);font-variant-numeric:tabular-nums}
+.sfield .sinp{display:flex;align-items:center;gap:8px}
+.ipre{position:relative;display:block;flex:1}
+.ipre .pref{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:700;font-size:13px;pointer-events:none;line-height:1;z-index:1}
+.ipre input{padding-left:30px!important}
+.isuf{position:relative;display:block;flex:1}
+.isuf .suf{position:absolute;right:34px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:600;font-size:12px;pointer-events:none;line-height:1;z-index:1}
+.isuf input{padding-right:82px!important}
+.isuf input::-webkit-outer-spin-button,.isuf input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.isuf input[type=number]{-moz-appearance:textfield;appearance:textfield}
+.isuf .spin{position:absolute;right:7px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:2px;z-index:2}
+.isuf .spin button{width:18px;height:11px;padding:0;border:1px solid var(--border);border-radius:3px;background:var(--surface);cursor:pointer;font-size:7px;line-height:1;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:.15s}
+.isuf .spin button:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-soft)}
+.finp{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:var(--font);background:var(--card);color:var(--text);transition:border-color .15s}
+.finp:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(110,86,207,.12)}
+select.finp{cursor:pointer}
+.htip{position:relative;display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:#e6e9ee;color:var(--muted);font-size:10px;font-weight:700;cursor:help;margin-left:6px;flex-shrink:0;line-height:1;transition:background .15s,color .15s}
+.htip:hover{background:var(--primary);color:#fff}
+.htip::after{content:attr(data-tip);position:absolute;top:calc(100% + 8px);right:-6px;background:#2b303b;color:#fff;padding:7px 10px;border-radius:6px;font-size:11px;font-weight:500;line-height:1.4;width:max-content;max-width:240px;white-space:normal;opacity:0;pointer-events:none;transition:opacity .15s;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.15);text-transform:none;letter-spacing:0}
+.htip::before{content:'';position:absolute;top:calc(100% + 2px);right:5px;border:5px solid transparent;border-bottom-color:#2b303b;opacity:0;transition:opacity .15s;z-index:100}
+.htip:hover::after,.htip:hover::before{opacity:1}
+.btn-row{display:flex;gap:8px;margin-top:14px}
+.btn{flex:1;padding:9px;border:1px solid var(--border);border-radius:7px;background:var(--card);cursor:pointer;font-size:12px;font-weight:600;color:var(--muted);transition:.15s}
+.btn:hover{background:#f5f6f8;border-color:var(--primary);color:var(--primary)}
+.opt-note{font-size:11px;color:var(--t3);margin-top:2px;font-style:italic}
+
+/* Restock plan tiles */
+.rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:760px){.rec-grid{grid-template-columns:1fr}}
+.rec-tile{border:1px solid var(--border);border-radius:10px;padding:26px 16px;text-align:center;background:var(--surface)}
+.rec-tile .rt-lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+.rec-tile .rt-val{font-size:26px;font-weight:800;letter-spacing:-.6px;margin-top:10px;color:var(--primary);font-variant-numeric:tabular-nums;line-height:1.1}
+.rec-tile .rt-sub{font-size:11px;color:var(--t3);margin-top:9px}
+
+/* Scenario buttons */
+.scn-row{display:flex;gap:18px;flex-wrap:wrap}
+.scn-btn{flex:1;min-width:190px;display:flex;flex-direction:column;gap:8px;padding:20px 22px;border:1px solid var(--border);border-radius:12px;background:var(--card);cursor:pointer;text-align:left;transition:.15s;position:relative}
+.scn-btn:hover{border-color:var(--primary)}
+.scn-btn.on{background:var(--primary-soft);border-color:var(--primary)}
+.scn-btn .t{font-size:15px;font-weight:700;display:flex;align-items:center;gap:7px}
+.scn-btn .d{font-size:13px;color:var(--muted);line-height:1.5}
+.scn-btn .chk{margin-left:auto;width:18px;height:18px;border-radius:4px;border:1.5px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:700;opacity:0}
+.scn-btn.on .chk{background:var(--primary);border-color:var(--primary);opacity:1}
+.scn-banner{margin-top:18px;padding:16px 20px;border-radius:12px;font-size:14px;display:none;line-height:1.6}
+.scn-banner.show{display:block}
+.scn-banner.ok{background:var(--glight);border:1px solid #b7e4cf;color:var(--green)}
+.scn-banner.warn{background:var(--rlight);border:1px solid #f3c2c8;color:var(--red)}
+.scn-banner b{font-variant-numeric:tabular-nums}
+
+/* Charts */
+.chwrap{position:relative;width:100%;max-width:100%;height:380px;overflow:hidden}
+.chwrap canvas{position:absolute;top:0;left:0;width:100%!important;height:100%!important;max-width:100%}
+
+/* Breakdown list */
+.res-list{border-radius:var(--r);border:1px solid var(--border);background:var(--card);overflow:hidden}
+.res-item{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;border-bottom:1px solid var(--border);font-size:13px}
+.res-item:last-child{border-bottom:none}
+.res-item:hover{background:var(--primary-soft)}
+.res-item .riname{color:var(--muted);font-weight:500;display:flex;align-items:center}
+.res-item .rival{font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.res-item.strong{font-weight:700;background:var(--primary-soft)}
+.res-item .rival.green{color:var(--green)}.res-item .rival.red{color:var(--red)}.res-item .rival.purple{color:var(--primary)}
+.res-group{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--t3);padding:12px 16px 4px}
+
+/* How it works */
+.how{margin-top:20px}
+.how summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--primary);padding:4px 0;list-style:none}
+.how summary::-webkit-details-marker{display:none}
+.how summary::before{content:'▸ ';color:var(--muted)}
+.how[open] summary::before{content:'▾ '}
+.formula{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-top:10px;font-size:13px;line-height:1.9}
+.formula code{background:#fff;border:1px solid var(--border);border-radius:5px;padding:1px 6px;font-size:12px;color:var(--primary);font-family:ui-monospace,Menlo,Consolas,monospace}
+.formula .row{display:flex;gap:10px;margin-bottom:6px}
+.formula .row:last-child{margin-bottom:0}
+.formula .lbl{flex:0 0 170px;font-weight:700;color:var(--text)}
+
+/* Footer */
+.ft{text-align:center;padding:28px 0 0;color:var(--t3);font-size:11px}
+.ft a{color:var(--primary);text-decoration:none}
+
+/* Site Footer */
+.footer{border-top:1px solid var(--border);padding:28px 0;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:var(--muted);text-decoration:none;transition:color 0.15s}
+.footer-links a:hover{color:var(--text)}
+@media(max-width:768px){.footer{flex-direction:column;gap:12px;text-align:center}.footer-links{gap:16px}}
+</style>
+</head>
+<body>
+<nav class="navbar container">
+  <a href="../index.html" class="nav-logo">SharonEcom</a>
+  <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="../tools/">Tools</a></li>
+    <li><a href="../index.html#playbooks">Playbooks</a></li>
+    <li><a href="../blog/">Blog</a></li>
+    <li><a href="../contact/">Contact</a></li>
+  </ul>
+</nav>
+<div class="wrap fade-in">
+
+<header class="hdr fade-in">
+  <div class="badges">
+    <span class="badge badge-ok">&#10003; 12 Marketplaces &middot; Aged Fee Timeline</span>
+    <span class="badge badge-free">100% Free &middot; No Sign-up</span>
+    <span class="badge badge-date">Built for 2026 Rate Cards</span>
+  </div>
+  <h1>Amazon Inventory Health Simulator</h1>
+  <p class="sub">Watch your monthly storage and aged inventory surcharges pile up day by day across 12 Amazon marketplaces. Get a restock quantity and reorder window, then see what happens if sales drop by half.</p>
+</header>
+
+<!-- KPI STRIP -->
+<div class="kpi-strip">
+  <div class="kpi info" id="kpiTotal"><div class="klbl">12-Month Fees</div><div class="kval">—</div><div class="ksub">storage + aged surcharge</div></div>
+  <div class="kpi" id="kpiAged"><div class="klbl">Aged Surcharge (12-mo)</div><div class="kval">—</div><div class="ksub">starts at day 181</div></div>
+  <div class="kpi" id="kpiCover"><div class="klbl">Days of Cover</div><div class="kval">—</div><div class="ksub">at current pace, no restock</div></div>
+  <div class="kpi info" id="kpiAgedStart"><div class="klbl">Aged Fee Starts</div><div class="kval">—</div><div class="ksub">on your current stock</div></div>
+  <div class="kpi" id="kpiStress"><div class="klbl">Sales &minus;50% Impact</div><div class="kval">—</div><div class="ksub">extra fees over 12 months</div></div>
+</div>
+
+<div class="main fade-in">
+  <!-- LEFT: INPUTS -->
+  <div class="left-col">
+    <div class="card" id="inputCard">
+      <div class="chead">&#9881; Your Numbers <span class="cret">edit any field</span></div>
+      <div class="cbody">
+
+        <!-- Marketplace -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">Marketplace</span></div>
+          <div class="sinp">
+            <select class="finp" id="market">
+              <option value="US" selected>United States (US)</option>
+              <option value="CA">Canada (CA)</option>
+              <option value="UK">United Kingdom (UK)</option>
+              <option value="DE">Germany (DE)</option>
+              <option value="FR">France (FR)</option>
+              <option value="IT">Italy (IT)</option>
+              <option value="ES">Spain (ES)</option>
+              <option value="NL">Netherlands (NL)</option>
+              <option value="BE">Belgium (BE)</option>
+              <option value="PL">Poland (PL)</option>
+              <option value="SE">Sweden (SE)</option>
+              <option value="JP">Japan (JP)</option>
+            </select>
+          </div>
+          <div class="opt-note" id="mktNote">Rates shown in local currency, published by Amazon</div>
+        </div>
+
+        <!-- Size tier -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">Size Tier</span></div>
+          <div class="sinp">
+            <select class="finp" id="tier">
+              <option value="std" selected>Standard size</option>
+              <option value="ovs">Oversize</option>
+            </select>
+          </div>
+          <div class="opt-note" id="tierNote">Off-peak (Jan&ndash;Sep) / peak (Oct&ndash;Dec) monthly rates</div>
+        </div>
+
+        <!-- Dimensions -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">Unit Dimensions <span class="htip" data-tip="Packaged product dimensions. Volume = L &times; W &times; H &divide; 1,728 cubic feet (inches) or &divide; 1,000,000 cubic metres (cm). Amazon uses packaged dimensions, not product dimensions.">?</span></span><span class="sv" id="cuVal">—</span></div>
+          <div class="sinp" style="gap:6px">
+            <div class="ipre"><span class="pref" id="dimPreL">L</span><input type="number" class="finp" id="len" value="12" step="0.5" min="0"></div>
+            <div class="ipre"><span class="pref" id="dimPreW">W</span><input type="number" class="finp" id="wid" value="10" step="0.5" min="0"></div>
+            <div class="ipre"><span class="pref" id="dimPreH">H</span><input type="number" class="finp" id="hei" value="6" step="0.5" min="0"></div>
+          </div>
+          <div class="opt-note" id="dimNote">Packaged dimensions in inches</div>
+        </div>
+
+        <!-- Current inventory -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">Current Inventory <span class="htip" data-tip="Units currently sitting in FBA warehouses for this SKU.">?</span></span></div>
+          <div class="sinp"><div class="isuf"><span class="suf">units</span><input type="number" class="finp" id="inv" value="600" step="10" min="0"><span class="spin"><button type="button" data-dir="up" aria-label="Increase">&#9650;</button><button type="button" data-dir="dn" aria-label="Decrease">&#9660;</button></span></div></div>
+        </div>
+
+        <!-- Current age -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">Current Stock Age <span class="htip" data-tip="Average age in days of the units currently in FBA. Check the Inventory Age report or Inventory Ledgers in Seller Central.">?</span></span></div>
+          <div class="sinp"><div class="isuf"><span class="suf">days</span><input type="number" class="finp" id="age" value="120" step="5" min="0"><span class="spin"><button type="button" data-dir="up" aria-label="Increase">&#9650;</button><button type="button" data-dir="dn" aria-label="Decrease">&#9660;</button></span></div></div>
+          <div class="opt-note">Days since these units arrived at Amazon</div>
+        </div>
+
+        <!-- Monthly sales -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">Monthly Sales</span></div>
+          <div class="sinp"><div class="isuf"><span class="suf">units</span><input type="number" class="finp" id="sales" value="150" step="10" min="0"><span class="spin"><button type="button" data-dir="up" aria-label="Increase">&#9650;</button><button type="button" data-dir="dn" aria-label="Decrease">&#9660;</button></span></div></div>
+        </div>
+
+        <!-- Lead time -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">Restock Lead Time <span class="htip" data-tip="Days from placing a purchase order to units being sellable in FBA: production + freight + Amazon receive time.">?</span></span></div>
+          <div class="sinp"><div class="isuf"><span class="suf">days</span><input type="number" class="finp" id="lead" value="45" step="1" min="0"><span class="spin"><button type="button" data-dir="up" aria-label="Increase">&#9650;</button><button type="button" data-dir="dn" aria-label="Decrease">&#9660;</button></span></div></div>
+        </div>
+
+        <!-- Cycle -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">Restock Every</span></div>
+          <div class="sinp"><div class="isuf"><span class="suf">days</span><input type="number" class="finp" id="cycle" value="30" step="1" min="1"><span class="spin"><button type="button" data-dir="up" aria-label="Increase">&#9650;</button><button type="button" data-dir="dn" aria-label="Decrease">&#9660;</button></span></div></div>
+          <div class="opt-note">How often you place a replenishment order</div>
+        </div>
+
+        <!-- Safety -->
+        <div class="sfield">
+          <div class="slbl"><span class="name">Safety Buffer</span></div>
+          <div class="sinp"><div class="isuf"><span class="suf">days</span><input type="number" class="finp" id="safety" value="15" step="1" min="0"><span class="spin"><button type="button" data-dir="up" aria-label="Increase">&#9650;</button><button type="button" data-dir="dn" aria-label="Decrease">&#9660;</button></span></div></div>
+          <div class="opt-note">Extra days of cover to absorb delays</div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn" id="resetBtn" type="button">Reset to sample</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: BREAKDOWN (sticky while the input column scrolls) -->
+  <div class="right-col">
+    <div class="card" style="position:sticky;top:16px">
+      <div class="chead">&#128202; Breakdown <span class="cret">your numbers, live</span></div>
+      <div class="cbody">
+        <div class="res-list" id="breakdown"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESTOCK PLAN -->
+<div class="card" style="margin-top:20px">
+  <div class="chead">&#127919; Restock Plan <span class="cret">based on your sales pace</span></div>
+  <div class="cbody">
+    <div class="rec-grid">
+      <div class="rec-tile">
+        <div class="rt-lbl">Reorder Point</div>
+        <div class="rt-val" id="recPoint">—</div>
+        <div class="rt-sub" id="recPointSub">order when inventory hits this level</div>
+      </div>
+      <div class="rec-tile">
+        <div class="rt-lbl">Reorder By</div>
+        <div class="rt-val" id="recDate">—</div>
+        <div class="rt-sub" id="recDateSub">days from today</div>
+      </div>
+      <div class="rec-tile">
+        <div class="rt-lbl">Restock Quantity</div>
+        <div class="rt-val" id="recQty">—</div>
+        <div class="rt-sub" id="recQtySub">covers one cycle</div>
+      </div>
+    </div>
+    <div class="opt-note" style="margin-top:12px">Reorder point = daily sales &times; (lead time + safety). Restock quantity = daily sales &times; cycle &mdash; each purchase order covers one replenishment cycle, while the reorder point bridges the lead-time gap.</div>
+  </div>
+</div>
+
+<!-- STRESS TEST -->
+<div class="card" style="margin-top:20px">
+  <div class="chead">&#9889; Stress Test</div>
+  <div class="cbody">
+    <div class="scn-row">
+      <button class="scn-btn" id="scStress" type="button">
+        <span class="t">Sales &minus;50% <span class="chk">&#10003;</span></span>
+        <span class="d">Demand collapses but your purchase orders keep arriving on schedule &mdash; stock piles up and the aged surcharge clock keeps ticking.</span>
+      </button>
+    </div>
+    <div class="scn-banner" id="scnBanner"></div>
+  </div>
+</div>
+
+<!-- CUMULATIVE FEES CHART -->
+<div class="card" style="margin-top:20px">
+  <div class="chead">&#128176; Cumulative Storage Fees <span class="cret">next 12 months, day by day</span></div>
+  <div class="cbody">
+    <div class="chwrap"><canvas id="feesChart"></canvas></div>
+    <div class="opt-note" style="margin-top:10px">Purple is the regular monthly storage fee. Red is the aged inventory surcharge &mdash; it starts small and jumps sharply the moment stock crosses the 271-day mark (181 days in the US and Canada). The orange markers show where your current stock hits those ages.</div>
+  </div>
+</div>
+
+<!-- INVENTORY CHART -->
+<div class="card" style="margin-top:20px">
+  <div class="chead">&#128230; Inventory Level <span class="cret">sawtooth of sales and restocks</span></div>
+  <div class="cbody">
+    <div class="chwrap"><canvas id="invChart"></canvas></div>
+    <div class="opt-note" style="margin-top:10px">The dashed orange line is your reorder point. Purple dots are restock arrivals. Under the stress test the sawtooth stops draining &mdash; that plateau is exactly what turns into aged surcharge fees.</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<details class="how">
+  <summary>How the math works</summary>
+  <div class="formula">
+    <div class="row"><span class="lbl">Unit volume</span><span><code>L &times; W &times; H</code> &rarr; cubic feet (US: inches &divide; 1,728) or cubic metres (cm &divide; 1,000,000; UK: cm &divide; 28,316.8 = cu ft)</span></div>
+    <div class="row"><span class="lbl">Daily sales pace</span><span><code>Monthly sales &divide; 30.4</code></span></div>
+    <div class="row"><span class="lbl">Monthly storage fee</span><span><code>Units &times; volume &times; rate</code> &mdash; Jan&ndash;Sep off-peak, Oct&ndash;Dec peak, per marketplace and size tier (rates embedded per market)</span></div>
+    <div class="row"><span class="lbl">Aged surcharge</span><span>Snapshot on the <code>15th of each month</code>, per unit of volume by age. US &amp; CA start at <code>181 days</code>; UK &amp; EU start at <code>241 days</code>; JP starts at <code>271 days</code>. The 271&ndash;300 day tier is several times the 241&ndash;270 tier in every marketplace.</span></div>
+    <div class="row"><span class="lbl">Reorder point</span><span><code>Daily pace &times; (lead time + safety buffer)</code></span></div>
+    <div class="row"><span class="lbl">Restock quantity</span><span><code>Daily pace &times; cycle</code> &mdash; each PO covers one replenishment cycle; the reorder point bridges the lead-time gap</span></div>
+    <div class="row"><span class="lbl">Assumptions</span><span>FIFO depletion (oldest units sell first), restocks arrive on schedule, fees accrue daily, surcharge snapshots monthly on the 15th. Excludes the storage utilization surcharge. The pre-271-day tiers don't apply to Clothing, Shoes, Bags, Jewelry &amp; Watches in most marketplaces.</span></div>
+  </div>
+</details>
+
+<footer class="ft">
+  <p>Fee data: Amazon Seller Central published rate cards (2025&ndash;2026), all 12 marketplaces. Poland uses the harmonised EU &euro; rate card; Sweden's aged surcharge is converted from the EU &euro; rate card at Amazon's own SEK storage-fee ratio &mdash; confirm in Seller Central. Estimates for planning only.</p>
+</footer>
+
+<footer class="footer container">
+  <span>&copy; 2026 SharonEcom</span>
+  <div class="footer-links">
+    <a href="../affiliate-disclosure.html">Affiliate Disclosure</a>
+    <a href="../privacy-policy.html">Privacy Policy</a>
+    <a href="../contact/">Contact</a>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script>
+// ===================== MARKET DATA (Amazon Seller Central published rate cards) =====================
+// volDiv converts packaged dimensions to the market's volume unit.
+// US: inches -> cu ft (1728). UK: cm -> cu ft (28316.8). Others: cm -> m3 (1,000,000).
+// aged: [ageFrom, ageTo, rate per volume unit per month]. aged366: per-unit-of-volume rate vs per-unit minimum.
+const MARKETS = {
+  US: { name:'United States', sym:'$', dec:2, dimUnit:'in',  volDiv:1728,    volLabel:'cu ft',
+        std:[0.78,2.40],   ovs:[0.56,1.40],
+        aged:[[181,210,0.50],[211,240,1.00],[241,270,1.50],[271,300,5.45],[301,330,5.70],[331,365,5.90]],
+        aged366:{perVol:6.90, perUnit:0.15} },
+  CA: { name:'Canada', sym:'C$', dec:2, dimUnit:'cm', volDiv:1000000, volLabel:'m\u00B3',
+        std:[40,77],       ovs:[28,49],
+        aged:[[181,210,24],[211,240,48],[241,270,72],[271,300,156],[301,330,172],[331,365,189]],
+        aged366:{perVol:330, perUnit:0.15} },
+  UK: { name:'United Kingdom', sym:'\u00A3', dec:2, dimUnit:'cm', volDiv:28316.8, volLabel:'cu ft',
+        std:[0.76,1.37],   ovs:[0.50,0.79],
+        aged:[[241,270,1.18],[271,300,3.14],[301,330,3.26],[331,365,3.41]],
+        aged366:{perVol:5.71, perUnit:0.10} },
+  DE: { name:'Germany', sym:'\u20AC', dec:2, dimUnit:'cm', volDiv:1000000, volLabel:'m\u00B3',
+        std:[27.54,47.45], ovs:[19.80,31.35],
+        aged:[[241,270,47.99],[271,300,125.16],[301,330,129.92],[331,365,135.98]],
+        aged366:{perVol:227.63, perUnit:0.10} },
+  FR: { name:'France', sym:'\u20AC', dec:2, dimUnit:'cm', volDiv:1000000, volLabel:'m\u00B3',
+        std:[27.54,47.45], ovs:[19.80,31.35],
+        aged:[[241,270,47.99],[271,300,125.16],[301,330,129.92],[331,365,135.98]],
+        aged366:{perVol:227.63, perUnit:0.10} },
+  IT: { name:'Italy', sym:'\u20AC', dec:2, dimUnit:'cm', volDiv:1000000, volLabel:'m\u00B3',
+        std:[27.54,47.45], ovs:[19.80,31.35],
+        aged:[[241,270,47.99],[271,300,125.16],[301,330,129.92],[331,365,135.98]],
+        aged366:{perVol:227.63, perUnit:0.10} },
+  ES: { name:'Spain', sym:'\u20AC', dec:2, dimUnit:'cm', volDiv:1000000, volLabel:'m\u00B3',
+        std:[27.54,47.45], ovs:[19.80,31.35],
+        aged:[[241,270,47.99],[271,300,125.16],[301,330,129.92],[331,365,135.98]],
+        aged366:{perVol:227.63, perUnit:0.10} },
+  NL: { name:'Netherlands', sym:'\u20AC', dec:2, dimUnit:'cm', volDiv:1000000, volLabel:'m\u00B3',
+        std:[27.54,47.45], ovs:[19.80,31.35],
+        aged:[[241,270,47.99],[271,300,125.16],[301,330,129.92],[331,365,135.98]],
+        aged366:{perVol:227.63, perUnit:0.10} },
+  BE: { name:'Belgium', sym:'\u20AC', dec:2, dimUnit:'cm', volDiv:1000000, volLabel:'m\u00B3',
+        std:[27.54,47.45], ovs:[19.80,31.35],
+        aged:[[241,270,47.99],[271,300,125.16],[301,330,129.92],[331,365,135.98]],
+        aged366:{perVol:227.63, perUnit:0.10} },
+  PL: { name:'Poland', sym:'\u20AC', dec:2, dimUnit:'cm', volDiv:1000000, volLabel:'m\u00B3',
+        std:[27.54,47.45], ovs:[19.80,31.35],
+        aged:[[241,270,47.99],[271,300,125.16],[301,330,129.92],[331,365,135.98]],
+        aged366:{perVol:227.63, perUnit:0.10} },
+  SE: { name:'Sweden', sym:'kr ', dec:2, dimUnit:'cm', volDiv:1000000, volLabel:'m\u00B3',
+        std:[321.31,498.34], ovs:[189.00,299.82],
+        // Amazon publishes no SEK aged table; converted from the EU rate card at Amazon's SEK storage-fee ratio (321.31 / 27.54)
+        aged:[[241,270,559.75],[271,300,1459.77],[301,330,1515.32],[331,365,1586.06]],
+        aged366:{perVol:2655.13, perUnit:1.17} },
+  JP: { name:'Japan', sym:'\u00A5', dec:0, dimUnit:'cm', volDiv:1000000, volLabel:'m\u00B3',
+        std:[5676,10087],  ovs:[3278,6984],
+        aged:[[271,300,16662],[301,330,17475],[331,365,18085]],
+        aged366:{perVol:34239, perUnit:10} },
+};
+const HORIZON = 365;
+const DIM_DEFAULTS = { in:[12,10,6], cm:[30,25,15] };
+
+const DEFAULTS = {len:12, wid:10, hei:6, inv:600, age:120, sales:150, lead:45, cycle:30, safety:15};
+let scStressOn = false;
+let feesChart = null, invChart = null;
+
+// ===================== HELPERS =====================
+const $ = id => document.getElementById(id);
+function num(id){ const v = parseFloat($(id).value); return isFinite(v) && v >= 0 ? v : 0; }
+function fmtC(x, mkt){
+  const dec = mkt.dec;
+  const s = x < 0 ? '-' + mkt.sym : mkt.sym;
+  return s + Math.abs(x).toLocaleString('en-US',{minimumFractionDigits:dec, maximumFractionDigits:dec});
+}
+function fmtC0(x, mkt){ return fmtC(x, mkt); }
+function fmtR(x, mkt){ return x.toLocaleString('en-US',{maximumFractionDigits:mkt.dec === 0 ? 0 : 2}); }
+function addDays(base, d){ return new Date(base.getTime() + d*86400000); }
+function daysInMonth(y, m){ return new Date(y, m+1, 0).getDate(); }
+function fmtDate(d){ return d.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}); }
+
+function agedRate(mkt, age, cu){
+  if(age >= 366) return Math.max(mkt.aged366.perVol, mkt.aged366.perUnit / cu);
+  for(const [a,b,r] of mkt.aged){ if(age >= a && age <= b) return r; }
+  return 0;
+}
+
+// ===================== SIMULATION =====================
+function simulate(mkt, p, salesFactor){
+  const cu = p.cu;
+  const daily = (p.sales / 30.4) * salesFactor;
+  const restockQty = p.restockQty;
+  const arrivals = new Set();
+  for(let od = 0; od < HORIZON; od += p.cycle){
+    const ad = od + p.lead;
+    if(ad < HORIZON) arrivals.add(ad);
+  }
+  let cohorts = p.inv > 0 ? [{u:p.inv, a:p.age}] : [];
+  let cS = 0, cA = 0, totS = 0, totA = 0;
+  let agedStartDay = null, stockoutDay = null, maxUnits = 0;
+  const storageArr = [], agedArr = [], unitsArr = [];
+
+  for(let d = 0; d < HORIZON; d++){
+    const date = addDays(p.start, d);
+    if(arrivals.has(d)) cohorts.push({u:restockQty, a:0});
+    // Sell FIFO: oldest cohort first (cohorts are kept oldest-first by construction)
+    let need = daily;
+    for(const c of cohorts){ if(need <= 0.0001) break; const take = Math.min(c.u, need); c.u -= take; need -= take; }
+    cohorts = cohorts.filter(c => c.u > 0.001);
+    cohorts.forEach(c => c.a += 1);
+    const units = cohorts.reduce((s,c) => s + c.u, 0);
+    if(stockoutDay === null && daily > 0 && units < daily) stockoutDay = d;
+    if(units > maxUnits) maxUnits = units;
+    // Monthly storage accrues daily at the month's rate (Oct-Dec = peak in every marketplace)
+    const m = date.getMonth();
+    const peak = (m >= 9 && m <= 11);
+    const rate = peak ? p.tierCfg[1] : p.tierCfg[0];
+    const dim = daysInMonth(date.getFullYear(), m);
+    const feeDay = units * cu * rate / dim;
+    cS += feeDay; totS += feeDay;
+    // Aged surcharge: snapshot on the 15th
+    if(date.getDate() === 15 && cohorts.length){
+      let aged = 0;
+      for(const c of cohorts){
+        const r = agedRate(mkt, c.a, cu);
+        if(r > 0) aged += c.u * cu * r;
+      }
+      if(aged > 0){ cA += aged; totA += aged; if(agedStartDay === null) agedStartDay = d; }
+    }
+    storageArr.push(cS); agedArr.push(cA); unitsArr.push(units);
+  }
+  return {storageArr, agedArr, unitsArr, totS, totA, agedStartDay, stockoutDay, maxUnits, arrivals};
+}
+
+// ===================== AGE MARKERS =====================
+function ageMarkers(mkt, age){
+  const days = [mkt.aged[0][0], 271, 365];
+  const marks = [];
+  const seen = new Set();
+  days.forEach(a => {
+    const day = a - age;
+    if(day >= 0 && day < HORIZON && !seen.has(day)){ marks.push({day, label: a + 'd'}); seen.add(day); }
+    else if(day < 0 && !seen.has(0)){ marks.push({day:0, label:'paying now'}); seen.add(0); }
+  });
+  return marks;
+}
+
+// ===================== CHARTS =====================
+const ageLinePlugin = {
+  id:'ageLine',
+  afterDatasetsDraw(chart){
+    const marks = chart.$ageMarks || [];
+    const x = chart.scales.x, {top, bottom} = chart.chartArea, ctx = chart.ctx;
+    ctx.save();
+    marks.forEach(m => {
+      const px = x.getPixelForValue(m.day);
+      if(!isFinite(px)) return;
+      ctx.beginPath();
+      ctx.setLineDash([4,4]);
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = 'rgba(217,119,6,.55)';
+      ctx.moveTo(px, top); ctx.lineTo(px, bottom);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.font = 'bold 13px -apple-system, Segoe UI, Roboto, sans-serif';
+      ctx.fillStyle = '#d97706';
+      ctx.textAlign = 'center';
+      ctx.fillText(m.label, px, top + 12);
+    });
+    ctx.restore();
+  }
+};
+
+function initCharts(labels0){
+  feesChart = new Chart($('feesChart').getContext('2d'), {
+    type:'line',
+    data:{ labels:labels0, datasets:[
+      { label:'Monthly storage (cumulative)', data:[], borderColor:'#6E56CF', backgroundColor:'rgba(110,86,207,.18)', borderWidth:2, pointRadius:0, tension:.15, fill:true, stack:'fees' },
+      { label:'Aged surcharge (cumulative)', data:[], borderColor:'#d92c3c', backgroundColor:'rgba(217,44,60,.16)', borderWidth:2, pointRadius:0, tension:.15, fill:true, stack:'fees' }
+    ]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{ labels:{ boxWidth:12, font:{size:14}, usePointStyle:true } },
+        tooltip:{ callbacks:{
+          label: c => c.dataset.label + ': ' + curSym + Number(c.parsed.y).toLocaleString('en-US',{maximumFractionDigits:0}),
+          afterBody: items => 'Total: ' + curSym + Number(items.reduce((s,i)=>s+i.parsed.y,0)).toLocaleString('en-US',{maximumFractionDigits:0})
+        } }
+      },
+      scales:{
+        x:{ ticks:{ font:{size:13}, maxTicksLimit:8, maxRotation:0, autoSkip:true }, grid:{display:false} },
+        y:{ title:{ display:true, text:'Cumulative fees', font:{size:14} }, ticks:{ font:{size:13}, callback:v=>curSym+Math.round(v).toLocaleString('en-US') }, grid:{ color:'#f0f1f3' }, beginAtZero:true }
+      }
+    },
+    plugins:[ageLinePlugin]
+  });
+
+  invChart = new Chart($('invChart').getContext('2d'), {
+    type:'line',
+    data:{ labels:labels0, datasets:[
+      { label:'Units in FBA', data:[], borderColor:'#6E56CF', backgroundColor:'rgba(110,86,207,.10)', borderWidth:2.5, pointRadius:0, tension:.1, fill:true },
+      { label:'Reorder point', data:[], borderColor:'#d97706', borderDash:[6,5], borderWidth:2, pointRadius:0, fill:false },
+      { label:'Restock arrivals', data:[], pointRadius:5, pointBackgroundColor:'#6E56CF', pointBorderColor:'#fff', pointBorderWidth:2, showLine:false }
+    ]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{ labels:{ boxWidth:12, font:{size:14}, usePointStyle:true } },
+        tooltip:{ callbacks:{ label: c => c.dataset.label === 'Restock arrivals' ? (c.parsed.y != null ? 'Restock arrives: +' + Math.round(c.parsed.y).toLocaleString('en-US') + ' units' : null) : c.dataset.label + ': ' + Math.round(c.parsed.y).toLocaleString('en-US') + ' units' } }
+      },
+      scales:{
+        x:{ ticks:{ font:{size:13}, maxTicksLimit:8, maxRotation:0, autoSkip:true }, grid:{display:false} },
+        y:{ title:{ display:true, text:'Units in FBA', font:{size:14} }, ticks:{ font:{size:13}, callback:v=>Math.round(v).toLocaleString('en-US') }, grid:{ color:'#f0f1f3' }, beginAtZero:true }
+      }
+    }
+  });
+}
+
+function setKpi(id, val, sub, cls){
+  const el = $(id);
+  el.className = 'kpi' + (cls ? (' ' + cls) : '');
+  el.querySelector('.kval').textContent = val;
+  el.querySelector('.ksub').textContent = sub;
+}
+
+let curSym = '$';
+
+// ===================== MAIN RECALC =====================
+function recalc(){
+  const mkt = MARKETS[$('market').value];
+  curSym = mkt.sym;
+  const p = {
+    tier:$('tier').value,
+    len:num('len'), wid:num('wid'), hei:num('hei'),
+    inv:num('inv'), age:Math.round(num('age')), sales:num('sales'),
+    lead:num('lead'), cycle:Math.max(1, num('cycle')), safety:num('safety'),
+    start:new Date()
+  };
+  p.tierCfg = p.tier === 'std' ? mkt.std : mkt.ovs;
+  p.cu = (p.len * p.wid * p.hei) / mkt.volDiv;
+  const daily = p.sales / 30.4;
+  p.restockQty = Math.ceil(daily * p.cycle);
+  p.reorderPoint = Math.ceil(daily * (p.lead + p.safety));
+
+  const base = simulate(mkt, p, 1);
+  const stress = simulate(mkt, p, 0.5);
+  const baseTotal = base.totS + base.totA;
+  const stressTotal = stress.totS + stress.totA;
+  const delta = stressTotal - baseTotal;
+
+  // ---- KPI strip ----
+  setKpi('kpiTotal', fmtC0(baseTotal, mkt), fmtC0(base.totS, mkt) + ' storage + ' + fmtC0(base.totA, mkt) + ' aged', 'info');
+  const agedPct = baseTotal > 0 ? Math.round(base.totA / baseTotal * 100) : 0;
+  setKpi('kpiAged', fmtC0(base.totA, mkt), agedPct + '% of total fees', base.totA > 0 ? 'bad' : 'good');
+  const cover = daily > 0 ? p.inv / daily : null;
+  setKpi('kpiCover', cover == null ? '—' : Math.round(cover) + ' d',
+    cover == null ? 'no sales entered' : (cover < 30 ? 'restock soon' : 'healthy runway'), cover == null ? '' : (cover < 30 ? 'bad' : 'good'));
+  const firstAgedDay = mkt.aged[0][0];
+  const dayToAged = firstAgedDay - p.age;
+  const dAged = new Date(p.start.getTime() + Math.max(0, dayToAged) * 86400000);
+  setKpi('kpiAgedStart', dayToAged <= 0 ? 'Already paying' : fmtDate(dAged),
+    (dayToAged <= 0 ? 'stock is past day ' + firstAgedDay : 'day ' + firstAgedDay + ', if stock lasts that long')
+    + ' \u00B7 ' + mkt.name, dayToAged <= 0 ? 'bad' : 'info');
+  setKpi('kpiStress', delta > 0.5 ? '+' + fmtC0(delta, mkt) : (mkt.sym.trim() || mkt.sym) + '0', 'extra fees over 12 months', delta > 0.5 ? 'bad' : 'good');
+
+  // ---- Breakdown list ----
+  const tierName = p.tier === 'std' ? 'Standard size' : 'Oversize';
+  const rows = [
+    ['Marketplace', mkt.name + ' (' + mkt.sym.trim() + ' ' + mkt.volLabel + ')', ''],
+    ['Size tier', tierName, ''],
+    ['Unit volume', p.cu.toFixed(p.cu < 0.1 ? 5 : 3) + ' ' + mkt.volLabel, ''],
+    ['Monthly storage fee today', fmtC(p.inv * p.cu * p.tierCfg[0], mkt), ''],
+    ['Monthly storage fee in Q4 peak', fmtC(p.inv * p.cu * p.tierCfg[1], mkt), 'red'],
+    ['Current inventory', Math.round(p.inv).toLocaleString('en-US') + ' units', ''],
+    ['Days of cover (no restock)', cover == null ? '—' : Math.round(cover) + ' days', ''],
+    ['12-month storage fees', fmtC(base.totS, mkt), ''],
+    ['12-month aged surcharge', fmtC(base.totA, mkt), base.totA > 0 ? 'red' : 'green'],
+    ['12-month total (current plan)', fmtC(baseTotal, mkt), 'purple strong'],
+    ['Stress: 12-month total (sales \u221250%)', fmtC(stressTotal, mkt) + (delta > 0.5 ? ' (+' + fmtC0(delta, mkt) + ')' : ''), delta > 0.5 ? 'red' : 'green'],
+  ];
+  let html = '';
+  rows.forEach(([name, val, cls]) => {
+    const strong = cls.includes('strong') ? ' strong' : '';
+    const vcls = cls.replace(' strong', '').trim();
+    const v = (vcls === 'green' || vcls === 'red' || vcls === 'purple') ? ' ' + vcls : '';
+    html += `<div class="res-item${strong}"><span class="riname">${name}</span><span class="rival${v}">${val}</span></div>`;
+  });
+  $('breakdown').innerHTML = html;
+
+  // ---- Restock plan ----
+  $('cuVal').textContent = p.cu.toFixed(p.cu < 0.1 ? 5 : 3) + ' ' + mkt.volLabel;
+  $('recPoint').textContent = p.reorderPoint.toLocaleString('en-US') + ' u';
+  const coverDays = daily > 0 ? (p.inv - p.reorderPoint) / daily : null;
+  if(coverDays == null){
+    $('recDate').textContent = '—';
+    $('recDateSub').textContent = 'no sales entered';
+  } else if(coverDays <= 0){
+    $('recDate').textContent = 'Order now';
+    $('recDateSub').textContent = 'stock is below reorder point';
+  } else {
+    $('recDate').textContent = fmtDate(new Date(p.start.getTime() + coverDays * 86400000));
+    $('recDateSub').textContent = Math.round(coverDays) + ' days from today';
+  }
+  $('recQty').textContent = p.restockQty.toLocaleString('en-US') + ' u';
+  $('recQtySub').textContent = 'covers one ' + Math.round(p.cycle) + '-day cycle';
+
+  // ---- Charts (stress mode switches both charts to the stressed scenario) ----
+  const active = scStressOn ? stress : base;
+  const labels = [];
+  for(let d = 0; d < HORIZON; d++){
+    labels.push(addDays(p.start, d).toLocaleDateString('en-US', {month:'short', day:'numeric'}));
+  }
+  if(!feesChart) initCharts(labels);
+
+  feesChart.data.labels = labels;
+  feesChart.data.datasets[0].data = active.storageArr;
+  feesChart.data.datasets[1].data = active.agedArr;
+  feesChart.$ageMarks = ageMarkers(mkt, p.age);
+  feesChart.update('none');
+
+  invChart.data.labels = labels;
+  invChart.data.datasets[0].data = active.unitsArr;
+  invChart.data.datasets[1].data = labels.map(() => p.reorderPoint);
+  const arrSet = active.arrivals || new Set();
+  invChart.data.datasets[2].data = active.unitsArr.map((v, i) => arrSet.has(i) ? v : null);
+  invChart.update('none');
+
+  // ---- Stress banner ----
+  const banner = $('scnBanner');
+  if(!scStressOn){ banner.className = 'scn-banner'; banner.innerHTML = ''; return; }
+  const stressAged = stress.totA;
+  const halfQty = Math.ceil(p.restockQty / 2);
+  banner.className = 'scn-banner show ' + (delta > 0.5 ? 'warn' : 'ok');
+  banner.innerHTML = `<b>Sales &minus;50%, purchase orders unchanged.</b> `
+    + `Fees over the next 12 months rise from <b>${fmtC(baseTotal, mkt)}</b> to <b>${fmtC(stressTotal, mkt)}</b> (+${fmtC0(delta, mkt)}), `
+    + `of which <b>${fmtC0(stressAged, mkt)}</b> is aged surcharge. Inventory peaks around <b>${Math.round(stress.maxUnits).toLocaleString('en-US')} units</b> `
+    + `instead of ${Math.round(base.maxUnits).toLocaleString('en-US')}. `
+    + `At the slower pace your restock quantity should shrink to about <b>${halfQty.toLocaleString('en-US')} units</b> per order &mdash; cut incoming POs now before the aged clock reaches the 271-day jump.`;
+}
+
+// ===================== MARKET SWITCH =====================
+function refreshTierOptions(mkt){
+  const sel = $('tier');
+  sel.options[0].textContent = 'Standard size \u2014 ' + fmtR(mkt.std[0], mkt) + ' / ' + fmtR(mkt.std[1], mkt) + ' per ' + mkt.volLabel;
+  sel.options[1].textContent = 'Oversize \u2014 ' + fmtR(mkt.ovs[0], mkt) + ' / ' + fmtR(mkt.ovs[1], mkt) + ' per ' + mkt.volLabel;
+}
+function applyMarket(mkt){
+  const [l, w, h] = DIM_DEFAULTS[mkt.dimUnit];
+  $('len').value = l; $('wid').value = w; $('hei').value = h;
+  $('dimNote').textContent = 'Packaged dimensions in ' + (mkt.dimUnit === 'in' ? 'inches' : 'centimetres');
+  $('mktNote').textContent = mkt.name + ' \u00B7 rates in ' + mkt.sym.trim() + ' per ' + mkt.volLabel + ' \u00B7 aged surcharge starts day ' + mkt.aged[0][0];
+  refreshTierOptions(mkt);
+}
+
+// ===================== EVENTS =====================
+const FIELDS = ['len','wid','hei','inv','age','sales','lead','cycle','safety'];
+FIELDS.forEach(f => {
+  $(f).addEventListener('input', recalc);
+});
+// Custom spin buttons (right of the unit suffix)
+document.querySelectorAll('.isuf .spin button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const inp = btn.closest('.isuf').querySelector('input');
+    const step = parseFloat(inp.step) || 1;
+    const v = (parseFloat(inp.value) || 0) + (btn.dataset.dir === 'up' ? step : -step);
+    inp.value = Math.max(parseFloat(inp.min) || 0, v);
+    inp.dispatchEvent(new Event('input', {bubbles:true}));
+  });
+});
+$('market').addEventListener('change', () => {
+  applyMarket(MARKETS[$('market').value]);
+  recalc();
+});
+$('tier').addEventListener('change', recalc);
+$('scStress').addEventListener('click', () => {
+  scStressOn = !scStressOn;
+  $('scStress').classList.toggle('on', scStressOn);
+  recalc();
+});
+$('resetBtn').addEventListener('click', () => {
+  $('market').value = 'US';
+  applyMarket(MARKETS.US);
+  FIELDS.forEach(f => { $(f).value = DEFAULTS[f]; });
+  $('tier').value = 'std';
+  scStressOn = false;
+  $('scStress').classList.remove('on');
+  recalc();
+});
+
+// ===================== INIT =====================
+applyMarket(MARKETS.US);
+recalc();
+</script>
+<script src="../assets/js/scroll-animation.js"></script>
+<script src="../assets/js/nav.js"></script>
+</body>
+</html>
