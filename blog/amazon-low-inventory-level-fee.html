@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FVRCJN284X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FVRCJN284X');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Amazon low-inventory-level fee charges you for running below 28 days of supply. How the 2026 FNSKU-level change works, who's exempt, and the restock rhythm that keeps the fee at zero.">
+  <link rel="canonical" href="https://sharonecom.com/blog/amazon-low-inventory-level-fee.html">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="Amazon Low-Inventory-Level Fee Explained: The Fee Nobody Saw Coming">
+  <meta property="og:description" content="The Amazon low-inventory-level fee charges you for running below 28 days of supply. How the 2026 FNSKU-level change works, who's exempt, and the restock rhythm that keeps the fee at zero.">
+  <meta property="og:url" content="https://sharonecom.com/blog/amazon-low-inventory-level-fee.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://sharonecom.com/assets/images/blog-low-inventory-fee.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"Amazon Low-Inventory-Level Fee Explained: The Fee Nobody Saw Coming","datePublished":"2026-09-04","dateModified":"2026-09-04","author":{"@type":"Person","name":"Sharon"},"publisher":{"@type":"Organization","name":"SharonEcom","url":"https://sharonecom.com"},"url":"https://sharonecom.com/blog/amazon-low-inventory-level-fee.html"}
+  </script>
+  <title>Amazon Low-Inventory-Level Fee Explained (2026): Threshold &amp; Fixes | SharonEcom</title>
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <style>
+:root {
+  --primary: #6E56CF;
+  --primary-hover: #5A44C0;
+  --primary-soft: #F0EBFA;
+  --accent: #FFCD4D;
+  --bg: #FFFFFF;
+  --surface: #F7F8FA;
+  --text: #1B1B1F;
+  --muted: #5B5B66;
+  --border: #E6E6EA;
+  --radius: 8px;
+  --radius-card: 12px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+    .article-header {
+      padding: 64px 0 40px;
+      text-align: center;
+    }
+    .article-header h1 {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .article-meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .article-meta .dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+    .article-content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+    }
+    .article-content .lead {
+      font-size: 18px;
+      color: var(--text);
+      line-height: 1.65;
+      margin-bottom: 32px;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+    }
+    .article-content h2 {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+      margin-top: 48px;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .article-content h3 {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.2px;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .article-content p {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+    .article-content strong {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .article-content ul, .article-content ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+    .article-content li {
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .article-content a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .article-content a:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
+    }
+    .highlight-box {
+      background: var(--primary-soft);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius-card);
+      padding: 28px 32px;
+      margin: 32px 0;
+    }
+    .highlight-box p {
+      margin-bottom: 12px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .highlight-box p:last-child {
+      margin-bottom: 0;
+    }
+    .highlight-box strong {
+      color: var(--primary);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+    }
+    th {
+      background: var(--surface);
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    tr:last-child td { border-bottom: none; }
+    .fee-up { color: #DC2626; font-weight: 600; }
+    .fee-down { color: #0d8a4e; font-weight: 600; }
+    .tool-cta {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 28px 32px;
+      margin: 32px 0;
+      text-align: center;
+    }
+    .tool-cta .tool-cta-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+    .tool-cta h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    .tool-cta p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .tool-cta .btn-primary {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--primary);
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 28px;
+      cursor: pointer;
+      transition: background 0.15s;
+      text-decoration: none;
+    }
+    .tool-cta .btn-primary:hover { background: var(--primary-hover); }
+    .author-bio {
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+      padding-top: 32px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .author-bio .author-avatar {
+      flex: 0 0 48px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .author-bio .author-info h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .author-bio .author-info p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 0;
+    }
+    .back-link-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .back-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .back-link:hover { color: var(--primary-hover); }
+    @media (max-width: 768px) {
+      .article-header h1 { font-size: 26px; }
+      .article-content .lead { font-size: 16px; }
+      .article-content h2 { font-size: 20px; }
+      .article-content h3 { font-size: 16px; }
+      .article-content p, .article-content li { font-size: 15px; }
+      .highlight-box, .tool-cta { padding: 20px; }
+      table { font-size: 12px; }
+      th, td { padding: 8px 10px; }
+      .author-bio { flex-direction: column; align-items: center; text-align: center; }
+    }
+    .related-articles { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .related-articles h3 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+    .related-articles ul { list-style: none; }
+    .related-articles li { margin-bottom: 10px; }
+    .related-articles a { color: var(--primary); text-decoration: none; font-size: 15px; font-weight: 500; transition: color 0.15s; }
+    .related-articles a:hover { color: var(--primary-hover); text-decoration: underline; }
+  /* ── Footer ── */
+    .footer{border-top:1px solid var(--border);padding:28px 0;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted)}
+    .footer-links{display:flex;gap:24px}
+    .footer-links a{color:var(--muted);text-decoration:none;transition:color 0.15s}
+    .footer-links a:hover{color:var(--text)}
+    @media (max-width:768px){.footer{flex-direction:column;gap:12px;text-align:center}.footer-links{gap:16px}}
+  </style>
+</head>
+<body>
+<nav class="navbar container">
+  <a href="../index.html" class="nav-logo">SharonEcom</a>
+  <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="../tools/">Tools</a></li>
+    <li><a href="../index.html#playbooks">Playbooks</a></li>
+    <li><a href="../blog/">Blog</a></li>
+    <li><a href="../contact/">Contact</a></li>
+  </ul>
+</nav>
+<header class="article-header container fade-in">
+<h1>Amazon Low-Inventory-Level Fee Explained: The Fee Nobody Saw Coming</h1>
+  <div class="article-meta">
+    <span>Sharon</span>
+    <span class="dot"></span>
+    <span>Inventory &amp; Fees</span>
+    <span class="dot"></span>
+    <span>Sep 4, 2026</span>
+    <span class="dot"></span>
+    <span>7 min read</span>
+  </div>
+</header>
+<div class="article-content fade-in">
+  <p class="lead">Amazon used to charge you for storing too much. Since April 2024, it can also charge you for storing too little. The low-inventory-level fee applies to standard-size FBA products when their inventory drops below roughly 28 days of supply relative to historical sales — and because the trigger is based on your <em>own</em> trailing sales history, it punishes exactly the sellers who run lean on purpose, sell through a spike, or restock "just in time." In 2026 the fee got sharper: it's now assessed at the FNSKU level instead of the parent ASIN, so a single thin variant can trigger charges. Here's how the mechanics actually work, who's exempt, and the restock rhythm that keeps this fee at zero.</p>
+
+  <h2>What the Fee Is and Why It Exists</h2>
+
+  <p>The stated logic is capacity: Amazon's network plans storage and staffing around expected inventory. When a SKU suddenly runs far below its historical demand pattern, the fulfillment centers absorbed the cost of the surprise — so Amazon priced it back to the seller. The fee is charged <strong>per unit sold</strong> during the period the SKU is below the supply threshold, and it's scaled by how far below the target your inventory sits.</p>
+
+  <p>The trigger isn't a fixed unit count. Amazon looks at your SKU's <strong>historical weeks of supply</strong> — a blend of the trailing 90-day and 30-day averages — and compares it against your current inventory. Fall under roughly four weeks of supply and the per-unit fee starts accruing on each sale.</p>
+
+  <table>
+    <thead>
+    <tr>
+      <th scope="col">Situation</th>
+      <th scope="col">Fee applies?</th>
+      <th scope="col">Why</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Standard-size SKU, &lt;~28 days of supply</td>
+      <td>Yes</td>
+      <td>Core trigger</td>
+    </tr>
+    <tr>
+      <td>New SKU / new parent (first ~26 weeks)</td>
+      <td>No</td>
+      <td>No sales history to measure against yet</td>
+    </tr>
+    <tr>
+      <td>Grocery products</td>
+      <td>No</td>
+      <td>Exempt category (2026 update)</td>
+    </tr>
+    <tr>
+      <td>Very slow-moving ASINs</td>
+      <td>Generally no</td>
+      <td>Exempt, but delivery promises may slow</td>
+    </tr>
+    <tr>
+      <td>Oversize products</td>
+      <td>No</td>
+      <td>Standard-size only</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <h2>The 2026 Change That Bit Variations Sellers</h2>
+
+  <p>The most consequential 2026 update (effective January 15) moved the fee from the <strong>parent ASIN level to the FNSKU level</strong>. Previously, a healthy parent listing could absorb one thin variant. Now each child SKU stands on its own: sell through your black color while the rest of the size run sits fine, and the black FNSKU alone can start generating fees — even though the listing looks well-stocked in aggregate.</p>
+
+  <p>Practical consequences:</p>
+
+  <ul>
+    <li><strong>Reorder by variant, not by listing.</strong> A blended "total units" view hides the SKU that's about to trigger fees.</li>
+    <li><strong>Watch your fastest variant.</strong> The best-seller in a variation family hits 28 days of supply first — it is always your canary.</li>
+    <li><strong>Rebalance inventory across variants</strong> rather than letting hot children starve while slow ones squat on cube.</li>
+  </ul>
+
+  <div class="highlight-box">
+    <p><strong>The irony to manage:</strong> this fee punishes under-stocking while the aged-inventory surcharge punishes over-stocking — and the aged tiers got more expensive in 2026 ($0.30/unit/month minimum for 12–15 month stock, a new $0.35 tier beyond that). The profitable zone is narrower than it used to be: roughly 4–8 weeks of supply, restocked on a rhythm, not in heroic swings.</p>
+  </div>
+
+  <h2>How to Avoid the Fee Without Hoarding Inventory</h2>
+
+  <ol>
+    <li><strong>Set a hard reorder point at 5 weeks of supply.</strong> Compute daily velocity per FNSKU (units ÷ 90), multiply by 35 days, and treat that number as your floor. At 4 weeks you're already in trigger territory — the alarm has to ring earlier than the fee does.</li>
+    <li><strong>Shorten your replenishment cycle before deepening your inventory.</strong> Two smaller POs landing three weeks apart beat one giant PO: same total stock over time, far less cube sitting at the back end of the cycle aging toward surcharges.</li>
+    <li><strong>Factor your inbound lead time into the reorder point.</strong> A 35-day factory-to-FC pipeline on a 30-day-cover product means you needed to reorder <em>before the product even launched</em>. If lead time exceeds target cover, the fix isn't bolder reordering — it's negotiating shorter lead times or better supplier terms.</li>
+    <li><strong>Use AWD for automatic replenishment.</strong> SKUs using Amazon Warehousing &amp; Distribution auto-replenishment (at least 70% auto-replenished, no caps set) are exempt from the low-inventory-level fee — Amazon manages the floor for you, in exchange for AWD's own rates.</li>
+    <li><strong>Audit the fee monthly.</strong> It appears on your settlement report and the FBA storage fee report. A low-inventory fee line that keeps recurring on one SKU is a restock-process failure, not an Amazon problem.</li>
+  </ol>
+
+  <h2>Running Lean "On Purpose": Do the Math</h2>
+
+  <p>Some sellers consciously accept the fee as the cost of minimal inventory exposure — a valid strategy for volatile or seasonal products. But make it a decision, not an accident. Compare, for a typical month of thin coverage:</p>
+
+  <ul>
+    <li><strong>Cost of the fee:</strong> per-unit charge on every sale while below threshold — effectively a few points of margin on that SKU's sales.</li>
+    <li><strong>Cost of the alternative:</strong> one extra week of stock = one extra week of storage ($0.78/cu ft non-peak for standard-size) plus the cash tied up in COGS.</li>
+  </ul>
+
+  <p>For most standard-size products, the extra week of storage costs less than the fee does. The fee is designed to be more annoying than the cure — which is why "order a week earlier" fixes most cases outright.</p>
+
+  <h2>Free Tool: Know Your Margin at the Sell Price You'll Actually Use</h2>
+  <div class="tool-cta">
+    <div class="tool-cta-icon">🧮</div>
+    <h3>FBA Profit Calculator</h3>
+    <p>Every fee like this one changes your real margin, not your planned one. The free calculator covers 12 marketplaces with 2026 rates, builds a price ladder so you can see profit at every sell point, and includes stress-test scenarios for exactly these surprise-cost moments. Price with the full picture.</p>
+    <a href="../tools/amazon-fba-profit-calculator.html" class="btn-primary">Open the FBA Profit Calculator →</a>
+    <p style="margin-top: 12px; font-size: 12px; color: var(--muted);">Free. No sign-up. 12 marketplaces, 2026 rates.</p>
+  </div>
+
+  <h2>The Bottom Line</h2>
+  <p>The low-inventory-level fee flipped inventory management on Amazon: the old "lean and fast" playbook now carries its own tax, and the 2026 FNSKU-level change means variation sellers can't hide behind a healthy parent listing. The winning rhythm is boring and deliberate — per-variant reorder points at 5 weeks, shorter replenishment cycles, monthly fee audits, and AWD where it fits. Run too lean and you pay per sale; run too deep and the aged-inventory surcharge waits on the other end. The margin lives in the middle.</p>
+
+    <div class="related-articles fade-in">
+      <h3>Related articles</h3>
+      <ul>
+        <li><a href="amazon-q4-storage-fees-2026.html">Q4 Is Coming: Amazon Storage Fees and the October Fee Jump (2026)</a></li>
+        <li><a href="amazon-fba-hidden-fees.html">Hidden Amazon FBA Fees: 9 Charges Quietly Eating Your Profit</a></li>
+        <li><a href="amazon-fba-fees-2026-breakdown.html">Amazon FBA Fees 2026: Complete Breakdown</a></li>
+      </ul>
+    </div>
+  <div class="author-bio">
+    <div class="author-avatar">S</div>
+    <div class="author-info">
+      <h4>Sharon</h4>
+      <p>Amazon operator based in China. I manage seller accounts daily — PPC, reviews, listing optimization, and FBA cost analysis. I built the free tools on this site from real operational workflows. No theory, just what works.</p>
+    </div>
+  </div>
+</div>
+<div class="back-link-wrap">
+  <a href="../blog/" class="back-link">← Back to Blog</a>
+</div>
+<footer class="footer container">
+  <span>&copy; 2026 SharonEcom</span>
+  <div class="footer-links">
+    <a href="../affiliate-disclosure.html">Affiliate Disclosure</a>
+    <a href="../privacy-policy.html">Privacy Policy</a>
+    <a href="../contact/">Contact</a>
+  </div>
+</footer>
+<script src="../assets/js/scroll-animation.js"></script>
+<script src="../assets/js/nav.js"></script>
+</body>
+</html>
